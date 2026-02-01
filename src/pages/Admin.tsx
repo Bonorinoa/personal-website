@@ -8,10 +8,11 @@ import { InboxList } from '@/components/admin/InboxList';
 import { ContentEditor } from '@/components/admin/ContentEditor';
 import { SyncButton } from '@/components/admin/SyncButton';
 import { RepoSelector } from '@/components/admin/RepoSelector';
-import { getArtifacts, getInboxItems, getInboxConfig } from '@/lib/artifacts';
-import { Inbox, FileEdit, BarChart3, FlaskConical, LogOut, Lock, ExternalLink } from 'lucide-react';
+import { getInboxConfig } from '@/lib/artifacts';
+import { useAllArtifacts } from '@/hooks/useArtifacts';
+import { useInboxItems } from '@/hooks/useInboxItems';
+import { Inbox, FileEdit, BarChart3, FlaskConical, LogOut, Lock, ExternalLink, Loader2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-import type { InboxItem } from '@/data/types';
 
 const ADMIN_PASSWORD = 'admin123'; // TODO: Replace with proper auth
 
@@ -36,14 +37,14 @@ const Admin = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const [pendingItems, setPendingItems] = useState<InboxItem[]>([]);
   const [githubRepos, setGithubRepos] = useState<RepoItem[]>([]);
   const [showRepoSelector, setShowRepoSelector] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  const artifacts = getArtifacts();
-  const inboxItems = getInboxItems();
+  const { data: artifacts = [], isLoading: artifactsLoading } = useAllArtifacts();
+  const { data: pendingItems = [], refetch: refetchInbox } = useInboxItems('pending');
+  
   const config = getInboxConfig() as {
     sources?: {
       orcid?: { enabled: boolean; id?: string; lastSync?: string | null };
@@ -56,8 +57,6 @@ const Admin = () => {
       emails?: { primary?: string; aliases?: string[] };
     };
   };
-
-  const allInboxItems = [...inboxItems, ...pendingItems];
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -74,12 +73,11 @@ const Admin = () => {
     setPassword('');
   };
 
-  const handleSyncComplete = (items: unknown[]) => {
-    const newItems = items as InboxItem[];
-    setPendingItems(prev => [...prev, ...newItems]);
+  const handleSyncComplete = (result: { inserted: number; skipped: number }) => {
+    refetchInbox();
     toast({
       title: 'Sync complete',
-      description: `Found ${newItems.length} new items for review.`,
+      description: `Added ${result.inserted} new items, ${result.skipped} duplicates skipped.`,
     });
   };
 
@@ -88,31 +86,12 @@ const Admin = () => {
     setShowRepoSelector(true);
   };
 
-  const handleRepoImport = (items: unknown[]) => {
-    const newItems = items as InboxItem[];
-    setPendingItems(prev => [...prev, ...newItems]);
+  const handleRepoImport = (result: { inserted: number; skipped: number }) => {
     setShowRepoSelector(false);
+    refetchInbox();
     toast({
       title: 'Repos imported',
-      description: `${newItems.length} repositories added to inbox.`,
-    });
-  };
-
-  const handleApprove = (item: InboxItem) => {
-    console.log('Approve:', item);
-    setPendingItems(prev => prev.filter(i => i.id !== item.id));
-    toast({
-      title: 'Approved',
-      description: `"${item.suggestedArtifact?.title}" will be added after Supabase integration.`,
-    });
-  };
-
-  const handleReject = (item: InboxItem) => {
-    setPendingItems(prev => prev.filter(i => i.id !== item.id));
-    toast({
-      title: 'Rejected',
-      description: 'Item removed from inbox.',
-      variant: 'destructive',
+      description: `Added ${result.inserted} repositories, ${result.skipped} duplicates skipped.`,
     });
   };
 
@@ -178,9 +157,9 @@ const Admin = () => {
             <TabsTrigger value="inbox" className="gap-2">
               <Inbox className="w-4 h-4" />
               <span className="hidden sm:inline">Inbox</span>
-              {allInboxItems.length > 0 && (
+              {pendingItems.length > 0 && (
                 <span className="ml-1 px-1.5 py-0.5 bg-primary/20 text-primary text-xs rounded-full">
-                  {allInboxItems.length}
+                  {pendingItems.length}
                 </span>
               )}
             </TabsTrigger>
@@ -209,9 +188,6 @@ const Admin = () => {
               </div>
             </div>
             <InboxList 
-              items={allInboxItems}
-              onApprove={handleApprove}
-              onReject={handleReject}
               onEdit={(item) => console.log('Edit:', item)}
             />
 
@@ -312,10 +288,19 @@ const Admin = () => {
                 Edit visibility, tags, and featured status for your artifacts.
               </p>
             </div>
-            <ContentEditor 
-              artifacts={artifacts}
-              onUpdate={(artifact) => console.log('Update:', artifact)}
-            />
+            {artifactsLoading ? (
+              <Card>
+                <CardContent className="py-12 text-center">
+                  <Loader2 className="w-8 h-8 animate-spin mx-auto text-muted-foreground mb-2" />
+                  <p className="text-muted-foreground">Loading artifacts...</p>
+                </CardContent>
+              </Card>
+            ) : (
+              <ContentEditor 
+                artifacts={artifacts}
+                onUpdate={(artifact) => console.log('Update:', artifact)}
+              />
+            )}
           </TabsContent>
 
           {/* Analytics Tab */}

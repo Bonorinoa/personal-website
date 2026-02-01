@@ -1,24 +1,92 @@
-import type { InboxItem, Artifact } from '@/data/types';
+import type { InboxItem } from '@/data/types';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Check, X, Edit, ExternalLink } from 'lucide-react';
+import { Check, X, Edit, Loader2, RefreshCw } from 'lucide-react';
+import { useInboxItems, useApproveInboxItem, useRejectInboxItem } from '@/hooks/useInboxItems';
+import { useToast } from '@/hooks/use-toast';
 
 interface InboxListProps {
-  items: InboxItem[];
-  onApprove?: (item: InboxItem) => void;
-  onReject?: (item: InboxItem) => void;
   onEdit?: (item: InboxItem) => void;
 }
 
-export function InboxList({ items, onApprove, onReject, onEdit }: InboxListProps) {
+export function InboxList({ onEdit }: InboxListProps) {
+  const { data: items = [], isLoading, error, refetch } = useInboxItems('pending');
+  const approveMutation = useApproveInboxItem();
+  const rejectMutation = useRejectInboxItem();
+  const { toast } = useToast();
+
+  const handleApprove = async (item: InboxItem) => {
+    try {
+      await approveMutation.mutateAsync({
+        itemId: item.id,
+        artifactData: item.suggestedArtifact as Record<string, unknown>,
+      });
+      toast({
+        title: 'Approved',
+        description: `"${item.suggestedArtifact?.title}" has been published.`,
+      });
+    } catch (err) {
+      toast({
+        title: 'Error',
+        description: err instanceof Error ? err.message : 'Failed to approve item',
+        variant: 'destructive',
+      });
+    }
+  };
+
+  const handleReject = async (item: InboxItem) => {
+    try {
+      await rejectMutation.mutateAsync(item.id);
+      toast({
+        title: 'Rejected',
+        description: 'Item removed from inbox.',
+        variant: 'destructive',
+      });
+    } catch (err) {
+      toast({
+        title: 'Error',
+        description: err instanceof Error ? err.message : 'Failed to reject item',
+        variant: 'destructive',
+      });
+    }
+  };
+
+  if (isLoading) {
+    return (
+      <Card className="border-dashed">
+        <CardContent className="py-12 text-center">
+          <Loader2 className="w-8 h-8 animate-spin mx-auto text-muted-foreground mb-2" />
+          <p className="text-muted-foreground">Loading inbox items...</p>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  if (error) {
+    return (
+      <Card className="border-destructive">
+        <CardContent className="py-12 text-center">
+          <p className="text-destructive mb-2">Failed to load inbox items</p>
+          <p className="text-sm text-muted-foreground mb-4">
+            {error instanceof Error ? error.message : 'Unknown error'}
+          </p>
+          <Button variant="outline" onClick={() => refetch()} className="gap-2">
+            <RefreshCw className="w-4 h-4" />
+            Retry
+          </Button>
+        </CardContent>
+      </Card>
+    );
+  }
+
   if (items.length === 0) {
     return (
       <Card className="border-dashed">
         <CardContent className="py-12 text-center">
           <p className="text-muted-foreground mb-2">No pending items in inbox</p>
           <p className="text-sm text-muted-foreground">
-            Items discovered from ORCID, Crossref, and GitHub will appear here for review.
+            Click "Sync" on a source below to discover new items from ORCID or GitHub.
           </p>
         </CardContent>
       </Card>
@@ -27,6 +95,16 @@ export function InboxList({ items, onApprove, onReject, onEdit }: InboxListProps
 
   return (
     <div className="space-y-4">
+      <div className="flex items-center justify-between">
+        <p className="text-sm text-muted-foreground">
+          {items.length} pending item{items.length !== 1 ? 's' : ''} for review
+        </p>
+        <Button variant="ghost" size="sm" onClick={() => refetch()} className="gap-2">
+          <RefreshCw className="w-4 h-4" />
+          Refresh
+        </Button>
+      </div>
+      
       {items.map((item) => (
         <Card key={item.id} className="bg-card">
           <CardHeader className="pb-2">
@@ -58,10 +136,15 @@ export function InboxList({ items, onApprove, onReject, onEdit }: InboxListProps
               <div className="flex gap-2">
                 <Button 
                   size="sm" 
-                  onClick={() => onApprove?.(item)}
+                  onClick={() => handleApprove(item)}
+                  disabled={approveMutation.isPending}
                   className="gap-1"
                 >
-                  <Check className="w-4 h-4" />
+                  {approveMutation.isPending ? (
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  ) : (
+                    <Check className="w-4 h-4" />
+                  )}
                   Approve
                 </Button>
                 <Button 
@@ -76,10 +159,15 @@ export function InboxList({ items, onApprove, onReject, onEdit }: InboxListProps
                 <Button 
                   size="sm" 
                   variant="destructive"
-                  onClick={() => onReject?.(item)}
+                  onClick={() => handleReject(item)}
+                  disabled={rejectMutation.isPending}
                   className="gap-1"
                 >
-                  <X className="w-4 h-4" />
+                  {rejectMutation.isPending ? (
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  ) : (
+                    <X className="w-4 h-4" />
+                  )}
                   Reject
                 </Button>
               </div>

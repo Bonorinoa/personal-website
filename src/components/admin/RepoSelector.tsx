@@ -26,11 +26,16 @@ interface RepoItem {
   isArchived: boolean;
 }
 
+interface SyncResult {
+  inserted: number;
+  skipped: number;
+}
+
 interface RepoSelectorProps {
   repos: RepoItem[];
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onImport: (items: unknown[]) => void;
+  onImport: (result: SyncResult) => void;
   username: string;
 }
 
@@ -106,7 +111,7 @@ export function RepoSelector({ repos, open, onOpenChange, onImport, username }: 
       if (error) throw error;
       if (data.error) throw new Error(data.error);
       
-      onImport(data.items || []);
+      onImport({ inserted: data.inserted || 0, skipped: data.skipped || 0 });
       onOpenChange(false);
       setSelectedIds(new Set());
     } catch (err) {

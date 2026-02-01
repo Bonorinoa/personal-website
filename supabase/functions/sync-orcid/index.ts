@@ -1,4 +1,5 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2.49.1";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -27,29 +28,6 @@ interface ORCIDWork {
   }>;
 }
 
-interface InboxItem {
-  id: string;
-  source: 'orcid';
-  discoveredAt: string;
-  status: 'pending';
-  rawData: unknown;
-  suggestedArtifact: {
-    title: string;
-    type: 'paper';
-    date: string;
-    summary: string;
-    mode_visibility: 'both';
-    section: 'publications';
-    source_ids?: {
-      doi?: string;
-      orcid?: string;
-    };
-    links?: {
-      paper?: string;
-    };
-  };
-}
-
 serve(async (req) => {
   // Handle CORS preflight
   if (req.method === 'OPTIONS') {
@@ -67,6 +45,11 @@ serve(async (req) => {
     }
 
     console.log(`Fetching works for ORCID: ${orcid_id}`);
+
+    // Initialize Supabase client with service role for DB writes
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+    const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+    const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
     // Fetch works from ORCID public API
     const response = await fetch(
@@ -92,10 +75,37 @@ serve(async (req) => {
 
     console.log(`Found ${works.length} works`);
 
-    // Transform ORCID works to InboxItems
-    const inboxItems: InboxItem[] = works.map((work: ORCIDWork) => {
+    // Get existing external_ids to check for duplicates
+    const { data: existingItems } = await supabase
+      .from('inbox_items')
+      .select('external_id')
+      .eq('source', 'orcid');
+    
+    const existingIds = new Set(existingItems?.map(item => item.external_id) || []);
+
+    // Transform ORCID works and filter duplicates
+    const newItems: Array<{
+      source: string;
+      external_id: string;
+      status: string;
+      raw_data: unknown;
+      suggested_artifact: unknown;
+      discovered_at: string;
+    }> = [];
+
+    let skippedCount = 0;
+
+    for (const work of works as ORCIDWork[]) {
       const summary = work['work-summary']?.[0];
-      if (!summary) return null;
+      if (!summary) continue;
+
+      const externalId = `orcid-${summary['put-code']}`;
+      
+      // Skip if already exists
+      if (existingIds.has(externalId)) {
+        skippedCount++;
+        continue;
+      }
 
       const title = summary.title?.title?.value || 'Untitled';
       const pubDate = summary['publication-date'];
@@ -112,37 +122,59 @@ serve(async (req) => {
 
       const journalTitle = summary['journal-title']?.value;
 
-      return {
-        id: `orcid-${summary['put-code']}`,
-        source: 'orcid' as const,
-        discoveredAt: new Date().toISOString(),
-        status: 'pending' as const,
-        rawData: work,
-        suggestedArtifact: {
+      newItems.push({
+        source: 'orcid',
+        external_id: externalId,
+        status: 'pending',
+        raw_data: work,
+        suggested_artifact: {
           title,
-          type: 'paper' as const,
+          type: 'paper',
           date,
           summary: journalTitle 
             ? `Published in ${journalTitle} (${year})` 
             : `${summary.type?.replace(/_/g, ' ').toLowerCase() || 'Publication'} from ${year}`,
-          mode_visibility: 'both' as const,
-          section: 'publications' as const,
+          mode_visibility: 'both',
+          section: 'publications',
           source_ids: {
-            doi: doi || undefined,
+            doi: doi || null,
             orcid: `${orcid_id}/${summary['put-code']}`,
           },
           links: {
-            paper: doiUrl || undefined,
+            paper: doiUrl || null,
           },
         },
-      };
-    }).filter(Boolean);
+        discovered_at: new Date().toISOString(),
+      });
+    }
+
+    // Insert new items into database
+    let insertedCount = 0;
+    if (newItems.length > 0) {
+      const { data: inserted, error } = await supabase
+        .from('inbox_items')
+        .insert(newItems)
+        .select();
+
+      if (error) {
+        console.error('Database insert error:', error);
+        return new Response(
+          JSON.stringify({ error: `Database error: ${error.message}` }),
+          { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      }
+
+      insertedCount = inserted?.length || 0;
+    }
+
+    console.log(`Inserted ${insertedCount} new items, skipped ${skippedCount} duplicates`);
 
     return new Response(
       JSON.stringify({ 
         success: true, 
-        items: inboxItems,
-        count: inboxItems.length,
+        inserted: insertedCount,
+        skipped: skippedCount,
+        total: works.length,
         syncedAt: new Date().toISOString(),
       }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }

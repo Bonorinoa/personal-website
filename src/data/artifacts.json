@@ -4,11 +4,12 @@
       "id": "edu-asu-phd",
       "type": "education",
       "title": "PhD in Economics",
+      "subtitle": "Specialization: Microeconomic Theory and AI",
       "organization": "Arizona State University",
       "location": "Tempe, AZ",
       "date": "2025-08",
       "endDate": "current",
-      "summary": "Doctoral studies in Economics with focus on computational methods and AI applications in economic research.",
+      "summary": "Doctoral studies in Economics with focus on microeconomic theory and artificial intelligence applications in economic research.",
       "mode_visibility": "academic",
       "section": "education",
       "featured": true
@@ -17,14 +18,14 @@
       "id": "edu-cgu-ma",
       "type": "education",
       "title": "MA in Economics (PhD Track)",
-      "subtitle": "GPA: 4.0",
+      "subtitle": "GPA: 4.0/4.0 · Applied Microeconomics - Experimental",
       "organization": "Claremont Graduate University",
       "location": "Claremont, CA",
       "date": "2022-08",
       "endDate": "2024-05",
-      "summary": "Advanced graduate training in economics with specialization in computational methods and behavioral economics.",
+      "summary": "Advanced graduate training in economics with specialization in experimental methods and computational approaches.",
       "details": [
-        "Relevant Coursework: Game Theory, IO, Behavioral, Econometrics I & II, Mathematical Economics"
+        "Relevant Coursework: Game Theory, Industrial Organization, Behavioral Economics, Econometrics I & II, Mathematical Economics"
       ],
       "mode_visibility": "academic",
       "section": "education",
@@ -34,14 +35,14 @@
       "id": "edu-marist-ba",
       "type": "education",
       "title": "BA in Economics (Honors)",
-      "subtitle": "Summa Cum Laude, GPA: 3.93",
+      "subtitle": "Summa Cum Laude · GPA: 3.93/4.0",
       "organization": "Marist College",
       "location": "Poughkeepsie, NY",
       "date": "2019-08",
       "endDate": "2022-05",
-      "summary": "Undergraduate honors degree with concentrations in Data Science and Finance.",
+      "summary": "Undergraduate honors degree with dual major in Economics and Data Science & Analytics.",
       "details": [
-        "Concentrations: Data Science, Finance",
+        "Majors: Economics and Data Science & Analytics",
         "Minor: Mathematics"
       ],
       "mode_visibility": "academic",
@@ -54,13 +55,13 @@
       "title": "Lead Graduate Researcher",
       "organization": "EconLLM Lab, Claremont Graduate University",
       "location": "Claremont, CA",
-      "date": "2023-05",
+      "date": "2023-09",
       "endDate": "current",
-      "summary": "Leading research on applying large language models to economic research and policy analysis.",
+      "summary": "Pioneered a new lab with Dr. Monica Capra to explore the intersection of LLMs with experimental economics and evaluate language models as computational engines of human behavior through economic games.",
       "details": [
-        "Developing LLM-powered tools for economic literature analysis",
-        "Building datasets for training domain-specific models",
-        "Publishing research on AI applications in economics"
+        "Assisted in drafting grants to fund studies, research assistants, and workshops",
+        "Led the development of the lab and curated educational resources to train research assistants",
+        "Hosted workshops on LLM applications in experimental economics"
       ],
       "links": {
         "website": "https://www.econllm-lab.com/"
@@ -70,11 +71,14 @@
       "section": "experience",
       "featured": true,
       "collaboration_breakdown": {
-        "human": "Designed research agenda, curated datasets, wrote papers, conducted economic analysis",
-        "ai_tools": "Claude and GPT-4 for literature review, code generation, and data processing",
-        "verification": "Peer review, replication studies, benchmark comparisons"
+        "human": "Designed research agenda, curated datasets, wrote papers, conducted economic analysis, mentored RAs",
+        "matrix": [
+          { "model": "gpt-4", "tasks": ["literature-review", "brainstorming", "writing-editing"] },
+          { "model": "claude-3-sonnet", "tasks": ["code-generation", "data-analysis", "writing-drafting"] }
+        ],
+        "verification": "Peer review, replication studies, benchmark comparisons against human subjects"
       },
-      "previewImage": "/placeholder.svg"
+      "year": 2023
     },
     {
       "id": "role-cjl",
@@ -82,11 +86,12 @@
       "title": "Research Assistant",
       "organization": "Computational Justice Lab",
       "location": "Claremont, CA",
-      "date": "2023-01",
-      "endDate": "2024-05",
-      "summary": "Conducting computational analysis of justice and policy outcomes.",
+      "date": "2022-09",
+      "endDate": "2023-06",
+      "summary": "Collaborated with Riverside County's District Attorney Office to identify causal implications of sentencing choices.",
       "details": [
-        "Developed data pipelines for analyzing judicial decisions",
+        "Assisted the quantitative team in feature engineering and EDA",
+        "Developed panel data causal inference models",
         "Applied NLP methods to legal text analysis"
       ],
       "mode_visibility": "academic",
@@ -100,39 +105,47 @@
       "location": "Poughkeepsie, NY",
       "date": "2020-09",
       "endDate": "2022-05",
-      "summary": "Led development of ODQA system (Kevin) for campus information retrieval.",
+      "summary": "Led a team of 5 students and 2 faculty in developing 'Kevin,' an open-source Open Domain Question-Answering (ODQA) system for college information retrieval, achieving 100% cost savings.",
       "details": [
-        "Built open-domain question answering system for college website",
-        "Deployed production chatbot serving thousands of users",
-        "Managed team of student developers"
+        "Designed and annotated custom question-answer pair dataset for fine-tuning BERT, ELECTRA, and RoBERTa",
+        "Applied NLP methods for entity extraction, sparse and dense retrieval, and text cleaning",
+        "Deployed production chatbot serving thousands of users"
       ],
       "tags": ["ai-assisted"],
       "mode_visibility": "both",
       "section": "experience",
       "featured": true,
       "collaboration_breakdown": {
-        "human": "Architected system, implemented retrieval pipeline, managed deployment",
-        "ai_tools": "Used transformer models for embeddings, GPT-3 for answer generation",
-        "verification": "User satisfaction surveys, accuracy benchmarks, A/B testing"
+        "human": "Architected system, designed annotation schema, implemented retrieval pipeline, managed deployment, led team",
+        "matrix": [
+          { "model": "gpt-3.5", "tasks": ["code-generation", "data-processing"] },
+          { "model": "custom", "tasks": ["simulation"] }
+        ],
+        "verification": "User satisfaction surveys, accuracy benchmarks, A/B testing with real users"
       },
       "links": {
-        "demo": "https://github.com/Bonorinoa"
+        "repo": "https://github.com/Bonorinoa/ODQA_Marist",
+        "paper": "https://doi.org/10.5220/0011059000003182"
       },
-      "previewImage": "/placeholder.svg"
+      "source_ids": {
+        "doi": "10.5220/0011059000003182",
+        "github": "ODQA_Marist"
+      },
+      "year": 2022
     },
     {
       "id": "teaching-pomona",
       "type": "role",
-      "title": "Visiting Lecturer",
+      "title": "Full-Time Visiting Lecturer",
       "organization": "Pomona College",
       "location": "Claremont, CA",
-      "date": "2023-08",
-      "endDate": "2024-05",
-      "summary": "Teaching undergraduate economics courses.",
+      "date": "2024-08",
+      "endDate": "2025-05",
+      "summary": "Teaching undergraduate economics courses with R programming components. Taught and mentored over 200 students across seven courses.",
       "details": [
-        "ECON 57: Economic Statistics",
-        "ECON 101: Intermediate Microeconomics",
-        "ECON 167: Behavioral Economics"
+        "ECON 57: Economic Statistics with R (2 sections)",
+        "ECON 101: Intermediate Macroeconomics (4 sections)",
+        "ECON 167: Econometrics with Linear Algebra (1 section)"
       ],
       "mode_visibility": "academic",
       "section": "teaching",
@@ -141,60 +154,244 @@
     {
       "id": "pub-book-chapter-2025",
       "type": "paper",
-      "title": "Applications of LLMs in Economic Research",
-      "organization": "Book Chapter",
+      "title": "Enhancing well-being by leveraging artificial intelligence in coaching practices",
+      "subtitle": "In J. Passmore (Ed.), The Health and Wellbeing Coaches' Handbook",
+      "organization": "Taylor & Francis Publishing",
       "date": "2025",
-      "summary": "Comprehensive overview of how large language models are transforming economic research methodology.",
+      "summary": "Book chapter exploring how AI can be integrated into coaching practices to enhance well-being outcomes.",
+      "details": [
+        "Authors: Olafsson, B., Martin, D., & Gonzalez-Bonorino, A."
+      ],
       "links": {
-        "paper": "#"
+        "paper": "https://www.routledge.com/The-Health-and-Wellbeing-Coaches-Handbook/Passmore/p/book/9781032674230"
       },
       "mode_visibility": "academic",
       "section": "publications",
       "featured": true
     },
     {
-      "id": "pub-journal-2022",
+      "id": "pub-journal-quantum-2022",
       "type": "paper",
-      "title": "Behavioral Insights in Digital Markets",
-      "organization": "Journal Article",
+      "title": "Near term hybrid quantum computing solution to the matrix Riccati equations",
+      "organization": "Journal of Quantum Computing",
       "date": "2022",
-      "summary": "Empirical analysis of consumer behavior in online marketplaces.",
+      "summary": "Novel approach to solving matrix Riccati equations using hybrid quantum-classical algorithms.",
+      "details": [
+        "Authors: Bonorino, A. G., Ndiaye, M., & DeCusatis, C.",
+        "Journal of Quantum Computing, 4(3), 135-146"
+      ],
       "links": {
-        "paper": "#"
+        "paper": "https://doi.org/10.32604/jqc.2022.036706"
+      },
+      "source_ids": {
+        "doi": "10.32604/jqc.2022.036706"
       },
       "mode_visibility": "academic",
       "section": "publications"
     },
     {
-      "id": "pub-ssrn-2024",
+      "id": "pub-ssrn-llm-weird-2024",
       "type": "paper",
-      "title": "Smart Surveys: AI-Augmented Research Instruments",
-      "organization": "SSRN Preprint",
+      "title": "LLMs Model Non-WEIRD Populations: Experiments with Synthetic Cultural Agents",
+      "organization": "SSRN + arXiv Preprint",
       "date": "2024",
-      "summary": "Framework for using LLMs to enhance survey design and response analysis.",
+      "summary": "Empirical study evaluating how large language models can simulate non-WEIRD populations for experimental economics research.",
+      "details": [
+        "Authors: Capra, C. M., Gonzalez-Bonorino, A., & Pantoja, E.",
+        "arXiv: 2501.06834"
+      ],
       "links": {
-        "paper": "https://ssrn.com/"
+        "paper": "http://dx.doi.org/10.2139/ssrn.5082714"
+      },
+      "tags": ["vibe-engineered"],
+      "mode_visibility": "both",
+      "section": "publications",
+      "featured": true,
+      "source_ids": {
+        "ssrn": "5082714",
+        "arxiv": "2501.06834"
+      },
+      "collaboration_breakdown": {
+        "human": "Designed methodology, developed experimental framework, conducted statistical analysis, wrote paper",
+        "matrix": [
+          { "model": "gpt-4", "tasks": ["simulation", "data-analysis"] },
+          { "model": "claude-3-sonnet", "tasks": ["writing-editing", "literature-review"] }
+        ],
+        "verification": "Comparison with human experimental data, statistical validation, peer review"
+      },
+      "year": 2024
+    },
+    {
+      "id": "pub-csedu-adaptive-kevin-2023",
+      "type": "paper",
+      "title": "Adaptive Kevin: A Multipurpose AI Assistant for Higher Education",
+      "organization": "CSEDU 2022, CCIS Vol. 1817, Springer",
+      "date": "2023",
+      "summary": "Conference paper describing an adaptive AI assistant architecture for higher education environments.",
+      "details": [
+        "Authors: Gonzalez-Bonorino, A., & Lauría, E. J. M.",
+        "Communications in Computer and Information Science (Vol. 1817)"
+      ],
+      "links": {
+        "paper": "https://doi.org/10.1007/978-3-031-40501-3_7"
+      },
+      "source_ids": {
+        "doi": "10.1007/978-3-031-40501-3_7"
+      },
+      "mode_visibility": "academic",
+      "section": "publications"
+    },
+    {
+      "id": "pub-csedu-odqa-2022",
+      "type": "paper",
+      "title": "Implementing Open-Domain Question-Answering in a College Setting",
+      "subtitle": "An End-to-End Methodology and a Preliminary Exploration",
+      "organization": "CSEDU 2022",
+      "date": "2022",
+      "summary": "Conference paper presenting methodology for implementing ODQA systems in educational contexts.",
+      "details": [
+        "Authors: González Bonorino, A., Lauría, E. J. M., & Presutti, E.",
+        "Proceedings of the 14th International Conference on Computer Supported Education"
+      ],
+      "links": {
+        "paper": "https://doi.org/10.5220/0011059000003182"
+      },
+      "source_ids": {
+        "doi": "10.5220/0011059000003182"
+      },
+      "mode_visibility": "academic",
+      "section": "publications"
+    },
+    {
+      "id": "pub-csedu-smart-surveys-2023",
+      "type": "paper",
+      "title": "Smart Surveys: An Automatic Survey Generation and Analysis Tool",
+      "organization": "CSEDU 2023",
+      "date": "2023",
+      "summary": "Conference paper presenting an AI-powered framework for automated survey design and response analysis.",
+      "details": [
+        "Author: Gonzalez Bonorino, A.",
+        "Proceedings of the 15th International Conference on Computer Supported Education, 2, 113-119"
+      ],
+      "links": {
+        "paper": "https://doi.org/10.5220/0011985400003470"
       },
       "tags": ["ai-assisted"],
       "mode_visibility": "both",
       "section": "publications",
       "source_ids": {
-        "ssrn": "placeholder"
+        "doi": "10.5220/0011985400003470"
       },
       "collaboration_breakdown": {
-        "human": "Designed methodology, conducted experiments, wrote analysis",
-        "ai_tools": "GPT-4 for survey generation, Claude for response analysis",
-        "verification": "Comparison with traditional surveys, inter-rater reliability"
+        "human": "Designed methodology, conducted experiments, wrote analysis, presented findings",
+        "matrix": [
+          { "model": "gpt-4", "tasks": ["survey-design", "data-analysis"] },
+          { "model": "gpt-3.5", "tasks": ["data-processing"] }
+        ],
+        "verification": "Comparison with traditional surveys, inter-rater reliability, user studies"
       },
-      "previewImage": "/placeholder.svg"
+      "year": 2023
     },
     {
-      "id": "cert-python",
+      "id": "talk-esa-2023",
+      "type": "talk",
+      "title": "Large Language Models for the Study of Non-WEIRD Populations",
+      "organization": "ESA North American Meeting",
+      "location": "Charlotte, NC",
+      "date": "2023-10",
+      "summary": "Conference presentation on using LLMs to study populations underrepresented in experimental economics.",
+      "details": [
+        "Presenters: Capra, M., Gonzalez-Bonorino, A., Feng, M., & Pantoja, E."
+      ],
+      "mode_visibility": "academic",
+      "section": "publications"
+    },
+    {
+      "id": "talk-wppa-2024",
+      "type": "talk",
+      "title": "PERMA+4 in Action: Advancing Well-Being through AI Facilitated Coaching",
+      "organization": "Western Positive Psychology Association 8th Annual Conference",
+      "location": "Albuquerque, NM",
+      "date": "2024-02",
+      "summary": "Conference presentation on applying the PERMA+4 framework to AI-facilitated coaching.",
+      "details": [
+        "Presenters: Olafsson, B., Martin, D., & Gonzalez-Bonorino, A."
+      ],
+      "mode_visibility": "academic",
+      "section": "publications"
+    },
+    {
+      "id": "talk-ecc-2023",
+      "type": "talk",
+      "title": "AutoKevin: A Semi-Autonomous AI Knowledge Discovery Architecture",
+      "subtitle": "Best Presentation Award",
+      "organization": "Enterprise Computing Community Conference",
+      "location": "Poughkeepsie, NY",
+      "date": "2023-06",
+      "summary": "Award-winning presentation on semi-autonomous AI architecture for knowledge discovery in higher education.",
+      "details": [
+        "Presenters: Gonzalez-Bonorino, A., & Lauria, E. J. M."
+      ],
+      "mode_visibility": "academic",
+      "section": "publications"
+    },
+    {
+      "id": "cert-beslab",
       "type": "certification",
-      "title": "Python for Data Science",
-      "organization": "Certification",
-      "date": "2021",
-      "summary": "Advanced Python programming for data analysis and machine learning.",
+      "title": "BESLab Experimental and Computational Economics",
+      "organization": "Universitat Pompeu Fabra, Spain",
+      "date": "2024-06",
+      "summary": "Intensive training in experimental and computational economics methods.",
+      "mode_visibility": "academic",
+      "section": "certifications"
+    },
+    {
+      "id": "cert-sna",
+      "type": "certification",
+      "title": "Social Network Analysis",
+      "organization": "Claremont Graduate University",
+      "date": "2022-08",
+      "summary": "Certification in social network analysis methodologies.",
+      "mode_visibility": "academic",
+      "section": "certifications"
+    },
+    {
+      "id": "cert-quantum",
+      "type": "certification",
+      "title": "Quantum Computing Algorithms and Programming",
+      "organization": "Marist College",
+      "date": "2021-12",
+      "summary": "Training in quantum computing algorithms and programming.",
+      "mode_visibility": "academic",
+      "section": "certifications"
+    },
+    {
+      "id": "cert-ibm-ds",
+      "type": "certification",
+      "title": "IBM Data Science Professional Certificate",
+      "organization": "IBM",
+      "date": "2020-08",
+      "summary": "Professional certification in data science methodologies.",
+      "mode_visibility": "academic",
+      "section": "certifications"
+    },
+    {
+      "id": "cert-linear-algebra-ml",
+      "type": "certification",
+      "title": "Linear Algebra for Machine Learning",
+      "organization": "Imperial College London",
+      "date": "2020-08",
+      "summary": "Specialized training in linear algebra foundations for ML.",
+      "mode_visibility": "academic",
+      "section": "certifications"
+    },
+    {
+      "id": "cert-ibm-ai",
+      "type": "certification",
+      "title": "IBM Applied AI Certificate",
+      "organization": "IBM",
+      "date": "2020-08",
+      "summary": "Certification in applied artificial intelligence.",
       "mode_visibility": "academic",
       "section": "certifications"
     },
@@ -203,7 +400,7 @@
       "type": "skill",
       "title": "Python",
       "date": "2019",
-      "summary": "NumPy, Pandas, Scikit-learn, PyTorch, TensorFlow",
+      "summary": "TensorFlow, Scikit-learn, LangChain, Hugging Face, Statsmodels, pandas",
       "mode_visibility": "academic",
       "section": "skills"
     },
@@ -212,7 +409,7 @@
       "type": "skill",
       "title": "R",
       "date": "2019",
-      "summary": "Tidyverse, ggplot2, Shiny, Statistical Modeling",
+      "summary": "dplyr, feols, ggplot2, Shiny, Statistical Modeling",
       "mode_visibility": "academic",
       "section": "skills"
     },
@@ -226,13 +423,32 @@
       "section": "skills"
     },
     {
-      "id": "skill-ml",
+      "id": "skill-other",
       "type": "skill",
-      "title": "Machine Learning",
+      "title": "Other Languages",
       "date": "2020",
-      "summary": "NLP, Deep Learning, Transformers, LLMs",
+      "summary": "NetLogo, Java, LaTeX, Stata, Excel",
       "mode_visibility": "academic",
       "section": "skills"
+    },
+    {
+      "id": "skill-ml",
+      "type": "skill",
+      "title": "Applications",
+      "date": "2020",
+      "summary": "Machine Learning, NLP, Reinforcement Learning, Algorithmic Game Theory",
+      "mode_visibility": "academic",
+      "section": "skills"
+    },
+    {
+      "id": "honor-president-award",
+      "type": "award",
+      "title": "President's Academic Achievement Award",
+      "organization": "Marist College",
+      "date": "2022-05",
+      "summary": "Highest GPA among student-athletes.",
+      "mode_visibility": "academic",
+      "section": "honors"
     },
     {
       "id": "honor-summa",
@@ -250,17 +466,123 @@
       "title": "Dean's List",
       "organization": "Marist College",
       "date": "2019-2022",
-      "summary": "All semesters.",
+      "summary": "All semesters from Fall 2019 to Spring 2022.",
       "mode_visibility": "academic",
       "section": "honors"
     },
     {
-      "id": "grant-research",
+      "id": "honor-datafest",
+      "type": "award",
+      "title": "Best Statistical Analysis Award",
+      "organization": "Vassar DataFest",
+      "date": "2021",
+      "summary": "Recognition for exceptional statistical analysis in competition.",
+      "mode_visibility": "academic",
+      "section": "honors"
+    },
+    {
+      "id": "honor-cohere-hackathon",
+      "type": "award",
+      "title": "2nd Place",
+      "organization": "LabLab.ai + Cohere Hackathon",
+      "date": "2023",
+      "summary": "Second place finish in AI hackathon competition.",
+      "mode_visibility": "academic",
+      "section": "honors"
+    },
+    {
+      "id": "honor-ecc-best-presentation",
+      "type": "award",
+      "title": "Best Presentation Award",
+      "organization": "ECC 2023",
+      "date": "2023",
+      "summary": "Best presentation for AutoKevin paper.",
+      "mode_visibility": "academic",
+      "section": "honors"
+    },
+    {
+      "id": "honor-drucker-kravis",
+      "type": "award",
+      "title": "1st Place",
+      "organization": "CGU Drucker-Kravis Business Competition",
+      "date": "2023",
+      "summary": "First place in graduate business competition.",
+      "mode_visibility": "academic",
+      "section": "honors"
+    },
+    {
+      "id": "honor-ita-scholar",
+      "type": "award",
+      "title": "ITA Scholar Athlete",
+      "organization": "NCAA Division 1",
+      "date": "2020-2022",
+      "summary": "NCAA D1 public recognition for academic excellence as student-athlete.",
+      "mode_visibility": "academic",
+      "section": "honors"
+    },
+    {
+      "id": "grant-blais",
       "type": "grant",
-      "title": "Graduate Research Fellowship",
+      "title": "BLAIS Grant",
+      "subtitle": "$35,000",
       "organization": "Claremont Graduate University",
-      "date": "2022-2024",
-      "summary": "Full funding for graduate studies and research.",
+      "date": "2023-2024",
+      "summary": "Research funding for graduate studies and AI research.",
+      "mode_visibility": "academic",
+      "section": "grants"
+    },
+    {
+      "id": "grant-aier",
+      "type": "grant",
+      "title": "Research Award",
+      "subtitle": "$14,000",
+      "organization": "American Institute of Economic Research",
+      "date": "2023",
+      "summary": "Award for economic research.",
+      "mode_visibility": "academic",
+      "section": "grants"
+    },
+    {
+      "id": "grant-iceland-rannis",
+      "type": "grant",
+      "title": "Rannis Frae Grant",
+      "subtitle": "$15,000",
+      "organization": "Iceland Ministry of Education",
+      "date": "2024",
+      "summary": "International research grant.",
+      "mode_visibility": "academic",
+      "section": "grants"
+    },
+    {
+      "id": "grant-crossing-boundaries",
+      "type": "grant",
+      "title": "Crossing Boundaries Transdisciplinary Grant",
+      "subtitle": "$10,000",
+      "organization": "Claremont Graduate University",
+      "date": "2023",
+      "summary": "Transdisciplinary research funding.",
+      "mode_visibility": "academic",
+      "section": "grants"
+    },
+    {
+      "id": "grant-marist-ds",
+      "type": "grant",
+      "title": "Data Science Summer Research Fellowship",
+      "subtitle": "$5,000",
+      "organization": "Marist College",
+      "date": "2021",
+      "summary": "Summer research fellowship for data science work.",
+      "mode_visibility": "academic",
+      "section": "grants"
+    },
+    {
+      "id": "grant-cofc",
+      "type": "grant",
+      "title": "Honors Summer Grant",
+      "subtitle": "$750",
+      "organization": "College of Charleston",
+      "date": "2020",
+      "summary": "Summer research grant.",
       "mode_visibility": "academic",
       "section": "grants"
     },
@@ -269,26 +591,74 @@
       "type": "project",
       "title": "Smart Surveys Tool",
       "organization": "EconLLM Lab",
-      "date": "2024",
-      "summary": "AI-powered survey design and analysis platform for researchers.",
+      "date": "2023",
+      "summary": "AI-powered survey design and analysis platform for researchers. Automates question generation based on research objectives with real-time response quality analysis.",
       "details": [
         "Automated survey question generation based on research objectives",
         "Real-time response quality analysis",
-        "Multi-language support"
+        "Multi-language support for international research"
       ],
       "tags": ["ai-assisted"],
       "mode_visibility": "build",
       "featured": true,
+      "year": 2023,
       "collaboration_breakdown": {
-        "human": "Designed UX, implemented core logic, conducted user testing",
-        "ai_tools": "Claude for question generation, GPT-4 for response parsing",
-        "verification": "User studies, comparison with manual survey design"
+        "human": "Designed methodology, implemented core logic, conducted user testing, wrote paper",
+        "matrix": [
+          { "model": "gpt-4", "tasks": ["survey-design", "data-analysis", "brainstorming"] },
+          { "model": "gpt-3.5", "tasks": ["data-processing", "translation"] }
+        ],
+        "verification": "User studies, comparison with manual survey design, published at CSEDU 2023"
       },
       "links": {
-        "repo": "https://github.com/Bonorinoa",
-        "demo": "#"
+        "repo": "https://github.com/Bonorinoa/smart-surveys",
+        "paper": "https://doi.org/10.5220/0011985400003470"
       },
-      "previewImage": "/placeholder.svg"
+      "source_ids": {
+        "doi": "10.5220/0011985400003470",
+        "github": "smart-surveys"
+      },
+      "demoInfo": {
+        "type": "github",
+        "url": "https://github.com/Bonorinoa/smart-surveys"
+      }
+    },
+    {
+      "id": "project-kevin-odqa",
+      "type": "project",
+      "title": "Kevin ODQA System",
+      "organization": "Marist College Data Science",
+      "date": "2022",
+      "summary": "Open-source Open Domain Question-Answering system for college information retrieval. Led team of 5 students + 2 faculty, achieving 100% cost savings.",
+      "details": [
+        "Fine-tuned BERT, ELECTRA, and RoBERTa on custom Q&A dataset",
+        "Implemented sparse and dense retrieval pipelines",
+        "Deployed production chatbot serving thousands of users"
+      ],
+      "tags": ["ai-assisted"],
+      "mode_visibility": "build",
+      "featured": true,
+      "year": 2022,
+      "collaboration_breakdown": {
+        "human": "System architecture, dataset design and annotation, retrieval pipeline implementation, team leadership, deployment",
+        "matrix": [
+          { "model": "custom", "tasks": ["code-generation", "data-processing"] },
+          { "model": "gpt-3.5", "tasks": ["brainstorming", "writing-editing"] }
+        ],
+        "verification": "User satisfaction surveys, accuracy benchmarks, A/B testing, published at CSEDU 2022"
+      },
+      "links": {
+        "repo": "https://github.com/Bonorinoa/ODQA_Marist",
+        "paper": "https://doi.org/10.5220/0011059000003182"
+      },
+      "source_ids": {
+        "doi": "10.5220/0011059000003182",
+        "github": "ODQA_Marist"
+      },
+      "demoInfo": {
+        "type": "github",
+        "url": "https://github.com/Bonorinoa/ODQA_Marist"
+      }
     },
     {
       "id": "project-personal-site",
@@ -296,19 +666,54 @@
       "title": "Personal Website",
       "organization": "Self",
       "date": "2024",
-      "summary": "This website - a dual-mode personal site showcasing academic work and AI collaboration.",
+      "summary": "This website - a dual-mode personal site showcasing academic work and AI collaboration transparency with structured task matrices.",
       "tags": ["vibe-coded"],
       "mode_visibility": "build",
       "featured": true,
+      "year": 2024,
       "collaboration_breakdown": {
-        "human": "Designed information architecture, provided design direction, curated content",
-        "ai_tools": "Claude for full implementation via Lovable",
-        "verification": "Manual testing, accessibility checks"
+        "human": "Designed information architecture, provided design direction, curated all content, defined collaboration taxonomy",
+        "matrix": [
+          { "model": "claude-3-sonnet", "tasks": ["code-generation", "ux-design", "writing-editing"] }
+        ],
+        "verification": "Manual testing, accessibility checks, responsive design validation"
       },
       "links": {
-        "repo": "https://github.com/Bonorinoa"
+        "repo": "https://github.com/Bonorinoa/personal-site"
       },
-      "previewImage": "/placeholder.svg"
+      "demoInfo": {
+        "type": "vercel",
+        "url": "#"
+      }
+    },
+    {
+      "id": "project-llm-weird",
+      "type": "project",
+      "title": "LLM Non-WEIRD Experiments",
+      "organization": "EconLLM Lab",
+      "date": "2024",
+      "summary": "Research platform for evaluating LLMs as synthetic cultural agents in experimental economics. Simulates non-WEIRD populations for behavioral research.",
+      "tags": ["vibe-engineered"],
+      "mode_visibility": "build",
+      "featured": true,
+      "year": 2024,
+      "collaboration_breakdown": {
+        "human": "Research design, experimental framework, statistical analysis, paper writing",
+        "matrix": [
+          { "model": "gpt-4", "tasks": ["simulation", "data-analysis", "brainstorming"] },
+          { "model": "claude-3-sonnet", "tasks": ["writing-drafting", "literature-review", "writing-editing"] },
+          { "model": "gpt-4o", "tasks": ["simulation", "code-review"] }
+        ],
+        "verification": "Comparison with human experimental data, statistical validation, under peer review"
+      },
+      "links": {
+        "paper": "http://dx.doi.org/10.2139/ssrn.5082714",
+        "repo": "https://github.com/Bonorinoa/llm-weird-experiments"
+      },
+      "source_ids": {
+        "ssrn": "5082714",
+        "arxiv": "2501.06834"
+      }
     }
   ]
 }

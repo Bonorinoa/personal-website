@@ -3,50 +3,76 @@
   "config": {
     "sources": {
       "orcid": {
-        "enabled": false,
-        "id": null,
+        "enabled": true,
+        "id": "0000-0002-9355-0831",
         "lastSync": null
       },
       "crossref": {
         "enabled": false,
-        "email": null,
+        "email": "agonz439@asu.edu",
         "lastSync": null
       },
       "github": {
-        "enabled": false,
-        "username": null,
+        "enabled": true,
+        "username": "Bonorinoa",
         "token": null,
         "lastSync": null
+      },
+      "google_scholar": {
+        "enabled": true,
+        "user_id": "xdO0FqwAAAAJ",
+        "lastSync": null
+      },
+      "openalex": {
+        "enabled": false,
+        "email_aliases": [
+          "augusto.gonzalezbonorino1@marist.edu",
+          "augusto.gonzalez-bonorino@cgu.edu",
+          "agonz439@asu.edu",
+          "agbonorino21@gmail.com"
+        ],
+        "lastSync": null,
+        "note": "Four OpenAlex aliases detected - will need deduplication"
       }
     },
     "analytics": {
       "enabled": false,
       "token": null
+    },
+    "profile": {
+      "name": "Augusto González-Bonorino",
+      "origin": "Tucumán, Argentina",
+      "emails": {
+        "primary": "agonz439@asu.edu",
+        "aliases": [
+          "augusto.gonzalez-bonorino@cgu.edu",
+          "augusto.gonzalezbonorino1@marist.edu",
+          "agbonorino21@gmail.com"
+        ]
+      },
+      "links": {
+        "orcid": "https://orcid.org/0000-0002-9355-0831",
+        "google_scholar": "https://scholar.google.com/citations?user=xdO0FqwAAAAJ&hl=en",
+        "linkedin": "https://www.linkedin.com/in/augustogbono/",
+        "github": "https://github.com/Bonorinoa",
+        "marist_profile": "https://www.marist.edu/w/profiles/augusto-gonzalez-bonorino"
+      }
     }
   },
   "_phase2_instructions": {
-    "description": "This file scaffolds Phase 2 automation. To enable:",
-    "orcid": {
-      "step1": "Get your ORCID ID from https://orcid.org",
-      "step2": "Add it to config.sources.orcid.id",
-      "step3": "Set enabled to true",
-      "note": "Public ORCID data can be fetched without an API key"
+    "description": "This file scaffolds Phase 2 automation. Configuration is ready:",
+    "status": {
+      "orcid": "READY - ID configured: 0000-0002-9355-0831",
+      "github": "READY - Username configured: Bonorinoa",
+      "google_scholar": "READY - User ID configured: xdO0FqwAAAAJ",
+      "openalex": "NEEDS SETUP - Email aliases configured but requires deduplication logic",
+      "crossref": "OPTIONAL - Email configured for polite pool access"
     },
-    "crossref": {
-      "step1": "Add your email to config.sources.crossref.email (polite pool)",
-      "step2": "Set enabled to true",
-      "note": "Crossref API is free and doesn't require authentication"
-    },
-    "github": {
-      "step1": "Add your GitHub username to config.sources.github.username",
-      "step2": "Optionally add a personal access token for private repos",
-      "step3": "Set enabled to true",
-      "note": "Token should be stored as an environment variable, not in this file"
-    },
-    "analytics": {
-      "step1": "Get analytics token from your provider",
-      "step2": "Store as environment variable",
-      "step3": "Set enabled to true"
-    }
+    "next_steps": [
+      "Implement ORCID API fetch in edge function",
+      "Implement GitHub API fetch for starred repos and activity",
+      "Add OpenAlex deduplication based on email aliases",
+      "Create approval workflow in Admin panel"
+    ]
   }
 }

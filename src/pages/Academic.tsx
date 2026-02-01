@@ -5,7 +5,7 @@ import { Navigation } from '@/components/shared/Navigation';
 import { Section, SectionItem } from '@/components/academic/Section';
 import { PublicationList } from '@/components/academic/PublicationList';
 import { getArtifactsBySection, sortByDate } from '@/lib/artifacts';
-import { Github, ExternalLink, Mail } from 'lucide-react';
+import { Github, ExternalLink, Linkedin, BookOpen, GraduationCap } from 'lucide-react';
 
 const Academic = () => {
   const { mode, setMode, isLoading } = useMode();
@@ -65,9 +65,15 @@ const Academic = () => {
               <p className="text-lg text-stone-600 mb-3">
                 PhD Student in Economics · Arizona State University
               </p>
-              <p className="text-stone-600 leading-relaxed">
-                Economist and researcher specializing in computational methods, behavioral economics, 
-                and the application of large language models to economic research.
+              <p className="text-stone-600 leading-relaxed mb-2">
+                Originally from Tucumán, Argentina. Economist and researcher specializing in 
+                microeconomic theory, experimental economics, and the application of large language 
+                models to economic research. I explore how LLMs can serve as computational engines 
+                of human behavior through economic games.
+              </p>
+              <p className="text-stone-500 text-sm leading-relaxed">
+                My work spans AI-assisted research methodology, behavioral economics, and computational 
+                approaches to studying non-WEIRD populations.
               </p>
               
               {/* Contact links */}
@@ -76,25 +82,41 @@ const Academic = () => {
                   href="https://github.com/Bonorinoa" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 text-sm text-stone-600 hover:text-amber-700"
+                  className="inline-flex items-center gap-1.5 text-sm text-stone-600 hover:text-amber-700 transition-colors"
                 >
                   <Github className="w-4 h-4" /> GitHub
+                </a>
+                <a 
+                  href="https://scholar.google.com/citations?user=xdO0FqwAAAAJ&hl=en" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-sm text-stone-600 hover:text-amber-700 transition-colors"
+                >
+                  <GraduationCap className="w-4 h-4" /> Google Scholar
+                </a>
+                <a 
+                  href="https://orcid.org/0000-0002-9355-0831" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-sm text-stone-600 hover:text-amber-700 transition-colors"
+                >
+                  <BookOpen className="w-4 h-4" /> ORCID
+                </a>
+                <a 
+                  href="https://www.linkedin.com/in/augustogbono/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-sm text-stone-600 hover:text-amber-700 transition-colors"
+                >
+                  <Linkedin className="w-4 h-4" /> LinkedIn
                 </a>
                 <a 
                   href="https://www.econllm-lab.com/" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 text-sm text-stone-600 hover:text-amber-700"
+                  className="inline-flex items-center gap-1.5 text-sm text-stone-600 hover:text-amber-700 transition-colors"
                 >
                   <ExternalLink className="w-4 h-4" /> EconLLM Lab
-                </a>
-                <a 
-                  href="https://perwellgroup.com/" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 text-sm text-stone-600 hover:text-amber-700"
-                >
-                  <ExternalLink className="w-4 h-4" /> Consulting
                 </a>
               </div>
             </div>

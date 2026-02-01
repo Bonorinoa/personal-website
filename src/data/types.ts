@@ -1,6 +1,10 @@
 // Canonical Artifact Schema for the personal website
 // This schema supports both Academic and Build mode rendering
 
+import type { AITask, LLMModel, TaskUsage } from './llm-tasks';
+
+export type { AITask, LLMModel, TaskUsage };
+
 export type ArtifactType = 
   | 'paper' 
   | 'project' 
@@ -19,6 +23,15 @@ export type CollaborationTag =
 
 export type ModeVisibility = 'academic' | 'build' | 'both';
 
+// Demo types for embedding
+export type DemoType = 'colab' | 'vercel' | 'streamlit' | 'github' | 'iframe' | 'video';
+
+export interface DemoInfo {
+  type: DemoType;
+  url: string;
+  thumbnail?: string;
+}
+
 export interface ArtifactLinks {
   repo?: string | null;
   demo?: string | null;
@@ -27,9 +40,10 @@ export interface ArtifactLinks {
 }
 
 export interface CollaborationBreakdown {
-  human: string;      // What I designed/implemented
-  ai_tools: string;   // Which tools assisted and how
-  verification: string; // Tests, benchmarks, evidence of quality
+  human: string;                    // What I designed/implemented
+  ai_tools?: string;                // Legacy: free-text description
+  matrix?: TaskUsage[];             // New: structured LLM-Task mapping
+  verification: string;             // Tests, benchmarks, evidence of quality
 }
 
 export interface Evidence {
@@ -68,6 +82,10 @@ export interface Artifact {
   // For media in Build mode
   previewImage?: string;
   previewVideo?: string;
+  // Enhanced demo info for Build mode
+  demoInfo?: DemoInfo;
+  // Year for timeline grouping
+  year?: number;
 }
 
 // Phase 2: Inbox item for discovered artifacts pending approval

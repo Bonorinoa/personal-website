@@ -3,6 +3,7 @@ import { useMode } from '@/hooks/useMode';
 import { Navigation } from '@/components/shared/Navigation';
 import { TagLegend } from '@/components/build/TagLegend';
 import { ProjectCard } from '@/components/build/ProjectCard';
+import { AggregateMatrix } from '@/components/build/AggregateMatrix';
 import { getBuildArtifacts, filterByTag, sortByDate } from '@/lib/artifacts';
 import type { CollaborationTag } from '@/data/types';
 
@@ -61,6 +62,9 @@ const Build = () => {
             </div>
           </div>
         </header>
+
+        {/* Aggregate Collaboration Matrix */}
+        <AggregateMatrix />
 
         {/* Tag Legend / Filter */}
         <TagLegend activeTag={activeTag} onTagSelect={setActiveTag} />

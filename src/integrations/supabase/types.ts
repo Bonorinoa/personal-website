@@ -14,13 +14,146 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      artifacts: {
+        Row: {
+          collaboration_breakdown: Json | null
+          created_at: string
+          date: string
+          demo_info: Json | null
+          details: Json | null
+          end_date: string | null
+          featured: boolean | null
+          id: string
+          inbox_item_id: string | null
+          links: Json | null
+          location: string | null
+          mode_visibility: string
+          organization: string | null
+          preview_image: string | null
+          preview_video: string | null
+          section: string | null
+          slug: string
+          source_ids: Json | null
+          subtitle: string | null
+          summary: string
+          tags: string[] | null
+          title: string
+          type: string
+          updated_at: string
+          year: number | null
+        }
+        Insert: {
+          collaboration_breakdown?: Json | null
+          created_at?: string
+          date: string
+          demo_info?: Json | null
+          details?: Json | null
+          end_date?: string | null
+          featured?: boolean | null
+          id?: string
+          inbox_item_id?: string | null
+          links?: Json | null
+          location?: string | null
+          mode_visibility?: string
+          organization?: string | null
+          preview_image?: string | null
+          preview_video?: string | null
+          section?: string | null
+          slug: string
+          source_ids?: Json | null
+          subtitle?: string | null
+          summary: string
+          tags?: string[] | null
+          title: string
+          type: string
+          updated_at?: string
+          year?: number | null
+        }
+        Update: {
+          collaboration_breakdown?: Json | null
+          created_at?: string
+          date?: string
+          demo_info?: Json | null
+          details?: Json | null
+          end_date?: string | null
+          featured?: boolean | null
+          id?: string
+          inbox_item_id?: string | null
+          links?: Json | null
+          location?: string | null
+          mode_visibility?: string
+          organization?: string | null
+          preview_image?: string | null
+          preview_video?: string | null
+          section?: string | null
+          slug?: string
+          source_ids?: Json | null
+          subtitle?: string | null
+          summary?: string
+          tags?: string[] | null
+          title?: string
+          type?: string
+          updated_at?: string
+          year?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "artifacts_inbox_item_id_fkey"
+            columns: ["inbox_item_id"]
+            isOneToOne: false
+            referencedRelation: "inbox_items"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      inbox_items: {
+        Row: {
+          created_at: string
+          discovered_at: string
+          external_id: string
+          id: string
+          notes: string | null
+          raw_data: Json | null
+          reviewed_at: string | null
+          source: string
+          status: string
+          suggested_artifact: Json | null
+        }
+        Insert: {
+          created_at?: string
+          discovered_at?: string
+          external_id: string
+          id?: string
+          notes?: string | null
+          raw_data?: Json | null
+          reviewed_at?: string | null
+          source: string
+          status?: string
+          suggested_artifact?: Json | null
+        }
+        Update: {
+          created_at?: string
+          discovered_at?: string
+          external_id?: string
+          id?: string
+          notes?: string | null
+          raw_data?: Json | null
+          reviewed_at?: string | null
+          source?: string
+          status?: string
+          suggested_artifact?: Json | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      approve_inbox_item: {
+        Args: { p_artifact_data: Json; p_inbox_id: string }
+        Returns: string
+      }
     }
     Enums: {
       [_ in never]: never

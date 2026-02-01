@@ -5,7 +5,8 @@ import { ModeButton } from '@/components/landing/ModeButton';
 import { useMode, type Mode } from '@/hooks/useMode';
 
 const Index = () => {
-  const [hoveredMode, setHoveredMode] = useState<Mode | null>(null);
+  // Sticky hover: once set, only changes when hovering another button (never resets to null)
+  const [activeMode, setActiveMode] = useState<Mode | null>(null);
   const { setMode } = useMode();
   const navigate = useNavigate();
 
@@ -14,9 +15,14 @@ const Index = () => {
     navigate(`/${mode}`);
   };
 
+  // Only set on hover enter, never clear on leave
+  const handleModeHover = (mode: Mode) => {
+    setActiveMode(mode);
+  };
+
   return (
     <div className="min-h-screen relative overflow-hidden">
-      <PondBackground hoveredMode={hoveredMode} />
+      <PondBackground hoveredMode={activeMode} />
       
       {/* Content overlay */}
       <div className="relative z-10 min-h-screen flex flex-col items-center justify-center px-4">
@@ -25,9 +31,9 @@ const Index = () => {
           <h1 className={`
             text-3xl md:text-5xl font-light tracking-wide mb-3
             transition-all duration-500
-            ${hoveredMode === 'academic' 
+            ${activeMode === 'academic' 
               ? 'font-academic text-stone-800' 
-              : hoveredMode === 'build'
+              : activeMode === 'build'
               ? 'font-build text-slate-800'
               : 'font-sans text-slate-700'
             }
@@ -35,21 +41,21 @@ const Index = () => {
             Augusto González-Bonorino
           </h1>
           <p 
-            key={hoveredMode || 'default'}
+            key={activeMode || 'default'}
             className={`
               text-lg md:text-xl
               animate-fade-in
-              ${hoveredMode === 'academic' 
+              ${activeMode === 'academic' 
                 ? 'font-academic text-stone-600' 
-                : hoveredMode === 'build'
+                : activeMode === 'build'
                 ? 'font-build text-slate-600'
                 : 'text-slate-500'
               }
             `}
           >
-            {hoveredMode === 'academic' 
+            {activeMode === 'academic' 
               ? 'Economist · Researcher · Teacher'
-              : hoveredMode === 'build'
+              : activeMode === 'build'
               ? '// builder · ai_collaborator'
               : 'Economist · Researcher · Builder'
             }
@@ -60,13 +66,15 @@ const Index = () => {
         <div className="flex flex-col sm:flex-row gap-6 sm:gap-8 animate-fade-in" style={{ animationDelay: '0.2s' }}>
           <ModeButton 
             mode="academic" 
-            onHover={setHoveredMode}
+            onHover={handleModeHover}
             onClick={handleModeSelect}
+            isActive={activeMode === 'academic'}
           />
           <ModeButton 
             mode="build" 
-            onHover={setHoveredMode}
+            onHover={handleModeHover}
             onClick={handleModeSelect}
+            isActive={activeMode === 'build'}
           />
         </div>
 

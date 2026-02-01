@@ -26,7 +26,7 @@ const Build = () => {
   const filteredArtifacts = filterByTag(allArtifacts, activeTag);
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-slate-50 font-build">
       {/* Grid pattern background */}
       <div 
         className="fixed inset-0 opacity-30 pointer-events-none"

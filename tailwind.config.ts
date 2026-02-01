@@ -13,6 +13,12 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        academic: ['Playfair Display', 'Georgia', 'serif'],
+        build: ['Roboto Mono', 'JetBrains Mono', 'monospace'],
+        serif: ['Playfair Display', 'Georgia', 'serif'],
+        mono: ['Roboto Mono', 'JetBrains Mono', 'monospace'],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

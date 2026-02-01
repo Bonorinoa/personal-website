@@ -1,9 +1,11 @@
 import { useState } from 'react';
-import { ChevronDown, ExternalLink, Github, Play, FileText } from 'lucide-react';
+import { ChevronDown, ExternalLink, Github, FileText } from 'lucide-react';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import type { Artifact } from '@/data/types';
 import { TagBadge } from './TagLegend';
+import { CollaborationMatrix } from './CollaborationMatrix';
+import { DemoEmbed } from './DemoEmbed';
 
 interface ProjectCardProps {
   artifact: Artifact;
@@ -12,29 +14,31 @@ interface ProjectCardProps {
 export function ProjectCard({ artifact }: ProjectCardProps) {
   const [isBreakdownOpen, setIsBreakdownOpen] = useState(false);
 
+  const hasMatrix = artifact.collaboration_breakdown?.matrix && artifact.collaboration_breakdown.matrix.length > 0;
+
   return (
     <Card className="group bg-white/70 backdrop-blur-sm border-slate-200/50 hover:shadow-lg hover:border-blue-200/50 transition-all duration-300 hover:-translate-y-1">
       <CardHeader className="pb-3">
-        {/* Preview placeholder */}
-        <div className="relative aspect-video bg-gradient-to-br from-slate-100 to-slate-200 rounded-lg mb-4 overflow-hidden">
-          {artifact.previewImage && artifact.previewImage !== '/placeholder.svg' ? (
+        {/* Demo Preview */}
+        {artifact.demoInfo ? (
+          <DemoEmbed demoInfo={artifact.demoInfo} title={artifact.title} />
+        ) : artifact.previewImage && artifact.previewImage !== '/placeholder.svg' ? (
+          <div className="relative aspect-video bg-gradient-to-br from-slate-100 to-slate-200 rounded-lg mb-4 overflow-hidden">
             <img 
               src={artifact.previewImage} 
               alt={artifact.title}
               className="w-full h-full object-cover"
             />
-          ) : artifact.previewVideo ? (
-            <div className="absolute inset-0 flex items-center justify-center">
-              <Play className="w-12 h-12 text-slate-400" />
-            </div>
-          ) : (
+          </div>
+        ) : (
+          <div className="relative aspect-video bg-gradient-to-br from-slate-100 to-slate-200 rounded-lg mb-4 overflow-hidden">
             <div className="absolute inset-0 flex items-center justify-center">
               <span className="text-4xl font-mono text-slate-300">
                 {artifact.title.charAt(0)}
               </span>
             </div>
-          )}
-        </div>
+          </div>
+        )}
 
         {/* Title and date */}
         <div className="flex items-start justify-between gap-2">
@@ -115,14 +119,29 @@ export function ProjectCard({ artifact }: ProjectCardProps) {
                   {artifact.collaboration_breakdown.human}
                 </p>
               </div>
-              <div>
-                <h4 className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1">
-                  AI Tools Used
-                </h4>
-                <p className="text-sm text-slate-600">
-                  {artifact.collaboration_breakdown.ai_tools}
-                </p>
-              </div>
+              
+              {/* Collaboration Matrix */}
+              {hasMatrix && (
+                <div>
+                  <h4 className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2">
+                    AI Tools × Tasks
+                  </h4>
+                  <CollaborationMatrix matrix={artifact.collaboration_breakdown.matrix!} />
+                </div>
+              )}
+              
+              {/* Legacy ai_tools field fallback */}
+              {!hasMatrix && artifact.collaboration_breakdown.ai_tools && (
+                <div>
+                  <h4 className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1">
+                    AI Tools Used
+                  </h4>
+                  <p className="text-sm text-slate-600">
+                    {artifact.collaboration_breakdown.ai_tools}
+                  </p>
+                </div>
+              )}
+              
               <div>
                 <h4 className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1">
                   Verification

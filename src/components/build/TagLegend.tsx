@@ -1,4 +1,5 @@
 import { TAG_DEFINITIONS, type CollaborationTag } from '@/data/types';
+export { TAG_DEFINITIONS } from '@/data/types';
 import { Badge } from '@/components/ui/badge';
 import {
   Tooltip,

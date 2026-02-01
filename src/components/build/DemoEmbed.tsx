@@ -4,6 +4,7 @@ import type { DemoInfo } from '@/data/types';
 interface DemoEmbedProps {
   demoInfo: DemoInfo;
   title: string;
+  compact?: boolean;
 }
 
 const DEMO_ICONS = {
@@ -33,17 +34,19 @@ const DEMO_COLORS = {
   video: 'bg-purple-500 hover:bg-purple-600',
 };
 
-export function DemoEmbed({ demoInfo, title }: DemoEmbedProps) {
+export function DemoEmbed({ demoInfo, title, compact = false }: DemoEmbedProps) {
   const Icon = DEMO_ICONS[demoInfo.type];
   const label = DEMO_LABELS[demoInfo.type];
   const colorClass = DEMO_COLORS[demoInfo.type];
+
+  const aspectClass = compact ? 'aspect-[4/3]' : 'aspect-video';
 
   // For GitHub repos, show a preview card
   if (demoInfo.type === 'github') {
     const repoPath = demoInfo.url.replace('https://github.com/', '');
     
     return (
-      <div className="relative aspect-video bg-gradient-to-br from-slate-800 to-slate-900 rounded-lg overflow-hidden">
+      <div className={`relative ${aspectClass} bg-gradient-to-br from-slate-800 to-slate-900 rounded-lg overflow-hidden`}>
         <div className="absolute inset-0 flex flex-col items-center justify-center p-4 text-center">
           <Github className="w-10 h-10 text-white/60 mb-2" />
           <p className="text-white/80 text-sm font-medium mb-1">{title}</p>
@@ -65,7 +68,7 @@ export function DemoEmbed({ demoInfo, title }: DemoEmbedProps) {
   // For Colab notebooks
   if (demoInfo.type === 'colab') {
     return (
-      <div className="relative aspect-video bg-gradient-to-br from-amber-50 to-orange-100 rounded-lg overflow-hidden">
+      <div className={`relative ${aspectClass} bg-gradient-to-br from-amber-50 to-orange-100 rounded-lg overflow-hidden`}>
         <div className="absolute inset-0 flex flex-col items-center justify-center p-4 text-center">
           <Notebook className="w-10 h-10 text-amber-600/60 mb-2" />
           <p className="text-amber-800 text-sm font-medium mb-1">{title}</p>
@@ -87,7 +90,7 @@ export function DemoEmbed({ demoInfo, title }: DemoEmbedProps) {
   // For Vercel/deployed apps
   if (demoInfo.type === 'vercel' || demoInfo.type === 'streamlit') {
     return (
-      <div className="relative aspect-video bg-gradient-to-br from-slate-100 to-slate-200 rounded-lg overflow-hidden">
+      <div className={`relative ${aspectClass} bg-gradient-to-br from-slate-100 to-slate-200 rounded-lg overflow-hidden`}>
         {demoInfo.thumbnail ? (
           <img 
             src={demoInfo.thumbnail} 
@@ -116,7 +119,7 @@ export function DemoEmbed({ demoInfo, title }: DemoEmbedProps) {
 
   // Default fallback
   return (
-    <div className="relative aspect-video bg-gradient-to-br from-slate-100 to-slate-200 rounded-lg overflow-hidden">
+    <div className={`relative ${aspectClass} bg-gradient-to-br from-slate-100 to-slate-200 rounded-lg overflow-hidden`}>
       <div className="absolute inset-0 flex flex-col items-center justify-center p-4 text-center">
         <FileCode2 className="w-10 h-10 text-slate-400 mb-2" />
         <p className="text-slate-600 text-sm font-medium">{title}</p>

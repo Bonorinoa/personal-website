@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -6,20 +6,58 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { InboxList } from '@/components/admin/InboxList';
 import { ContentEditor } from '@/components/admin/ContentEditor';
+import { SyncButton } from '@/components/admin/SyncButton';
+import { RepoSelector } from '@/components/admin/RepoSelector';
 import { getArtifacts, getInboxItems, getInboxConfig } from '@/lib/artifacts';
-import { Inbox, FileEdit, BarChart3, FlaskConical, LogOut, Lock } from 'lucide-react';
+import { Inbox, FileEdit, BarChart3, FlaskConical, LogOut, Lock, ExternalLink } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
+import type { InboxItem } from '@/data/types';
 
 const ADMIN_PASSWORD = 'admin123'; // TODO: Replace with proper auth
+
+interface RepoItem {
+  id: string;
+  name: string;
+  description: string | null;
+  url: string;
+  homepage: string | null;
+  language: string | null;
+  topics: string[];
+  stars: number;
+  forks: number;
+  createdAt: string;
+  updatedAt: string;
+  pushedAt: string;
+  isFork: boolean;
+  isArchived: boolean;
+}
 
 const Admin = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [pendingItems, setPendingItems] = useState<InboxItem[]>([]);
+  const [githubRepos, setGithubRepos] = useState<RepoItem[]>([]);
+  const [showRepoSelector, setShowRepoSelector] = useState(false);
   const navigate = useNavigate();
+  const { toast } = useToast();
 
   const artifacts = getArtifacts();
   const inboxItems = getInboxItems();
-  const config = getInboxConfig();
+  const config = getInboxConfig() as {
+    sources?: {
+      orcid?: { enabled: boolean; id?: string; lastSync?: string | null };
+      google_scholar?: { enabled: boolean; user_id?: string; lastSync?: string | null };
+      github?: { enabled: boolean; username?: string; lastSync?: string | null };
+      openalex?: { enabled: boolean; email_aliases?: string[]; lastSync?: string | null };
+    };
+    profile?: {
+      name?: string;
+      emails?: { primary?: string; aliases?: string[] };
+    };
+  };
+
+  const allInboxItems = [...inboxItems, ...pendingItems];
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,6 +72,48 @@ const Admin = () => {
   const handleLogout = () => {
     setIsAuthenticated(false);
     setPassword('');
+  };
+
+  const handleSyncComplete = (items: unknown[]) => {
+    const newItems = items as InboxItem[];
+    setPendingItems(prev => [...prev, ...newItems]);
+    toast({
+      title: 'Sync complete',
+      description: `Found ${newItems.length} new items for review.`,
+    });
+  };
+
+  const handleReposFetched = (repos: unknown[]) => {
+    setGithubRepos(repos as RepoItem[]);
+    setShowRepoSelector(true);
+  };
+
+  const handleRepoImport = (items: unknown[]) => {
+    const newItems = items as InboxItem[];
+    setPendingItems(prev => [...prev, ...newItems]);
+    setShowRepoSelector(false);
+    toast({
+      title: 'Repos imported',
+      description: `${newItems.length} repositories added to inbox.`,
+    });
+  };
+
+  const handleApprove = (item: InboxItem) => {
+    console.log('Approve:', item);
+    setPendingItems(prev => prev.filter(i => i.id !== item.id));
+    toast({
+      title: 'Approved',
+      description: `"${item.suggestedArtifact?.title}" will be added after Supabase integration.`,
+    });
+  };
+
+  const handleReject = (item: InboxItem) => {
+    setPendingItems(prev => prev.filter(i => i.id !== item.id));
+    toast({
+      title: 'Rejected',
+      description: 'Item removed from inbox.',
+      variant: 'destructive',
+    });
   };
 
   // Password prompt
@@ -65,7 +145,7 @@ const Admin = () => {
               </Button>
             </form>
             <p className="text-xs text-muted-foreground mt-4 text-center">
-              TODO: Replace with Supabase authentication
+              TODO: Replace with proper authentication
             </p>
           </CardContent>
         </Card>
@@ -98,6 +178,11 @@ const Admin = () => {
             <TabsTrigger value="inbox" className="gap-2">
               <Inbox className="w-4 h-4" />
               <span className="hidden sm:inline">Inbox</span>
+              {allInboxItems.length > 0 && (
+                <span className="ml-1 px-1.5 py-0.5 bg-primary/20 text-primary text-xs rounded-full">
+                  {allInboxItems.length}
+                </span>
+              )}
             </TabsTrigger>
             <TabsTrigger value="content" className="gap-2">
               <FileEdit className="w-4 h-4" />
@@ -124,60 +209,90 @@ const Admin = () => {
               </div>
             </div>
             <InboxList 
-              items={inboxItems}
-              onApprove={(item) => console.log('Approve:', item)}
-              onReject={(item) => console.log('Reject:', item)}
+              items={allInboxItems}
+              onApprove={handleApprove}
+              onReject={handleReject}
               onEdit={(item) => console.log('Edit:', item)}
             />
 
-            {/* Phase 2 Configuration Panel */}
+            {/* Source Configuration Panel with Sync */}
             <Card className="mt-8">
               <CardHeader>
                 <CardTitle className="text-base">Source Configuration</CardTitle>
                 <CardDescription>
-                  Configure external sources for automatic artifact discovery.
+                  Configure external sources for automatic artifact discovery. Click "Sync" to fetch new items.
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-                  <ConfigSource
+                  <SourceCard
                     name="ORCID"
-                    enabled={(config as any)?.sources?.orcid?.enabled}
-                    configValue={(config as any)?.sources?.orcid?.id}
+                    enabled={config?.sources?.orcid?.enabled ?? false}
+                    configValue={config?.sources?.orcid?.id}
+                    lastSync={config?.sources?.orcid?.lastSync}
                     description="Sync publications from your ORCID profile"
                     configNeeded="ORCID ID"
+                    syncButton={
+                      <SyncButton
+                        source="orcid"
+                        sourceId={config?.sources?.orcid?.id || ''}
+                        onSyncComplete={handleSyncComplete}
+                      />
+                    }
                   />
-                  <ConfigSource
+                  <SourceCard
                     name="Google Scholar"
-                    enabled={(config as any)?.sources?.google_scholar?.enabled}
-                    configValue={(config as any)?.sources?.google_scholar?.user_id}
+                    enabled={config?.sources?.google_scholar?.enabled ?? false}
+                    configValue={config?.sources?.google_scholar?.user_id}
+                    lastSync={config?.sources?.google_scholar?.lastSync}
                     description="Import citations and h-index data"
                     configNeeded="Scholar User ID"
+                    syncButton={
+                      <SyncButton
+                        source="google_scholar"
+                        sourceId={config?.sources?.google_scholar?.user_id || ''}
+                        onSyncComplete={handleSyncComplete}
+                        disabled // No public API
+                      />
+                    }
                   />
-                  <ConfigSource
+                  <SourceCard
                     name="GitHub"
-                    enabled={(config as any)?.sources?.github?.enabled}
-                    configValue={(config as any)?.sources?.github?.username}
+                    enabled={config?.sources?.github?.enabled ?? false}
+                    configValue={config?.sources?.github?.username}
+                    lastSync={config?.sources?.github?.lastSync}
                     description="Import repositories and activity"
                     configNeeded="Username"
+                    syncButton={
+                      <SyncButton
+                        source="github"
+                        sourceId={config?.sources?.github?.username || ''}
+                        onReposFetched={handleReposFetched}
+                      />
+                    }
                   />
-                  <ConfigSource
+                  <SourceCard
                     name="OpenAlex"
-                    enabled={(config as any)?.sources?.openalex?.enabled}
-                    configValue={(config as any)?.sources?.openalex?.email_aliases?.length > 0 ? `${(config as any).sources.openalex.email_aliases.length} aliases` : undefined}
+                    enabled={config?.sources?.openalex?.enabled ?? false}
+                    configValue={
+                      config?.sources?.openalex?.email_aliases && config.sources.openalex.email_aliases.length > 0 
+                        ? `${config.sources.openalex.email_aliases.length} aliases` 
+                        : undefined
+                    }
+                    lastSync={config?.sources?.openalex?.lastSync}
                     description="Discover works across email aliases"
                     configNeeded="Email aliases"
                   />
                 </div>
                 
                 {/* Profile info */}
-                {(config as any)?.profile && (
+                {config?.profile && (
                   <div className="mt-6 p-4 bg-muted/30 rounded-lg">
                     <h4 className="text-sm font-medium text-foreground mb-2">Profile Configuration</h4>
                     <div className="grid gap-2 text-xs text-muted-foreground">
-                      <p><strong>Name:</strong> {(config as any).profile.name}</p>
-                      <p><strong>Primary Email:</strong> {(config as any).profile.emails?.primary}</p>
-                      <p><strong>Aliases:</strong> {(config as any).profile.emails?.aliases?.join(', ')}</p>
+                      <p><strong>Name:</strong> {config.profile.name}</p>
+                      <p><strong>Primary Email:</strong> {config.profile.emails?.primary}</p>
+                      <p><strong>Aliases:</strong> {config.profile.emails?.aliases?.join(', ')}</p>
                     </div>
                   </div>
                 )}
@@ -214,10 +329,15 @@ const Admin = () => {
             <Card>
               <CardContent className="py-12 text-center">
                 <BarChart3 className="w-12 h-12 mx-auto text-muted-foreground mb-4" />
-                <p className="text-muted-foreground">Analytics dashboard coming soon</p>
-                <p className="text-sm text-muted-foreground mt-2">
-                  Configure your analytics token in Phase 2 to enable tracking.
+                <p className="text-muted-foreground font-medium">Analytics require a published app</p>
+                <p className="text-sm text-muted-foreground mt-2 max-w-md mx-auto">
+                  Analytics will be available after you publish your site. Lovable's built-in analytics will track 
+                  page views, visitors, and engagement automatically.
                 </p>
+                <Button variant="outline" className="mt-4 gap-2" onClick={() => window.open('https://docs.lovable.dev/features/analytics', '_blank')}>
+                  <ExternalLink className="w-4 h-4" />
+                  Learn about Analytics
+                </Button>
               </CardContent>
             </Card>
           </TabsContent>
@@ -242,22 +362,35 @@ const Admin = () => {
           </TabsContent>
         </Tabs>
       </main>
+
+      {/* GitHub Repo Selector Modal */}
+      <RepoSelector
+        repos={githubRepos}
+        open={showRepoSelector}
+        onOpenChange={setShowRepoSelector}
+        onImport={handleRepoImport}
+        username={config?.sources?.github?.username || ''}
+      />
     </div>
   );
 };
 
-function ConfigSource({ 
+function SourceCard({ 
   name, 
   enabled, 
   configValue,
+  lastSync,
   description, 
-  configNeeded 
+  configNeeded,
+  syncButton,
 }: { 
   name: string; 
   enabled: boolean; 
   configValue?: string;
+  lastSync?: string | null;
   description: string;
   configNeeded: string;
+  syncButton?: React.ReactNode;
 }) {
   const isConfigured = !!configValue;
   
@@ -271,13 +404,23 @@ function ConfigSource({
       </div>
       <p className="text-xs text-muted-foreground mb-2">{description}</p>
       {configValue ? (
-        <p className="text-xs font-mono bg-muted px-2 py-1 rounded truncate" title={configValue}>
+        <p className="text-xs font-mono bg-muted px-2 py-1 rounded truncate mb-2" title={configValue}>
           {configValue}
         </p>
       ) : (
-        <p className="text-xs text-muted-foreground">
+        <p className="text-xs text-muted-foreground mb-2">
           Needs: <code className="bg-muted px-1 rounded">{configNeeded}</code>
         </p>
+      )}
+      {lastSync && (
+        <p className="text-xs text-muted-foreground mb-2">
+          Last sync: {new Date(lastSync).toLocaleDateString()}
+        </p>
+      )}
+      {syncButton && (
+        <div className="mt-2">
+          {syncButton}
+        </div>
       )}
     </div>
   );

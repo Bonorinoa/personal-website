@@ -1,272 +1,191 @@
 
+# Data Pipeline: Database-Backed Inbox & Content Management
 
-# Google AI Studio-Inspired Interactive Node Network Background
+## Overview
 
-## Description of the Animation Concept
-
-Based on your description, the Google AI Studio background features a **responsive particle/node network system** with the following characteristics:
-
-### Visual Elements
-- **Connected Nodes**: Multiple floating dots/points scattered across the canvas
-- **Dynamic Lines**: Lines connecting nearby nodes, creating a network graph visualization
-- **Flowing Particles**: Small particles that travel along the connection lines or drift independently
-- **Morphing Shapes**: Abstract blobs or clusters that reshape based on the current mode
-
-### Interaction Behavior
-- **Cursor Reactivity**: Nodes near the cursor move away or toward it, creating a "magnetic field" effect
-- **Mode Reorganization**: When switching modes, nodes physically rearrange into different patterns:
-  - **Academic Mode**: Organized, structured grid-like arrangement (scholarly, ordered)
-  - **Build Mode**: Web/network cluster formation (collaborative, interconnected)
-- **Color Palette Shift**: Warm tones for Academic, cool technical tones for Build
-- **Density Changes**: Build mode may show more connections/complexity; Academic may be sparser and cleaner
-
-### Motion Quality
-- **Responsive**: Elements react quickly to mouse movement
-- **Organic Flow**: Smooth easing, natural-feeling physics
-- **Living Background**: Continuous subtle movement even without interaction
+Transform the current "demo" pipeline into a fully functional system where:
+- Synced items persist in the database
+- Approved items become visible artifacts on your site
+- The entire flow survives page refreshes
 
 ---
 
-## Implementation Plan
-
-### Architecture: Canvas-Based Particle System
-
-Replace the current CSS-only approach with a **hybrid Canvas + React** system for performance and flexibility.
+## Architecture
 
 ```text
-+--------------------------------------------------+
-|  PondBackground (Container)                      |
-|  +--------------------------------------------+  |
-|  |  <canvas> - Particles, Nodes, Lines        |  |
-|  |  - High-performance 2D rendering           |  |
-|  |  - Physics simulation (spring/repulsion)   |  |
-|  |  - 60fps animation loop                    |  |
-|  +--------------------------------------------+  |
-|  +--------------------------------------------+  |
-|  |  CSS Layers (existing)                     |  |
-|  |  - Gradient backgrounds                    |  |
-|  |  - Mode-specific textures                  |  |
-|  +--------------------------------------------+  |
-+--------------------------------------------------+
+                    PROPOSED FLOW (Complete)
+                    
+[ORCID/GitHub API] ──► [Edge Function] ──► [Supabase DB] ◄──► [Admin UI]
+                                                │
+                                                ├── inbox_items table
+                                                │   (pending review)
+                                                │
+                                                └── artifacts table
+                                                    (published content)
+                                                          │
+                                                          ▼
+                                            [Academic/Build Pages]
+                                              (read from DB)
 ```
 
 ---
 
-### Core Components
+## Database Schema
 
-#### 1. Node System
-```text
-interface Node {
-  id: number;
-  x: number;           // Current position
-  y: number;
-  targetX: number;     // Target position (for mode transitions)
-  targetY: number;
-  vx: number;          // Velocity for physics
-  vy: number;
-  radius: number;      // Visual size (3-8px)
-  connections: number[]; // IDs of connected nodes
-}
-```
+### Table 1: `inbox_items`
+Holds discovered items awaiting review.
 
-- Generate 40-60 nodes distributed across the canvas
-- Each node has physics properties (position, velocity)
-- Nodes ease toward target positions when mode changes
+| Column | Type | Description |
+|--------|------|-------------|
+| id | uuid | Primary key |
+| source | text | 'orcid', 'github', 'crossref' |
+| external_id | text | Source-specific ID for deduplication |
+| status | text | 'pending', 'approved', 'rejected' |
+| raw_data | jsonb | Original API response |
+| suggested_artifact | jsonb | Pre-populated artifact fields |
+| notes | text | Admin notes |
+| discovered_at | timestamptz | When synced |
+| reviewed_at | timestamptz | When approved/rejected |
+| created_at | timestamptz | Record creation |
 
-#### 2. Connection Lines
-```text
-- Calculate distances between all node pairs
-- Draw lines for pairs within threshold distance (150-200px)
-- Line opacity based on distance (closer = more opaque)
-- Line color transitions with mode
-```
+### Table 2: `artifacts`
+The main content table powering both Academic and Build modes.
 
-#### 3. Mode-Specific Formations
-
-**Neutral State (Welcome)**
-- Random, organic distribution
-- Gentle ambient drift
-- Sparse connections
-
-**Academic Mode**
-- Nodes reorganize into a loose grid pattern
-- Reduced connections (cleaner, focused)
-- Warm amber connection colors
-- Slower, more deliberate movement
-
-**Build Mode**  
-- Nodes cluster into interconnected groups
-- Dense network of connections
-- Cool blue connection colors
-- More dynamic, responsive movement
-
-```text
-NEUTRAL:              ACADEMIC:             BUILD:
-  o     o               o   o   o            o---o---o
-    o       o           o   o   o           /|\ /|\ /|
-  o   o                 o   o   o          o-+-o-+-o
-      o   o             o   o   o           \|/ \|/ \|
-  o                     o   o   o            o---o---o
-```
+| Column | Type | Description |
+|--------|------|-------------|
+| id | uuid | Primary key |
+| slug | text | URL-friendly identifier |
+| type | text | 'paper', 'project', 'role', etc. |
+| title | text | Display title |
+| subtitle | text | Optional subtitle |
+| organization | text | Institution/company |
+| location | text | City, State |
+| date | date | Start date |
+| end_date | date | End date (null = current) |
+| summary | text | Short description |
+| details | jsonb | Array of bullet points |
+| links | jsonb | {repo, demo, paper, website} |
+| tags | text[] | Collaboration tags |
+| mode_visibility | text | 'academic', 'build', 'both' |
+| section | text | For Academic grouping |
+| collaboration_breakdown | jsonb | Human/AI work split |
+| source_ids | jsonb | {doi, arxiv, github, orcid} |
+| featured | boolean | Show prominently |
+| preview_image | text | Image URL |
+| demo_info | jsonb | {type, url, thumbnail} |
+| year | integer | For timeline grouping |
+| created_at | timestamptz | Record creation |
+| updated_at | timestamptz | Last modification |
 
 ---
 
-### Animation Loop
+## Implementation Steps
 
-```text
-function animate() {
-  1. Clear canvas
-  
-  2. Update node positions
-     - Apply velocity
-     - Apply cursor repulsion/attraction
-     - Ease toward target positions
-     - Add ambient drift
-     - Dampen velocity
-  
-  3. Calculate connections
-     - Find nodes within connection distance
-     - Filter based on mode density
-  
-  4. Draw connections
-     - Line with distance-based opacity
-     - Mode-specific color
-  
-  5. Draw nodes
-     - Filled circles with glow effect
-     - Mode-specific color
-  
-  6. requestAnimationFrame(animate)
-}
-```
+### Phase 1: Database Setup
+1. Create `inbox_items` table with RLS policies (admin-only access)
+2. Create `artifacts` table with RLS policies (public read, admin write)
+3. Add unique constraint on `inbox_items.external_id` to prevent duplicates
+4. Create database function for approving items (moves from inbox to artifacts)
 
----
+### Phase 2: Update Edge Functions
+1. Modify `sync-orcid` to:
+   - Check for existing items by external_id before inserting
+   - Insert new items directly into `inbox_items` table
+   - Return count of new vs. existing items
 
-### Cursor Interaction
+2. Modify `sync-github` to:
+   - Same deduplication logic
+   - Handle the two-step flow (fetch repos → select → insert)
 
-```text
-Mouse Position -> Force Field
+### Phase 3: Update Admin UI
+1. Replace local state with database queries using React Query
+2. Implement real approve/reject that updates database
+3. Add "Edit before approving" flow (edit suggested_artifact, then approve)
+4. Show sync history and last sync timestamps
 
-For each node:
-  distance = sqrt((node.x - mouse.x)² + (node.y - mouse.y)²)
-  
-  if distance < INFLUENCE_RADIUS (150px):
-    // Repulsion force (nodes move away from cursor)
-    force = (INFLUENCE_RADIUS - distance) / INFLUENCE_RADIUS
-    angle = atan2(node.y - mouse.y, node.x - mouse.x)
-    
-    node.vx += cos(angle) * force * STRENGTH
-    node.vy += sin(angle) * force * STRENGTH
-```
+### Phase 4: Update Frontend Pages
+1. Replace `getArtifacts()` (reads JSON) with database query
+2. Keep JSON as fallback/seed data
+3. Add loading states for database queries
 
 ---
 
-### Mode Transition Animation
+## Security Considerations
 
-```text
-When hoveredMode changes:
+### RLS Policies
 
-1. Calculate new target positions for all nodes
-   - Academic: grid positions
-   - Build: cluster positions  
-   - Neutral: random positions
+**inbox_items:**
+- No public access (admin only via service role or future auth)
+- Edge functions use service role key
 
-2. Nodes ease toward targets over 0.8-1.2 seconds
-   node.x += (node.targetX - node.x) * 0.05
-   node.y += (node.targetY - node.y) * 0.05
+**artifacts:**
+- Public can SELECT (anyone can view portfolio)
+- No public INSERT/UPDATE/DELETE
+- Edge functions/admin use service role
 
-3. Connection threshold and color transition simultaneously
-```
+### Authentication Options
 
----
+Two approaches for admin access:
 
-### Technical Implementation
+1. **Simple (Current):** Password check in frontend + service role in edge functions
+   - Quick to implement
+   - Adequate for single-user portfolio
 
-#### Files to Modify
-
-| File | Changes |
-|------|---------|
-| `src/components/landing/PondBackground.tsx` | Major rewrite: Add canvas element, particle system, animation loop |
-
-#### New Additions to PondBackground.tsx
-
-**State & Refs**
-- `canvasRef` - Reference to canvas element
-- `nodesRef` - Array of node objects (mutable for performance)
-- `animationFrameRef` - For cleanup
-- `mouseRef` - Current mouse position
-
-**New Functions**
-- `generateNodes()` - Create initial node array
-- `calculateTargetPositions(mode)` - Get grid/cluster/random positions
-- `updatePhysics()` - Apply forces, velocity, damping
-- `drawFrame()` - Render nodes and connections
-- `animate()` - Main loop
-
-**Canvas Layer**
-- Positioned behind CSS layers
-- Sized to fill container
-- Handles resize events
+2. **Proper Auth (Recommended):** Supabase Auth with email/password
+   - Add login page
+   - RLS policies based on user ID
+   - More secure, audit trail
 
 ---
 
-### Visual Parameters by Mode
+## Data Migration
 
-| Parameter | Neutral | Academic | Build |
-|-----------|---------|----------|-------|
-| Node count | 45 | 45 | 45 |
-| Node color | `sky-300` | `amber-400` | `blue-400` |
-| Line color | `sky-200/30` | `amber-300/25` | `blue-300/40` |
-| Connection distance | 140px | 120px | 180px |
-| Max connections/node | 3 | 2 | 5 |
-| Movement speed | Medium | Slow | Fast |
-| Cursor influence | Medium | Gentle | Strong |
-| Formation | Random | Grid | Clusters |
+### Seeding from artifacts.json
+1. Create migration script that reads current JSON
+2. Insert all existing artifacts into database
+3. Keeps JSON as backup/version control
 
 ---
 
-### Keeping Existing Features
+## Files to Create/Modify
 
-The current background effects will be preserved as overlay layers:
-- Gradient backgrounds (mode-specific colors)
-- Paper texture (Academic mode)
-- Scan-line grid (Build mode)  
-- Cursor-following glow
-- Ambient shimmer
-
-The canvas particle system adds a new base layer underneath these.
-
----
-
-### Performance Considerations
-
-1. **Use Canvas 2D** - More performant than DOM-based particles
-2. **Limit node count** - 40-60 nodes is visually rich but performant
-3. **Throttle mouse events** - Update mouse position at 60fps max
-4. **Use refs for mutable data** - Avoid React state for physics calculations
-5. **Respect reduced motion** - Fall back to static/minimal animation
+| File | Action | Description |
+|------|--------|-------------|
+| `migrations/*.sql` | Create | Database tables, RLS, functions |
+| `supabase/functions/sync-orcid/index.ts` | Modify | Write to DB instead of returning items |
+| `supabase/functions/sync-github/index.ts` | Modify | Write to DB instead of returning items |
+| `src/hooks/useInboxItems.ts` | Create | React Query hook for inbox |
+| `src/hooks/useArtifacts.ts` | Create | React Query hook for artifacts |
+| `src/components/admin/InboxList.tsx` | Modify | Use database queries |
+| `src/pages/Admin.tsx` | Modify | Wire up real CRUD operations |
+| `src/lib/artifacts.ts` | Modify | Add database fetching with JSON fallback |
+| `src/pages/Academic.tsx` | Modify | Use database-backed artifacts |
+| `src/pages/Build.tsx` | Modify | Use database-backed artifacts |
 
 ---
 
-### Accessibility
+## Estimated Effort
 
-```text
-@media (prefers-reduced-motion: reduce) {
-  - Disable cursor reactivity
-  - Freeze nodes in place
-  - Remove ambient drift
-  - Keep static connection lines visible
-}
-```
+| Phase | Complexity | Notes |
+|-------|------------|-------|
+| Database Setup | Medium | ~2 migrations, RLS policies |
+| Edge Function Updates | Low | Straightforward DB inserts |
+| Admin UI Updates | Medium | Replace state with queries |
+| Frontend Integration | Low | Swap data source |
+| **Total** | ~4-5 iterations | |
 
 ---
 
-### Expected Result
+## Quick Wins (Can Do First)
 
-1. **Page Load**: Nodes fade in with organic random positions, gentle drift
-2. **Cursor Movement**: Nodes smoothly push away from cursor, creating a ripple effect
-3. **Hover Academic**: Nodes gracefully reorganize into a structured grid, colors warm
-4. **Hover Build**: Nodes cluster into interconnected groups, colors shift cool/blue
-5. **Mode Persistence**: Formation remains after cursor leaves button (sticky state)
-6. **Overall Feel**: Living, breathing background that visually signals each mode's philosophy
+1. **Database tables** - Foundation for everything else
+2. **Make approve/reject persist** - Most visible improvement
+3. **Deduplication** - Prevent syncing same items repeatedly
 
+---
+
+## Decision Points for You
+
+1. **Authentication**: Keep simple password or add proper login?
+2. **Data seeding**: Auto-import all current JSON artifacts to DB?
+3. **Fallback behavior**: If DB fails, show JSON data or error?

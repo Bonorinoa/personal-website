@@ -34,16 +34,19 @@ const Index = () => {
           `}>
             Augusto González-Bonorino
           </h1>
-          <p className={`
-            text-lg md:text-xl
-            transition-all duration-500
-            ${hoveredMode === 'academic' 
-              ? 'font-academic text-stone-600' 
-              : hoveredMode === 'build'
-              ? 'font-build text-slate-600'
-              : 'text-slate-500'
-            }
-          `}>
+          <p 
+            key={hoveredMode || 'default'}
+            className={`
+              text-lg md:text-xl
+              animate-fade-in
+              ${hoveredMode === 'academic' 
+                ? 'font-academic text-stone-600' 
+                : hoveredMode === 'build'
+                ? 'font-build text-slate-600'
+                : 'text-slate-500'
+              }
+            `}
+          >
             {hoveredMode === 'academic' 
               ? 'Economist · Researcher · Teacher'
               : hoveredMode === 'build'

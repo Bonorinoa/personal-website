@@ -242,4 +242,3 @@ src/
 6. ✅ Password-protected admin scaffold
 7. ✅ Phase 2 inbox structure (ready for automation)
 8. ✅ Mobile-responsive design throughout
-

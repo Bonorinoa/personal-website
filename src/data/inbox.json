@@ -1,0 +1,52 @@
+{
+  "items": [],
+  "config": {
+    "sources": {
+      "orcid": {
+        "enabled": false,
+        "id": null,
+        "lastSync": null
+      },
+      "crossref": {
+        "enabled": false,
+        "email": null,
+        "lastSync": null
+      },
+      "github": {
+        "enabled": false,
+        "username": null,
+        "token": null,
+        "lastSync": null
+      }
+    },
+    "analytics": {
+      "enabled": false,
+      "token": null
+    }
+  },
+  "_phase2_instructions": {
+    "description": "This file scaffolds Phase 2 automation. To enable:",
+    "orcid": {
+      "step1": "Get your ORCID ID from https://orcid.org",
+      "step2": "Add it to config.sources.orcid.id",
+      "step3": "Set enabled to true",
+      "note": "Public ORCID data can be fetched without an API key"
+    },
+    "crossref": {
+      "step1": "Add your email to config.sources.crossref.email (polite pool)",
+      "step2": "Set enabled to true",
+      "note": "Crossref API is free and doesn't require authentication"
+    },
+    "github": {
+      "step1": "Add your GitHub username to config.sources.github.username",
+      "step2": "Optionally add a personal access token for private repos",
+      "step3": "Set enabled to true",
+      "note": "Token should be stored as an environment variable, not in this file"
+    },
+    "analytics": {
+      "step1": "Get analytics token from your provider",
+      "step2": "Store as environment variable",
+      "step3": "Set enabled to true"
+    }
+  }
+}

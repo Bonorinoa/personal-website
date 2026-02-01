@@ -1,0 +1,314 @@
+{
+  "artifacts": [
+    {
+      "id": "edu-asu-phd",
+      "type": "education",
+      "title": "PhD in Economics",
+      "organization": "Arizona State University",
+      "location": "Tempe, AZ",
+      "date": "2025-08",
+      "endDate": "current",
+      "summary": "Doctoral studies in Economics with focus on computational methods and AI applications in economic research.",
+      "mode_visibility": "academic",
+      "section": "education",
+      "featured": true
+    },
+    {
+      "id": "edu-cgu-ma",
+      "type": "education",
+      "title": "MA in Economics (PhD Track)",
+      "subtitle": "GPA: 4.0",
+      "organization": "Claremont Graduate University",
+      "location": "Claremont, CA",
+      "date": "2022-08",
+      "endDate": "2024-05",
+      "summary": "Advanced graduate training in economics with specialization in computational methods and behavioral economics.",
+      "details": [
+        "Relevant Coursework: Game Theory, IO, Behavioral, Econometrics I & II, Mathematical Economics"
+      ],
+      "mode_visibility": "academic",
+      "section": "education",
+      "featured": true
+    },
+    {
+      "id": "edu-marist-ba",
+      "type": "education",
+      "title": "BA in Economics (Honors)",
+      "subtitle": "Summa Cum Laude, GPA: 3.93",
+      "organization": "Marist College",
+      "location": "Poughkeepsie, NY",
+      "date": "2019-08",
+      "endDate": "2022-05",
+      "summary": "Undergraduate honors degree with concentrations in Data Science and Finance.",
+      "details": [
+        "Concentrations: Data Science, Finance",
+        "Minor: Mathematics"
+      ],
+      "mode_visibility": "academic",
+      "section": "education",
+      "featured": true
+    },
+    {
+      "id": "role-econllm-lab",
+      "type": "role",
+      "title": "Lead Graduate Researcher",
+      "organization": "EconLLM Lab, Claremont Graduate University",
+      "location": "Claremont, CA",
+      "date": "2023-05",
+      "endDate": "current",
+      "summary": "Leading research on applying large language models to economic research and policy analysis.",
+      "details": [
+        "Developing LLM-powered tools for economic literature analysis",
+        "Building datasets for training domain-specific models",
+        "Publishing research on AI applications in economics"
+      ],
+      "links": {
+        "website": "https://www.econllm-lab.com/"
+      },
+      "tags": ["vibe-engineered"],
+      "mode_visibility": "both",
+      "section": "experience",
+      "featured": true,
+      "collaboration_breakdown": {
+        "human": "Designed research agenda, curated datasets, wrote papers, conducted economic analysis",
+        "ai_tools": "Claude and GPT-4 for literature review, code generation, and data processing",
+        "verification": "Peer review, replication studies, benchmark comparisons"
+      },
+      "previewImage": "/placeholder.svg"
+    },
+    {
+      "id": "role-cjl",
+      "type": "role",
+      "title": "Research Assistant",
+      "organization": "Computational Justice Lab",
+      "location": "Claremont, CA",
+      "date": "2023-01",
+      "endDate": "2024-05",
+      "summary": "Conducting computational analysis of justice and policy outcomes.",
+      "details": [
+        "Developed data pipelines for analyzing judicial decisions",
+        "Applied NLP methods to legal text analysis"
+      ],
+      "mode_visibility": "academic",
+      "section": "experience"
+    },
+    {
+      "id": "role-marist-ds",
+      "type": "role",
+      "title": "Lead AI Student Analyst",
+      "organization": "Marist College Data Science",
+      "location": "Poughkeepsie, NY",
+      "date": "2020-09",
+      "endDate": "2022-05",
+      "summary": "Led development of ODQA system (Kevin) for campus information retrieval.",
+      "details": [
+        "Built open-domain question answering system for college website",
+        "Deployed production chatbot serving thousands of users",
+        "Managed team of student developers"
+      ],
+      "tags": ["ai-assisted"],
+      "mode_visibility": "both",
+      "section": "experience",
+      "featured": true,
+      "collaboration_breakdown": {
+        "human": "Architected system, implemented retrieval pipeline, managed deployment",
+        "ai_tools": "Used transformer models for embeddings, GPT-3 for answer generation",
+        "verification": "User satisfaction surveys, accuracy benchmarks, A/B testing"
+      },
+      "links": {
+        "demo": "https://github.com/Bonorinoa"
+      },
+      "previewImage": "/placeholder.svg"
+    },
+    {
+      "id": "teaching-pomona",
+      "type": "role",
+      "title": "Visiting Lecturer",
+      "organization": "Pomona College",
+      "location": "Claremont, CA",
+      "date": "2023-08",
+      "endDate": "2024-05",
+      "summary": "Teaching undergraduate economics courses.",
+      "details": [
+        "ECON 57: Economic Statistics",
+        "ECON 101: Intermediate Microeconomics",
+        "ECON 167: Behavioral Economics"
+      ],
+      "mode_visibility": "academic",
+      "section": "teaching",
+      "featured": true
+    },
+    {
+      "id": "pub-book-chapter-2025",
+      "type": "paper",
+      "title": "Applications of LLMs in Economic Research",
+      "organization": "Book Chapter",
+      "date": "2025",
+      "summary": "Comprehensive overview of how large language models are transforming economic research methodology.",
+      "links": {
+        "paper": "#"
+      },
+      "mode_visibility": "academic",
+      "section": "publications",
+      "featured": true
+    },
+    {
+      "id": "pub-journal-2022",
+      "type": "paper",
+      "title": "Behavioral Insights in Digital Markets",
+      "organization": "Journal Article",
+      "date": "2022",
+      "summary": "Empirical analysis of consumer behavior in online marketplaces.",
+      "links": {
+        "paper": "#"
+      },
+      "mode_visibility": "academic",
+      "section": "publications"
+    },
+    {
+      "id": "pub-ssrn-2024",
+      "type": "paper",
+      "title": "Smart Surveys: AI-Augmented Research Instruments",
+      "organization": "SSRN Preprint",
+      "date": "2024",
+      "summary": "Framework for using LLMs to enhance survey design and response analysis.",
+      "links": {
+        "paper": "https://ssrn.com/"
+      },
+      "tags": ["ai-assisted"],
+      "mode_visibility": "both",
+      "section": "publications",
+      "source_ids": {
+        "ssrn": "placeholder"
+      },
+      "collaboration_breakdown": {
+        "human": "Designed methodology, conducted experiments, wrote analysis",
+        "ai_tools": "GPT-4 for survey generation, Claude for response analysis",
+        "verification": "Comparison with traditional surveys, inter-rater reliability"
+      },
+      "previewImage": "/placeholder.svg"
+    },
+    {
+      "id": "cert-python",
+      "type": "certification",
+      "title": "Python for Data Science",
+      "organization": "Certification",
+      "date": "2021",
+      "summary": "Advanced Python programming for data analysis and machine learning.",
+      "mode_visibility": "academic",
+      "section": "certifications"
+    },
+    {
+      "id": "skill-python",
+      "type": "skill",
+      "title": "Python",
+      "date": "2019",
+      "summary": "NumPy, Pandas, Scikit-learn, PyTorch, TensorFlow",
+      "mode_visibility": "academic",
+      "section": "skills"
+    },
+    {
+      "id": "skill-r",
+      "type": "skill",
+      "title": "R",
+      "date": "2019",
+      "summary": "Tidyverse, ggplot2, Shiny, Statistical Modeling",
+      "mode_visibility": "academic",
+      "section": "skills"
+    },
+    {
+      "id": "skill-sql",
+      "type": "skill",
+      "title": "SQL",
+      "date": "2020",
+      "summary": "PostgreSQL, MySQL, SQLite, Query Optimization",
+      "mode_visibility": "academic",
+      "section": "skills"
+    },
+    {
+      "id": "skill-ml",
+      "type": "skill",
+      "title": "Machine Learning",
+      "date": "2020",
+      "summary": "NLP, Deep Learning, Transformers, LLMs",
+      "mode_visibility": "academic",
+      "section": "skills"
+    },
+    {
+      "id": "honor-summa",
+      "type": "award",
+      "title": "Summa Cum Laude",
+      "organization": "Marist College",
+      "date": "2022-05",
+      "summary": "Graduated with highest honors.",
+      "mode_visibility": "academic",
+      "section": "honors"
+    },
+    {
+      "id": "honor-deans-list",
+      "type": "award",
+      "title": "Dean's List",
+      "organization": "Marist College",
+      "date": "2019-2022",
+      "summary": "All semesters.",
+      "mode_visibility": "academic",
+      "section": "honors"
+    },
+    {
+      "id": "grant-research",
+      "type": "grant",
+      "title": "Graduate Research Fellowship",
+      "organization": "Claremont Graduate University",
+      "date": "2022-2024",
+      "summary": "Full funding for graduate studies and research.",
+      "mode_visibility": "academic",
+      "section": "grants"
+    },
+    {
+      "id": "project-smart-surveys",
+      "type": "project",
+      "title": "Smart Surveys Tool",
+      "organization": "EconLLM Lab",
+      "date": "2024",
+      "summary": "AI-powered survey design and analysis platform for researchers.",
+      "details": [
+        "Automated survey question generation based on research objectives",
+        "Real-time response quality analysis",
+        "Multi-language support"
+      ],
+      "tags": ["ai-assisted"],
+      "mode_visibility": "build",
+      "featured": true,
+      "collaboration_breakdown": {
+        "human": "Designed UX, implemented core logic, conducted user testing",
+        "ai_tools": "Claude for question generation, GPT-4 for response parsing",
+        "verification": "User studies, comparison with manual survey design"
+      },
+      "links": {
+        "repo": "https://github.com/Bonorinoa",
+        "demo": "#"
+      },
+      "previewImage": "/placeholder.svg"
+    },
+    {
+      "id": "project-personal-site",
+      "type": "project",
+      "title": "Personal Website",
+      "organization": "Self",
+      "date": "2024",
+      "summary": "This website - a dual-mode personal site showcasing academic work and AI collaboration.",
+      "tags": ["vibe-coded"],
+      "mode_visibility": "build",
+      "featured": true,
+      "collaboration_breakdown": {
+        "human": "Designed information architecture, provided design direction, curated content",
+        "ai_tools": "Claude for full implementation via Lovable",
+        "verification": "Manual testing, accessibility checks"
+      },
+      "links": {
+        "repo": "https://github.com/Bonorinoa"
+      },
+      "previewImage": "/placeholder.svg"
+    }
+  ]
+}

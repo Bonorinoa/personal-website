@@ -26,9 +26,9 @@ const Index = () => {
             text-3xl md:text-5xl font-light tracking-wide mb-3
             transition-all duration-500
             ${hoveredMode === 'academic' 
-              ? 'font-serif text-stone-800' 
+              ? 'font-academic text-stone-800' 
               : hoveredMode === 'build'
-              ? 'font-sans text-slate-800'
+              ? 'font-build text-slate-800'
               : 'font-sans text-slate-700'
             }
           `}>
@@ -38,13 +38,18 @@ const Index = () => {
             text-lg md:text-xl
             transition-all duration-500
             ${hoveredMode === 'academic' 
-              ? 'text-stone-600' 
+              ? 'font-academic text-stone-600' 
               : hoveredMode === 'build'
-              ? 'text-slate-600'
+              ? 'font-build text-slate-600'
               : 'text-slate-500'
             }
           `}>
-            Economist · Researcher · Builder
+            {hoveredMode === 'academic' 
+              ? 'Economist · Researcher · Teacher'
+              : hoveredMode === 'build'
+              ? '// builder · ai_collaborator'
+              : 'Economist · Researcher · Builder'
+            }
           </p>
         </div>
 

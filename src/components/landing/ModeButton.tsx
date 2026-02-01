@@ -34,8 +34,8 @@ export function ModeButton({ mode, onHover, onClick }: ModeButtonProps) {
         text-xl md:text-2xl font-medium tracking-wide
         transition-all duration-300
         ${isAcademic 
-          ? 'font-serif text-stone-700 group-hover:text-stone-900'
-          : 'font-mono text-slate-700 group-hover:text-slate-900'
+          ? 'font-academic text-stone-700 group-hover:text-stone-900'
+          : 'font-build text-slate-700 group-hover:text-slate-900'
         }
       `}>
         {isAcademic ? 'Academic' : 'Build'}

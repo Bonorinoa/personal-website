@@ -1,5 +1,6 @@
 import { useEffect, useRef, useCallback } from 'react';
 import { useNodePhysics } from './useNodePhysics';
+import { BackgroundMode } from './types';
 
 interface NodeCanvasProps {
   hoveredMode: 'academic' | 'build' | null;
@@ -13,14 +14,16 @@ export function NodeCanvas({ hoveredMode }: NodeCanvasProps) {
   const reducedMotion = typeof window !== 'undefined' 
     && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  // Map hoveredMode to BackgroundMode
+  const mode: BackgroundMode = hoveredMode || 'neutral';
+
   const {
-    initNodes,
-    updateTargets,
+    initParticles,
     animate,
-    animationFrameRef,
+    frameIdRef,
     handleMouseMove,
     handleMouseLeave,
-  } = useNodePhysics(canvasRef, hoveredMode, reducedMotion);
+  } = useNodePhysics(canvasRef, mode, reducedMotion);
 
   // Handle resize
   const handleResize = useCallback(() => {
@@ -41,9 +44,8 @@ export function NodeCanvas({ hoveredMode }: NodeCanvasProps) {
       ctx.scale(dpr, dpr);
     }
     
-    initNodes(rect.width, rect.height, hoveredMode);
-    updateTargets(rect.width, rect.height, hoveredMode);
-  }, [initNodes, updateTargets, hoveredMode]);
+    initParticles(rect.width, rect.height);
+  }, [initParticles]);
 
   // Setup
   useEffect(() => {
@@ -55,11 +57,11 @@ export function NodeCanvas({ hoveredMode }: NodeCanvasProps) {
     
     return () => {
       window.removeEventListener('resize', handleResize);
-      if (animationFrameRef.current) {
-        cancelAnimationFrame(animationFrameRef.current);
+      if (frameIdRef.current) {
+        cancelAnimationFrame(frameIdRef.current);
       }
     };
-  }, [handleResize, animate, animationFrameRef]);
+  }, [handleResize, animate, frameIdRef]);
 
   // Mouse events
   useEffect(() => {

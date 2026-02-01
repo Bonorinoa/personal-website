@@ -126,11 +126,10 @@ export function useNodePhysics(
 
     // --- BUILD MODE: DRAW NETWORK LINES ---
     if (mode === 'build' && !reducedMotion) {
-      ctx.lineWidth = 0.5;
-      ctx.strokeStyle = MODE_PHYSICS.build.lineColor;
-      
       const particles = particlesRef.current;
       const connectionDist = MODE_PHYSICS.build.connectionDistance;
+      
+      ctx.lineWidth = 1;
       
       for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
@@ -141,9 +140,9 @@ export function useNodePhysics(
           const dist = Math.sqrt(dx * dx + dy * dy);
 
           if (dist < connectionDist) {
-            // Fade lines based on distance
-            const opacity = 1 - (dist / connectionDist);
-            ctx.globalAlpha = opacity * 0.3;
+            // Fade lines based on distance - closer = more opaque
+            const opacity = (1 - (dist / connectionDist)) * 0.5;
+            ctx.strokeStyle = `rgba(59, 130, 246, ${opacity})`;
             ctx.beginPath();
             ctx.moveTo(p1.x, p1.y);
             ctx.lineTo(p2.x, p2.y);
@@ -151,7 +150,6 @@ export function useNodePhysics(
           }
         }
       }
-      ctx.globalAlpha = 1;
     }
 
     frameIdRef.current = requestAnimationFrame(animate);

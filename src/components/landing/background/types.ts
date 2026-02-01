@@ -31,13 +31,13 @@ export const MODE_PHYSICS = {
     lineColor: 'rgba(180, 140, 60, 0.08)',
   },
   build: {
-    wanderForce: 0.5,
+    wanderForce: 0.4,
     friction: 0.98,
     mouseRadius: 200,
     mousePush: 15,
-    particleColor: 'rgba(59, 130, 246, 0.6)',  // blue-500
-    lineColor: 'rgba(59, 130, 246, 0.15)',
-    connectionDistance: 100,
+    particleColor: 'rgba(59, 130, 246, 0.7)',  // blue-500
+    lineColor: 'rgba(59, 130, 246, 0.35)',     // More visible lines
+    connectionDistance: 150,                   // Larger connection radius
   },
 } as const;
 

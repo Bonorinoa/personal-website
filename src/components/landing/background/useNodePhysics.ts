@@ -3,16 +3,26 @@ import {
   Node, 
   ModeConfig, 
   MODE_CONFIGS, 
-  NODE_COUNT, 
+  BASE_NODE_COUNT,
+  BUILD_NODE_MULTIPLIER,
   CURSOR_INFLUENCE_RADIUS, 
-  VELOCITY_DAMPING 
+  VELOCITY_DAMPING,
+  MIN_NODE_RADIUS,
+  MAX_NODE_RADIUS
 } from './types';
 
 type Mode = 'academic' | 'build' | null;
 
-function generateNodes(width: number, height: number): Node[] {
+function getNodeCount(mode: Mode): number {
+  if (mode === 'build') {
+    return Math.floor(BASE_NODE_COUNT * BUILD_NODE_MULTIPLIER);
+  }
+  return BASE_NODE_COUNT;
+}
+
+function generateNodes(width: number, height: number, count: number): Node[] {
   const nodes: Node[] = [];
-  for (let i = 0; i < NODE_COUNT; i++) {
+  for (let i = 0; i < count; i++) {
     const x = Math.random() * width;
     const y = Math.random() * height;
     nodes.push({
@@ -23,7 +33,7 @@ function generateNodes(width: number, height: number): Node[] {
       targetY: y,
       vx: 0,
       vy: 0,
-      radius: 3 + Math.random() * 4,
+      radius: MIN_NODE_RADIUS + Math.random() * (MAX_NODE_RADIUS - MIN_NODE_RADIUS),
     });
   }
   return nodes;
@@ -52,19 +62,21 @@ function calculateGridPositions(width: number, height: number, count: number): {
 
 function calculateClusterPositions(width: number, height: number, count: number): { x: number; y: number }[] {
   const positions: { x: number; y: number }[] = [];
-  // Create 3-4 cluster centers
+  // Create 5-6 network cluster centers for Build mode - more interconnected feel
   const clusterCenters = [
-    { x: width * 0.25, y: height * 0.3 },
-    { x: width * 0.7, y: height * 0.25 },
-    { x: width * 0.5, y: height * 0.65 },
-    { x: width * 0.8, y: height * 0.7 },
+    { x: width * 0.2, y: height * 0.25 },
+    { x: width * 0.5, y: height * 0.2 },
+    { x: width * 0.8, y: height * 0.3 },
+    { x: width * 0.3, y: height * 0.6 },
+    { x: width * 0.6, y: height * 0.55 },
+    { x: width * 0.75, y: height * 0.75 },
   ];
   
   for (let i = 0; i < count; i++) {
     const cluster = clusterCenters[i % clusterCenters.length];
-    // Nodes cluster around centers with some spread
+    // Tighter clustering for network effect
     const angle = Math.random() * Math.PI * 2;
-    const distance = Math.random() * Math.min(width, height) * 0.15;
+    const distance = Math.random() * Math.min(width, height) * 0.12;
     positions.push({
       x: cluster.x + Math.cos(angle) * distance,
       y: cluster.y + Math.sin(angle) * distance,
@@ -95,23 +107,51 @@ export function useNodePhysics(
   const currentConfigRef = useRef<ModeConfig>(MODE_CONFIGS.neutral);
   const timeRef = useRef(0);
 
-  // Initialize nodes
-  const initNodes = useCallback((width: number, height: number) => {
-    if (nodesRef.current.length === 0) {
-      nodesRef.current = generateNodes(width, height);
+  const lastModeRef = useRef<Mode>(null);
+
+  // Initialize or update nodes based on mode
+  const initNodes = useCallback((width: number, height: number, mode: Mode = null) => {
+    const targetCount = getNodeCount(mode);
+    const currentCount = nodesRef.current.length;
+    
+    if (currentCount === 0) {
+      // Initial generation
+      nodesRef.current = generateNodes(width, height, targetCount);
+    } else if (targetCount > currentCount) {
+      // Add more nodes for Build mode (multiplication effect)
+      for (let i = currentCount; i < targetCount; i++) {
+        // Spawn new nodes from existing node positions (multiplication feel)
+        const parentNode = nodesRef.current[i % currentCount];
+        const angle = Math.random() * Math.PI * 2;
+        const spawnDist = 20 + Math.random() * 40;
+        nodesRef.current.push({
+          id: i,
+          x: parentNode.x + Math.cos(angle) * spawnDist,
+          y: parentNode.y + Math.sin(angle) * spawnDist,
+          targetX: parentNode.x,
+          targetY: parentNode.y,
+          vx: (Math.random() - 0.5) * 2,
+          vy: (Math.random() - 0.5) * 2,
+          radius: MIN_NODE_RADIUS + Math.random() * (MAX_NODE_RADIUS - MIN_NODE_RADIUS),
+        });
+      }
+    } else if (targetCount < currentCount) {
+      // Remove excess nodes when leaving Build mode
+      nodesRef.current = nodesRef.current.slice(0, targetCount);
     }
   }, []);
 
   // Update target positions based on mode
   const updateTargets = useCallback((width: number, height: number, mode: Mode) => {
+    const targetCount = getNodeCount(mode);
     let positions: { x: number; y: number }[];
     
     if (mode === 'academic') {
-      positions = calculateGridPositions(width, height, NODE_COUNT);
+      positions = calculateGridPositions(width, height, targetCount);
     } else if (mode === 'build') {
-      positions = calculateClusterPositions(width, height, NODE_COUNT);
+      positions = calculateClusterPositions(width, height, targetCount);
     } else {
-      positions = calculateRandomPositions(width, height, NODE_COUNT);
+      positions = calculateRandomPositions(width, height, targetCount);
     }
     
     nodesRef.current.forEach((node, i) => {
@@ -120,18 +160,23 @@ export function useNodePhysics(
         node.targetY = positions[i].y;
       }
     });
+    
+    lastModeRef.current = mode;
   }, []);
 
-  // Update config when mode changes
+  // Update config and node count when mode changes
   useEffect(() => {
     const modeKey = hoveredMode || 'neutral';
     currentConfigRef.current = MODE_CONFIGS[modeKey];
     
     const canvas = canvasRef.current;
     if (canvas) {
+      // First adjust node count (for Build mode multiplication)
+      initNodes(canvas.width, canvas.height, hoveredMode);
+      // Then update targets
       updateTargets(canvas.width, canvas.height, hoveredMode);
     }
-  }, [hoveredMode, updateTargets, canvasRef]);
+  }, [hoveredMode, updateTargets, initNodes, canvasRef]);
 
   // Physics update
   const updatePhysics = useCallback(() => {

@@ -41,7 +41,7 @@ export function NodeCanvas({ hoveredMode }: NodeCanvasProps) {
       ctx.scale(dpr, dpr);
     }
     
-    initNodes(rect.width, rect.height);
+    initNodes(rect.width, rect.height, hoveredMode);
     updateTargets(rect.width, rect.height, hoveredMode);
   }, [initNodes, updateTargets, hoveredMode]);
 

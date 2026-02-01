@@ -2,14 +2,18 @@ import { useEffect, useState } from 'react';
 import { useMode } from '@/hooks/useMode';
 import { Navigation } from '@/components/shared/Navigation';
 import { TagLegend } from '@/components/build/TagLegend';
-import { ProjectCard } from '@/components/build/ProjectCard';
+import { ProjectShowcase } from '@/components/build/ProjectShowcase';
 import { AggregateMatrix } from '@/components/build/AggregateMatrix';
 import { getBuildArtifacts, filterByTag, sortByDate } from '@/lib/artifacts';
 import type { CollaborationTag } from '@/data/types';
+import { ChevronDown, ChevronUp } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 
 const Build = () => {
   const { mode, setMode, isLoading } = useMode();
   const [activeTag, setActiveTag] = useState<CollaborationTag | null>(null);
+  const [isPhilosophyOpen, setIsPhilosophyOpen] = useState(false);
 
   // Set mode if coming directly to this page
   useEffect(() => {
@@ -36,31 +40,51 @@ const Build = () => {
 
       <Navigation />
       
-      <main className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-16">
+      <main className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-16">
         {/* Hero Section */}
-        <header className="mb-12 animate-fade-in">
+        <header className="mb-8 animate-fade-in">
           <h1 className="text-3xl md:text-4xl font-bold text-slate-800 mb-4">
             Build Portfolio
           </h1>
           
-          {/* AI-Human Collaboration Philosophy */}
-          <div className="bg-white/70 backdrop-blur-sm rounded-xl border border-slate-200/50 p-6 mb-8">
-            <h2 className="text-lg font-semibold text-slate-700 mb-3">
-              AI-Human Collaboration Principles
-            </h2>
-            <p className="text-slate-600 leading-relaxed mb-4">
-              I believe in transparent collaboration between humans and AI. Each project here 
-              is tagged to show the approximate balance of human direction versus AI execution. 
-              This isn't about credit—it's about honesty in how modern work gets done.
-            </p>
-            <div className="text-sm text-slate-500 space-y-1">
-              <p>
-                <strong>Why this matters:</strong> AI tools are transforming how we build and research. 
-                By being explicit about my collaboration patterns, I hope to contribute to honest 
-                discourse about AI's role in academic and technical work.
-              </p>
+          {/* AI-Human Collaboration Philosophy - Collapsible */}
+          <Collapsible open={isPhilosophyOpen} onOpenChange={setIsPhilosophyOpen}>
+            <div className="bg-white/70 backdrop-blur-sm rounded-xl border border-slate-200/50 overflow-hidden">
+              <CollapsibleTrigger asChild>
+                <button className="w-full flex items-center justify-between p-4 text-left hover:bg-slate-50/50 transition-colors">
+                  <div>
+                    <h2 className="text-lg font-semibold text-slate-700">
+                      AI-Human Collaboration Principles
+                    </h2>
+                    <p className="text-sm text-slate-500 mt-0.5">
+                      My philosophy on transparent collaboration with AI
+                    </p>
+                  </div>
+                  {isPhilosophyOpen ? (
+                    <ChevronUp className="w-5 h-5 text-slate-400" />
+                  ) : (
+                    <ChevronDown className="w-5 h-5 text-slate-400" />
+                  )}
+                </button>
+              </CollapsibleTrigger>
+              <CollapsibleContent>
+                <div className="px-4 pb-4 border-t border-slate-100 pt-4">
+                  <p className="text-slate-600 leading-relaxed mb-4">
+                    I believe in transparent collaboration between humans and AI. Each project here 
+                    is tagged to show the approximate balance of human direction versus AI execution. 
+                    This isn't about credit—it's about honesty in how modern work gets done.
+                  </p>
+                  <div className="text-sm text-slate-500 space-y-1">
+                    <p>
+                      <strong>Why this matters:</strong> AI tools are transforming how we build and research. 
+                      By being explicit about my collaboration patterns, I hope to contribute to honest 
+                      discourse about AI's role in academic and technical work.
+                    </p>
+                  </div>
+                </div>
+              </CollapsibleContent>
             </div>
-          </div>
+          </Collapsible>
         </header>
 
         {/* Aggregate Collaboration Matrix */}
@@ -69,12 +93,10 @@ const Build = () => {
         {/* Tag Legend / Filter */}
         <TagLegend activeTag={activeTag} onTagSelect={setActiveTag} />
 
-        {/* Project Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredArtifacts.map((artifact) => (
-            <ProjectCard key={artifact.id} artifact={artifact} />
-          ))}
-        </div>
+        {/* Project Showcase - Horizontal Scroll */}
+        <section className="mb-12">
+          <ProjectShowcase artifacts={filteredArtifacts} />
+        </section>
 
         {/* Empty state */}
         {filteredArtifacts.length === 0 && (

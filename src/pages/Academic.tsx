@@ -38,7 +38,7 @@ const Academic = () => {
   };
 
   return (
-    <div className="min-h-screen bg-stone-50">
+    <div className="min-h-screen bg-stone-50 font-academic">
       {/* Paper texture background */}
       <div 
         className="fixed inset-0 opacity-30 pointer-events-none"
@@ -55,11 +55,11 @@ const Academic = () => {
           <div className="flex flex-col sm:flex-row gap-6 items-start">
             {/* Profile photo placeholder */}
             <div className="w-24 h-24 rounded-full bg-gradient-to-br from-stone-200 to-stone-300 flex items-center justify-center shrink-0">
-              <span className="text-2xl font-serif text-stone-500">AG</span>
+              <span className="text-2xl text-stone-500">AG</span>
             </div>
             
             <div>
-              <h1 className="text-3xl font-serif text-stone-800 mb-2">
+              <h1 className="text-3xl font-bold text-stone-800 mb-2">
                 Augusto González-Bonorino
               </h1>
               <p className="text-lg text-stone-600 mb-3">

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -115,7 +115,16 @@ All colors MUST be HSL.
     @apply bg-background text-foreground;
   }
 
-  /* Typography for Academic mode */
+  /* Typography for Academic mode - elegant serif */
+  .font-academic {
+    font-family: 'Playfair Display', Georgia, serif;
+  }
+
+  /* Typography for Build mode - technical monospace */
+  .font-build {
+    font-family: 'Roboto Mono', 'JetBrains Mono', monospace;
+  }
+
   .font-serif {
     font-family: 'Playfair Display', Georgia, serif;
   }
@@ -125,7 +134,7 @@ All colors MUST be HSL.
   }
 
   .font-mono {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Roboto Mono', 'JetBrains Mono', monospace;
   }
 }
 

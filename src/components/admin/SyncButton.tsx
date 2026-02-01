@@ -4,10 +4,15 @@ import { RefreshCw, Check, AlertCircle } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
 
+interface SyncResult {
+  inserted: number;
+  skipped: number;
+}
+
 interface SyncButtonProps {
   source: 'orcid' | 'github' | 'google_scholar';
   sourceId: string;
-  onSyncComplete?: (items: unknown[]) => void;
+  onSyncComplete?: (result: SyncResult) => void;
   onReposFetched?: (repos: unknown[]) => void;
   disabled?: boolean;
   className?: string;
@@ -66,7 +71,7 @@ export function SyncButton({
         throw new Error(data.error);
       }
 
-      // GitHub returns repos for selection
+      // GitHub returns repos for selection (first call)
       if (source === 'github' && data.repos) {
         onReposFetched?.(data.repos);
         setItemCount(data.repos.length);
@@ -74,10 +79,10 @@ export function SyncButton({
         return;
       }
 
-      // ORCID returns items directly
-      if (data.items) {
-        onSyncComplete?.(data.items);
-        setItemCount(data.items.length);
+      // ORCID and GitHub (second call) return insert counts
+      if (data.inserted !== undefined) {
+        onSyncComplete?.({ inserted: data.inserted, skipped: data.skipped || 0 });
+        setItemCount(data.inserted);
       }
 
       setStatus('success');

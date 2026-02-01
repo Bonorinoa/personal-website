@@ -139,28 +139,51 @@ const Admin = () => {
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="grid gap-4 md:grid-cols-3">
+                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
                   <ConfigSource
                     name="ORCID"
-                    enabled={false}
+                    enabled={(config as any)?.sources?.orcid?.enabled}
+                    configValue={(config as any)?.sources?.orcid?.id}
                     description="Sync publications from your ORCID profile"
                     configNeeded="ORCID ID"
                   />
                   <ConfigSource
-                    name="Crossref"
-                    enabled={false}
-                    description="Discover citations and references"
-                    configNeeded="Email (polite pool)"
+                    name="Google Scholar"
+                    enabled={(config as any)?.sources?.google_scholar?.enabled}
+                    configValue={(config as any)?.sources?.google_scholar?.user_id}
+                    description="Import citations and h-index data"
+                    configNeeded="Scholar User ID"
                   />
                   <ConfigSource
                     name="GitHub"
-                    enabled={false}
+                    enabled={(config as any)?.sources?.github?.enabled}
+                    configValue={(config as any)?.sources?.github?.username}
                     description="Import repositories and activity"
-                    configNeeded="Username + Token (optional)"
+                    configNeeded="Username"
+                  />
+                  <ConfigSource
+                    name="OpenAlex"
+                    enabled={(config as any)?.sources?.openalex?.enabled}
+                    configValue={(config as any)?.sources?.openalex?.email_aliases?.length > 0 ? `${(config as any).sources.openalex.email_aliases.length} aliases` : undefined}
+                    description="Discover works across email aliases"
+                    configNeeded="Email aliases"
                   />
                 </div>
+                
+                {/* Profile info */}
+                {(config as any)?.profile && (
+                  <div className="mt-6 p-4 bg-muted/30 rounded-lg">
+                    <h4 className="text-sm font-medium text-foreground mb-2">Profile Configuration</h4>
+                    <div className="grid gap-2 text-xs text-muted-foreground">
+                      <p><strong>Name:</strong> {(config as any).profile.name}</p>
+                      <p><strong>Primary Email:</strong> {(config as any).profile.emails?.primary}</p>
+                      <p><strong>Aliases:</strong> {(config as any).profile.emails?.aliases?.join(', ')}</p>
+                    </div>
+                  </div>
+                )}
+                
                 <p className="text-xs text-muted-foreground">
-                  Phase 2: Add your credentials to src/data/inbox.json to enable these sources.
+                  Edit <code className="bg-muted px-1 rounded">src/data/inbox.json</code> to update source configuration.
                 </p>
               </CardContent>
             </Card>
@@ -226,26 +249,36 @@ const Admin = () => {
 function ConfigSource({ 
   name, 
   enabled, 
+  configValue,
   description, 
   configNeeded 
 }: { 
   name: string; 
   enabled: boolean; 
+  configValue?: string;
   description: string;
   configNeeded: string;
 }) {
+  const isConfigured = !!configValue;
+  
   return (
-    <div className={`p-4 rounded-lg border ${enabled ? 'bg-green-50 border-green-200' : 'bg-muted/50 border-border'}`}>
+    <div className={`p-4 rounded-lg border ${enabled ? 'bg-green-50 border-green-200 dark:bg-green-950/30 dark:border-green-800' : isConfigured ? 'bg-amber-50 border-amber-200 dark:bg-amber-950/30 dark:border-amber-800' : 'bg-muted/50 border-border'}`}>
       <div className="flex items-center justify-between mb-2">
         <span className="font-medium text-foreground">{name}</span>
-        <span className={`text-xs px-2 py-0.5 rounded ${enabled ? 'bg-green-200 text-green-800' : 'bg-muted text-muted-foreground'}`}>
-          {enabled ? 'Enabled' : 'Disabled'}
+        <span className={`text-xs px-2 py-0.5 rounded ${enabled ? 'bg-green-200 text-green-800 dark:bg-green-800 dark:text-green-200' : isConfigured ? 'bg-amber-200 text-amber-800 dark:bg-amber-800 dark:text-amber-200' : 'bg-muted text-muted-foreground'}`}>
+          {enabled ? 'Active' : isConfigured ? 'Ready' : 'Not configured'}
         </span>
       </div>
       <p className="text-xs text-muted-foreground mb-2">{description}</p>
-      <p className="text-xs text-muted-foreground">
-        Needs: <code className="bg-muted px-1 rounded">{configNeeded}</code>
-      </p>
+      {configValue ? (
+        <p className="text-xs font-mono bg-muted px-2 py-1 rounded truncate" title={configValue}>
+          {configValue}
+        </p>
+      ) : (
+        <p className="text-xs text-muted-foreground">
+          Needs: <code className="bg-muted px-1 rounded">{configNeeded}</code>
+        </p>
+      )}
     </div>
   );
 }

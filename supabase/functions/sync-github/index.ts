@@ -1,4 +1,5 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2.49.1";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -59,6 +60,11 @@ serve(async (req) => {
 
     console.log(`Fetching repos for GitHub user: ${username}`);
 
+    // Initialize Supabase client with service role for DB writes
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+    const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+    const supabase = createClient(supabaseUrl, supabaseServiceKey);
+
     // Fetch repos from GitHub API (public, no token needed for public repos)
     const response = await fetch(
       `https://api.github.com/users/${username}/repos?per_page=100&sort=updated`,
@@ -103,48 +109,96 @@ serve(async (req) => {
         isArchived: repo.archived,
       }));
 
-    // If selected_repos provided, convert to inbox items
+    // If selected_repos provided, insert into inbox_items
     if (selected_repos && Array.isArray(selected_repos) && selected_repos.length > 0) {
       const selectedRepoItems = repoItems.filter(repo => 
         selected_repos.includes(repo.id) || selected_repos.includes(repo.name)
       );
 
-      const inboxItems = selectedRepoItems.map(repo => ({
-        id: repo.id,
-        source: 'github' as const,
-        discoveredAt: new Date().toISOString(),
-        status: 'pending' as const,
-        rawData: repo,
-        suggestedArtifact: {
-          title: repo.name.replace(/-/g, ' ').replace(/_/g, ' '),
-          type: 'project' as const,
-          date: repo.createdAt.split('T')[0],
-          summary: repo.description || `A ${repo.language || 'code'} project`,
-          mode_visibility: 'build' as const,
-          section: 'experience' as const,
-          tags: inferCollaborationTag(repo),
-          source_ids: {
-            github: repo.url,
+      // Get existing external_ids to check for duplicates
+      const { data: existingItems } = await supabase
+        .from('inbox_items')
+        .select('external_id')
+        .eq('source', 'github');
+      
+      const existingIds = new Set(existingItems?.map(item => item.external_id) || []);
+
+      // Filter out duplicates and prepare items
+      const newItems: Array<{
+        source: string;
+        external_id: string;
+        status: string;
+        raw_data: unknown;
+        suggested_artifact: unknown;
+        discovered_at: string;
+      }> = [];
+
+      let skippedCount = 0;
+
+      for (const repo of selectedRepoItems) {
+        if (existingIds.has(repo.id)) {
+          skippedCount++;
+          continue;
+        }
+
+        newItems.push({
+          source: 'github',
+          external_id: repo.id,
+          status: 'pending',
+          raw_data: repo,
+          suggested_artifact: {
+            title: repo.name.replace(/-/g, ' ').replace(/_/g, ' '),
+            type: 'project',
+            date: repo.createdAt.split('T')[0],
+            summary: repo.description || `A ${repo.language || 'code'} project`,
+            mode_visibility: 'build',
+            section: 'experience',
+            tags: inferCollaborationTag(repo),
+            source_ids: {
+              github: repo.url,
+            },
+            links: {
+              repo: repo.url,
+              demo: repo.homepage || null,
+            },
           },
-          links: {
-            repo: repo.url,
-            demo: repo.homepage || undefined,
-          },
-        },
-      }));
+          discovered_at: new Date().toISOString(),
+        });
+      }
+
+      // Insert new items into database
+      let insertedCount = 0;
+      if (newItems.length > 0) {
+        const { data: inserted, error } = await supabase
+          .from('inbox_items')
+          .insert(newItems)
+          .select();
+
+        if (error) {
+          console.error('Database insert error:', error);
+          return new Response(
+            JSON.stringify({ error: `Database error: ${error.message}` }),
+            { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+          );
+        }
+
+        insertedCount = inserted?.length || 0;
+      }
+
+      console.log(`Inserted ${insertedCount} new items, skipped ${skippedCount} duplicates`);
 
       return new Response(
         JSON.stringify({ 
           success: true, 
-          items: inboxItems,
-          count: inboxItems.length,
+          inserted: insertedCount,
+          skipped: skippedCount,
           syncedAt: new Date().toISOString(),
         }),
         { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
 
-    // Return repo list for selection
+    // Return repo list for selection (first step of two-step flow)
     return new Response(
       JSON.stringify({ 
         success: true, 

@@ -1,58 +1,44 @@
-export interface Node {
-  id: number;
+export interface Particle {
   x: number;
   y: number;
-  targetX: number;
-  targetY: number;
+  originX: number;
+  originY: number;
   vx: number;
   vy: number;
-  radius: number;
+  size: number;
+  color: string;
 }
 
-export interface ModeConfig {
-  nodeColor: string;
-  lineColor: string;
-  connectionDistance: number;
-  maxConnections: number;
-  cursorInfluence: number;
-  easeSpeed: number;
-  ambientDrift: number;
-}
+export type BackgroundMode = 'neutral' | 'academic' | 'build';
 
-export const MODE_CONFIGS: Record<'neutral' | 'academic' | 'build', ModeConfig> = {
+// Physics constants per mode
+export const MODE_PHYSICS = {
   neutral: {
-    nodeColor: 'rgba(56, 189, 248, 0.6)',      // sky-400
-    lineColor: 'rgba(56, 189, 248, 0.15)',
-    connectionDistance: 100,
-    maxConnections: 3,
-    cursorInfluence: 0.8,
-    easeSpeed: 0.03,
-    ambientDrift: 0.12,
+    wanderForce: 0.1,
+    originPull: 0.001,
+    friction: 0.95,
+    mouseRadius: 150,
+    mousePush: 10,
+    particleColor: 'rgba(56, 189, 248, 0.5)',  // sky-400
+    lineColor: 'rgba(56, 189, 248, 0.1)',
   },
   academic: {
-    nodeColor: 'rgba(251, 191, 36, 0.7)',      // amber-400
-    lineColor: 'rgba(251, 191, 36, 0.1)',
-    connectionDistance: 80,
-    maxConnections: 2,
-    cursorInfluence: 0.3,
-    easeSpeed: 0.06,           // Fast snap to grid
-    ambientDrift: 0.02,        // Minimal movement - solid foundation
+    springForce: 0.05,
+    friction: 0.8,
+    mouseRadius: 100,
+    mousePush: 5,
+    particleColor: 'rgba(180, 140, 60, 0.5)',  // warm gold/amber
+    lineColor: 'rgba(180, 140, 60, 0.08)',
   },
   build: {
-    nodeColor: 'rgba(96, 165, 250, 0.7)',      // blue-400
-    lineColor: 'rgba(96, 165, 250, 0.25)',
-    connectionDistance: 120,
-    maxConnections: 6,
-    cursorInfluence: 1.0,
-    easeSpeed: 0.035,
-    ambientDrift: 0.25,        // Dynamic movement
+    wanderForce: 0.5,
+    friction: 0.98,
+    mouseRadius: 200,
+    mousePush: 15,
+    particleColor: 'rgba(59, 130, 246, 0.6)',  // blue-500
+    lineColor: 'rgba(59, 130, 246, 0.15)',
+    connectionDistance: 100,
   },
-};
+} as const;
 
-// Base node count - Build mode will multiply this
-export const BASE_NODE_COUNT = 80;
-export const BUILD_NODE_MULTIPLIER = 1.8;  // 80 * 1.8 = ~144 nodes in Build mode
-export const CURSOR_INFLUENCE_RADIUS = 120;
-export const VELOCITY_DAMPING = 0.9;
-export const MIN_NODE_RADIUS = 1.5;
-export const MAX_NODE_RADIUS = 5;  // Max ~10px diameter (roughly 1cm on screen)
+export const GRID_SPACING = 45;  // Spacing between grid points

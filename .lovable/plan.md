@@ -1,182 +1,272 @@
 
-# Landing Page Enhancement: Persistent Hover, Enhanced Background, and Uniform Buttons
 
-## Overview
+# Google AI Studio-Inspired Interactive Node Network Background
 
-This plan addresses three improvements to the landing page:
-1. **Sticky Hover State** - Once user hovers over either mode, that style persists until they hover the other
-2. **Enhanced Pond Animation** - More captivating ambient background with floating elements and depth
-3. **Geometrically Identical Buttons** - Both buttons share exact same dimensions and structure
+## Description of the Animation Concept
+
+Based on your description, the Google AI Studio background features a **responsive particle/node network system** with the following characteristics:
+
+### Visual Elements
+- **Connected Nodes**: Multiple floating dots/points scattered across the canvas
+- **Dynamic Lines**: Lines connecting nearby nodes, creating a network graph visualization
+- **Flowing Particles**: Small particles that travel along the connection lines or drift independently
+- **Morphing Shapes**: Abstract blobs or clusters that reshape based on the current mode
+
+### Interaction Behavior
+- **Cursor Reactivity**: Nodes near the cursor move away or toward it, creating a "magnetic field" effect
+- **Mode Reorganization**: When switching modes, nodes physically rearrange into different patterns:
+  - **Academic Mode**: Organized, structured grid-like arrangement (scholarly, ordered)
+  - **Build Mode**: Web/network cluster formation (collaborative, interconnected)
+- **Color Palette Shift**: Warm tones for Academic, cool technical tones for Build
+- **Density Changes**: Build mode may show more connections/complexity; Academic may be sparser and cleaner
+
+### Motion Quality
+- **Responsive**: Elements react quickly to mouse movement
+- **Organic Flow**: Smooth easing, natural-feeling physics
+- **Living Background**: Continuous subtle movement even without interaction
 
 ---
 
-## Part 1: Sticky Hover State
+## Implementation Plan
 
-### Current Behavior
-- Hover over Academic: page shows Academic style
-- Mouse leaves button: page reverts to neutral
-- This creates visual "flickering" as users explore
+### Architecture: Canvas-Based Particle System
 
-### New Behavior
-- Page loads with neutral "welcome" state (calm, inviting)
-- First hover over either button: that mode's style activates
-- Mouse leaves: style PERSISTS (no revert to neutral)
-- Hovering other button: switches to that mode's style
-- Result: user only sees neutral state once, on initial load
-
-### Implementation
-**File: `src/pages/Index.tsx`**
-- Change state from `hoveredMode` to `activeMode` with different logic
-- Track actual hover separately from persisted selection
-- Update handler: `onMouseEnter` sets `activeMode`, `onMouseLeave` does nothing
+Replace the current CSS-only approach with a **hybrid Canvas + React** system for performance and flexibility.
 
 ```text
-Before:                          After:
-[null] -> hover A -> [A]         [null] -> hover A -> [A]
-       -> leave   -> [null]              -> leave   -> [A] (persists!)
-       -> hover B -> [B]                 -> hover B -> [B]
-       -> leave   -> [null]              -> leave   -> [B] (persists!)
++--------------------------------------------------+
+|  PondBackground (Container)                      |
+|  +--------------------------------------------+  |
+|  |  <canvas> - Particles, Nodes, Lines        |  |
+|  |  - High-performance 2D rendering           |  |
+|  |  - Physics simulation (spring/repulsion)   |  |
+|  |  - 60fps animation loop                    |  |
+|  +--------------------------------------------+  |
+|  +--------------------------------------------+  |
+|  |  CSS Layers (existing)                     |  |
+|  |  - Gradient backgrounds                    |  |
+|  |  - Mode-specific textures                  |  |
+|  +--------------------------------------------+  |
++--------------------------------------------------+
 ```
 
 ---
 
-## Part 2: Enhanced Pond Background
+### Core Components
 
-### Current Issues
-- Ripples are subtle and can be missed
-- No ambient movement when cursor is still
-- Background feels static between interactions
-
-### Enhancements
-
-**Floating Orbs/Particles**
-- 3-5 slowly drifting translucent circles
-- Different sizes (20px to 80px)
-- Gentle sine-wave motion paths
-- Opacity: 10-20% (subtle, not distracting)
-
-**Layered Depth Effect**
-- Multiple gradient layers at different positions
-- Parallax-like movement following cursor (slower response)
-- Creates sense of depth in the "pond"
-
-**Improved Ripples**
-- Larger max size (300px instead of 200px)
-- Multiple concentric rings per ripple
-- Slight blur for more organic water feel
-- Slower, more graceful animation timing
-
-**Ambient Shimmer**
-- Subtle CSS animation on the base gradient
-- Slow color shifts within the palette
-- Creates "living" background even without interaction
-
-**Mode-Specific Enhancements**
-- Academic hover: paper-grain texture + warm light glow
-- Build hover: subtle scan-line animation + digital particles
-- Neutral: calm water with gentle light reflections
-
-### Animation Keyframes to Add
+#### 1. Node System
 ```text
-@keyframes float - gentle up/down/drift for orbs
-@keyframes shimmer - slow opacity/position shift
-@keyframes pulse-glow - soft radial light breathing
+interface Node {
+  id: number;
+  x: number;           // Current position
+  y: number;
+  targetX: number;     // Target position (for mode transitions)
+  targetY: number;
+  vx: number;          // Velocity for physics
+  vy: number;
+  radius: number;      // Visual size (3-8px)
+  connections: number[]; // IDs of connected nodes
+}
+```
+
+- Generate 40-60 nodes distributed across the canvas
+- Each node has physics properties (position, velocity)
+- Nodes ease toward target positions when mode changes
+
+#### 2. Connection Lines
+```text
+- Calculate distances between all node pairs
+- Draw lines for pairs within threshold distance (150-200px)
+- Line opacity based on distance (closer = more opaque)
+- Line color transitions with mode
+```
+
+#### 3. Mode-Specific Formations
+
+**Neutral State (Welcome)**
+- Random, organic distribution
+- Gentle ambient drift
+- Sparse connections
+
+**Academic Mode**
+- Nodes reorganize into a loose grid pattern
+- Reduced connections (cleaner, focused)
+- Warm amber connection colors
+- Slower, more deliberate movement
+
+**Build Mode**  
+- Nodes cluster into interconnected groups
+- Dense network of connections
+- Cool blue connection colors
+- More dynamic, responsive movement
+
+```text
+NEUTRAL:              ACADEMIC:             BUILD:
+  o     o               o   o   o            o---o---o
+    o       o           o   o   o           /|\ /|\ /|
+  o   o                 o   o   o          o-+-o-+-o
+      o   o             o   o   o           \|/ \|/ \|
+  o                     o   o   o            o---o---o
 ```
 
 ---
 
-## Part 3: Geometrically Identical Buttons
+### Animation Loop
 
-### Current Issue
-Buttons use padding-based sizing:
-- `px-8 py-4 md:px-12 md:py-6`
-- Content determines final width
-- "Academic" and "Build" have different character counts
-
-### Solution: Fixed Dimensions
-
-**Uniform Size Approach**
-- Set explicit width: `w-40 md:w-52` (same for both)
-- Set explicit height: `h-24 md:h-32`
-- Center content with flexbox
-- Both buttons become perfect rectangles
-
-**Updated Button Structure**
 ```text
-+------------------+    +------------------+
-|                  |    |                  |
-|     Academic     |    |      Build       |
-|  Research & ...  |    |  Projects & ...  |
-|                  |    |                  |
-+------------------+    +------------------+
-     160px x 96px            160px x 96px
+function animate() {
+  1. Clear canvas
+  
+  2. Update node positions
+     - Apply velocity
+     - Apply cursor repulsion/attraction
+     - Ease toward target positions
+     - Add ambient drift
+     - Dampen velocity
+  
+  3. Calculate connections
+     - Find nodes within connection distance
+     - Filter based on mode density
+  
+  4. Draw connections
+     - Line with distance-based opacity
+     - Mode-specific color
+  
+  5. Draw nodes
+     - Filled circles with glow effect
+     - Mode-specific color
+  
+  6. requestAnimationFrame(animate)
+}
 ```
-
-**Visual Balance**
-- Identical border-radius
-- Same glassmorphism effect
-- Matching hover animations
-- Symmetric accent line widths
 
 ---
 
-## Technical Implementation
+### Cursor Interaction
 
-### Files to Modify
+```text
+Mouse Position -> Force Field
+
+For each node:
+  distance = sqrt((node.x - mouse.x)² + (node.y - mouse.y)²)
+  
+  if distance < INFLUENCE_RADIUS (150px):
+    // Repulsion force (nodes move away from cursor)
+    force = (INFLUENCE_RADIUS - distance) / INFLUENCE_RADIUS
+    angle = atan2(node.y - mouse.y, node.x - mouse.x)
+    
+    node.vx += cos(angle) * force * STRENGTH
+    node.vy += sin(angle) * force * STRENGTH
+```
+
+---
+
+### Mode Transition Animation
+
+```text
+When hoveredMode changes:
+
+1. Calculate new target positions for all nodes
+   - Academic: grid positions
+   - Build: cluster positions  
+   - Neutral: random positions
+
+2. Nodes ease toward targets over 0.8-1.2 seconds
+   node.x += (node.targetX - node.x) * 0.05
+   node.y += (node.targetY - node.y) * 0.05
+
+3. Connection threshold and color transition simultaneously
+```
+
+---
+
+### Technical Implementation
+
+#### Files to Modify
 
 | File | Changes |
 |------|---------|
-| `src/pages/Index.tsx` | Implement sticky hover logic (activeMode state) |
-| `src/components/landing/PondBackground.tsx` | Add floating orbs, layered gradients, enhanced ripples, ambient shimmer |
-| `src/components/landing/ModeButton.tsx` | Fixed width/height, flexbox centering, update props to not clear on leave |
+| `src/components/landing/PondBackground.tsx` | Major rewrite: Add canvas element, particle system, animation loop |
 
-### New CSS Animations (in PondBackground)
+#### New Additions to PondBackground.tsx
+
+**State & Refs**
+- `canvasRef` - Reference to canvas element
+- `nodesRef` - Array of node objects (mutable for performance)
+- `animationFrameRef` - For cleanup
+- `mouseRef` - Current mouse position
+
+**New Functions**
+- `generateNodes()` - Create initial node array
+- `calculateTargetPositions(mode)` - Get grid/cluster/random positions
+- `updatePhysics()` - Apply forces, velocity, damping
+- `drawFrame()` - Render nodes and connections
+- `animate()` - Main loop
+
+**Canvas Layer**
+- Positioned behind CSS layers
+- Sized to fill container
+- Handles resize events
+
+---
+
+### Visual Parameters by Mode
+
+| Parameter | Neutral | Academic | Build |
+|-----------|---------|----------|-------|
+| Node count | 45 | 45 | 45 |
+| Node color | `sky-300` | `amber-400` | `blue-400` |
+| Line color | `sky-200/30` | `amber-300/25` | `blue-300/40` |
+| Connection distance | 140px | 120px | 180px |
+| Max connections/node | 3 | 2 | 5 |
+| Movement speed | Medium | Slow | Fast |
+| Cursor influence | Medium | Gentle | Strong |
+| Formation | Random | Grid | Clusters |
+
+---
+
+### Keeping Existing Features
+
+The current background effects will be preserved as overlay layers:
+- Gradient backgrounds (mode-specific colors)
+- Paper texture (Academic mode)
+- Scan-line grid (Build mode)  
+- Cursor-following glow
+- Ambient shimmer
+
+The canvas particle system adds a new base layer underneath these.
+
+---
+
+### Performance Considerations
+
+1. **Use Canvas 2D** - More performant than DOM-based particles
+2. **Limit node count** - 40-60 nodes is visually rich but performant
+3. **Throttle mouse events** - Update mouse position at 60fps max
+4. **Use refs for mutable data** - Avoid React state for physics calculations
+5. **Respect reduced motion** - Fall back to static/minimal animation
+
+---
+
+### Accessibility
+
 ```text
-@keyframes float {
-  0%, 100% { transform: translate(0, 0); }
-  25% { transform: translate(10px, -15px); }
-  50% { transform: translate(-5px, -25px); }
-  75% { transform: translate(-15px, -10px); }
+@media (prefers-reduced-motion: reduce) {
+  - Disable cursor reactivity
+  - Freeze nodes in place
+  - Remove ambient drift
+  - Keep static connection lines visible
 }
-
-@keyframes shimmer {
-  0%, 100% { opacity: 0.1; }
-  50% { opacity: 0.25; }
-}
-
-@keyframes pulse-glow {
-  0%, 100% { transform: scale(1); opacity: 0.3; }
-  50% { transform: scale(1.1); opacity: 0.5; }
-}
-```
-
-### State Logic Change
-```text
-// Current
-const [hoveredMode, setHoveredMode] = useState<Mode | null>(null);
-onMouseLeave={() => setHoveredMode(null)}  // resets
-
-// New
-const [activeMode, setActiveMode] = useState<Mode | null>(null);
-onMouseEnter={() => setActiveMode(mode)}   // sets
-onMouseLeave={() => {}}                     // does nothing - persists!
 ```
 
 ---
 
-## Accessibility Considerations
+### Expected Result
 
-- All animations respect `prefers-reduced-motion`
-- Floating elements have reduced/disabled motion for accessibility
-- Buttons maintain clear focus states
-- Sufficient color contrast maintained in all states
+1. **Page Load**: Nodes fade in with organic random positions, gentle drift
+2. **Cursor Movement**: Nodes smoothly push away from cursor, creating a ripple effect
+3. **Hover Academic**: Nodes gracefully reorganize into a structured grid, colors warm
+4. **Hover Build**: Nodes cluster into interconnected groups, colors shift cool/blue
+5. **Mode Persistence**: Formation remains after cursor leaves button (sticky state)
+6. **Overall Feel**: Living, breathing background that visually signals each mode's philosophy
 
----
-
-## Expected Result
-
-1. **First Visit**: User sees calm, neutral pond with gentle ambient animation
-2. **First Hover**: Page smoothly transitions to that mode's style (Academic warm tones or Build cool/technical)
-3. **Exploration**: User can hover between buttons, style switches but never reverts to neutral
-4. **Visual Impact**: Background feels alive with floating elements, layered depth, and organic ripples
-5. **Symmetry**: Both buttons are perfectly identical rectangles, creating balanced composition

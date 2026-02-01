@@ -1,377 +1,182 @@
 
-# Admin Panel Upgrade, API Sync, and Build Page Redesign
+# Landing Page Enhancement: Persistent Hover, Enhanced Background, and Uniform Buttons
 
-**Status: ✅ IMPLEMENTED**
+## Overview
 
-## Implementation Summary
-
-All major features have been implemented:
-
-### Part 1: API Sync System ✅
-- `supabase/functions/sync-orcid/index.ts` - Fetches publications from ORCID API
-- `supabase/functions/sync-github/index.ts` - Fetches repos with selection support
-- `SyncButton.tsx` - Reusable sync button with loading/success/error states
-- `RepoSelector.tsx` - Modal for filtering and selecting GitHub repos
-
-### Part 2: Content Management Upgrade ✅
-- `ArtifactFilters.tsx` - Search, filter by type/visibility/section, sort
-- `ArtifactEditor.tsx` - Full edit form for all artifact fields
-- `BulkActions.tsx` - Multi-select with visibility/featured/delete actions
-- Two-panel layout with localStorage persistence
-
-### Part 3: Build Page Redesign ✅
-- `ProjectShowcase.tsx` - Horizontal scroll container with arrows
-- `ExpandableProjectCard.tsx` - Cards expand on hover
-- `ProjectModal.tsx` - Full details modal on click
-- Collapsible philosophy header
-
-### Part 4: Analytics Tab ✅
-- Clear messaging about publishing requirements
+This plan addresses three improvements to the landing page:
+1. **Sticky Hover State** - Once user hovers over either mode, that style persists until they hover the other
+2. **Enhanced Pond Animation** - More captivating ambient background with floating elements and depth
+3. **Geometrically Identical Buttons** - Both buttons share exact same dimensions and structure
 
 ---
 
-## Original Plan
+## Part 1: Sticky Hover State
 
-This plan covers three major enhancements:
-1. **API Sync System** - Sync buttons for ORCID/GitHub with repository filtering
-2. **Content Management Upgrade** - Full CRUD capabilities with filtering and bulk actions
-3. **Build Page Redesign** - Grid with expandable cards and horizontal scrolling option
+### Current Behavior
+- Hover over Academic: page shows Academic style
+- Mouse leaves button: page reverts to neutral
+- This creates visual "flickering" as users explore
+
+### New Behavior
+- Page loads with neutral "welcome" state (calm, inviting)
+- First hover over either button: that mode's style activates
+- Mouse leaves: style PERSISTS (no revert to neutral)
+- Hovering other button: switches to that mode's style
+- Result: user only sees neutral state once, on initial load
+
+### Implementation
+**File: `src/pages/Index.tsx`**
+- Change state from `hoveredMode` to `activeMode` with different logic
+- Track actual hover separately from persisted selection
+- Update handler: `onMouseEnter` sets `activeMode`, `onMouseLeave` does nothing
+
+```text
+Before:                          After:
+[null] -> hover A -> [A]         [null] -> hover A -> [A]
+       -> leave   -> [null]              -> leave   -> [A] (persists!)
+       -> hover B -> [B]                 -> hover B -> [B]
+       -> leave   -> [null]              -> leave   -> [B] (persists!)
+```
 
 ---
 
-## Part 1: API Sync System
+## Part 2: Enhanced Pond Background
 
-### Architecture
+### Current Issues
+- Ripples are subtle and can be missed
+- No ambient movement when cursor is still
+- Background feels static between interactions
 
-The sync system will use Supabase Edge Functions to securely fetch data from external APIs, then surface results in the Admin Inbox for approval before publishing.
+### Enhancements
 
+**Floating Orbs/Particles**
+- 3-5 slowly drifting translucent circles
+- Different sizes (20px to 80px)
+- Gentle sine-wave motion paths
+- Opacity: 10-20% (subtle, not distracting)
+
+**Layered Depth Effect**
+- Multiple gradient layers at different positions
+- Parallax-like movement following cursor (slower response)
+- Creates sense of depth in the "pond"
+
+**Improved Ripples**
+- Larger max size (300px instead of 200px)
+- Multiple concentric rings per ripple
+- Slight blur for more organic water feel
+- Slower, more graceful animation timing
+
+**Ambient Shimmer**
+- Subtle CSS animation on the base gradient
+- Slow color shifts within the palette
+- Creates "living" background even without interaction
+
+**Mode-Specific Enhancements**
+- Academic hover: paper-grain texture + warm light glow
+- Build hover: subtle scan-line animation + digital particles
+- Neutral: calm water with gentle light reflections
+
+### Animation Keyframes to Add
 ```text
-+-------------------+     +----------------------+     +------------------+
-| Admin Panel       | --> | Edge Function        | --> | External API     |
-| (Sync Button)     |     | (ORCID/GitHub fetch) |     | (ORCID, GitHub)  |
-+-------------------+     +----------------------+     +------------------+
-         |                         |
-         v                         v
-+-------------------+     +----------------------+
-| UI: Loading State |     | inbox.json / Supabase|
-| + Progress        |     | (Discovered Items)   |
-+-------------------+     +----------------------+
+@keyframes float - gentle up/down/drift for orbs
+@keyframes shimmer - slow opacity/position shift
+@keyframes pulse-glow - soft radial light breathing
 ```
 
-### Source Configuration Panel (Enhanced)
+---
 
-Each source card will get:
-- **Sync Now** button (triggers fetch)
-- **Last Synced** timestamp
-- **Status indicator** (syncing, success, error)
-- **Items Found** count after sync
+## Part 3: Geometrically Identical Buttons
 
-### ORCID Sync Implementation
+### Current Issue
+Buttons use padding-based sizing:
+- `px-8 py-4 md:px-12 md:py-6`
+- Content determines final width
+- "Academic" and "Build" have different character counts
 
-**Edge Function: `sync-orcid`**
-- Uses the public ORCID API (no OAuth required for public data)
-- Endpoint: `https://pub.orcid.org/v3.0/{ORCID_ID}/works`
-- Fetches: Publications, DOIs, titles, dates
-- Returns: Array of `InboxItem` suggestions
+### Solution: Fixed Dimensions
 
-**Data Flow:**
-1. Admin clicks "Sync ORCID"
-2. Frontend calls edge function with ORCID ID
-3. Edge function fetches works from ORCID API
-4. Results mapped to `suggestedArtifact` format
-5. Items added to Inbox with status "pending"
-6. Admin reviews/approves/rejects each item
+**Uniform Size Approach**
+- Set explicit width: `w-40 md:w-52` (same for both)
+- Set explicit height: `h-24 md:h-32`
+- Center content with flexbox
+- Both buttons become perfect rectangles
 
-### GitHub Sync Implementation
-
-**Edge Function: `sync-github`**
-- Uses GitHub REST API (public repos, no token needed; private repos need token)
-- Endpoint: `https://api.github.com/users/{username}/repos`
-- Fetches: Repository list with metadata (stars, description, language, topics)
-
-**Repository Filter UI:**
-After fetching, show a selection modal:
-- List all repos with checkboxes
-- Filter by: language, stars, recently updated
-- Search by name
-- "Select All" / "Select None" buttons
-- Only selected repos become Inbox items
-
-**Data Mapping:**
+**Updated Button Structure**
 ```text
-GitHub Repo -> InboxItem
-- name -> title
-- description -> summary
-- html_url -> links.repo
-- homepage -> links.demo (if exists)
-- topics -> suggested tags
-- stargazers_count -> metadata for display
++------------------+    +------------------+
+|                  |    |                  |
+|     Academic     |    |      Build       |
+|  Research & ...  |    |  Projects & ...  |
+|                  |    |                  |
++------------------+    +------------------+
+     160px x 96px            160px x 96px
 ```
 
-### Files to Create
+**Visual Balance**
+- Identical border-radius
+- Same glassmorphism effect
+- Matching hover animations
+- Symmetric accent line widths
 
-| File | Purpose |
-|------|---------|
-| `supabase/functions/sync-orcid/index.ts` | ORCID API fetch edge function |
-| `supabase/functions/sync-github/index.ts` | GitHub API fetch edge function |
-| `src/components/admin/SyncButton.tsx` | Reusable sync button with loading state |
-| `src/components/admin/RepoSelector.tsx` | Modal for filtering GitHub repos |
+---
+
+## Technical Implementation
 
 ### Files to Modify
 
 | File | Changes |
 |------|---------|
-| `src/pages/Admin.tsx` | Add sync buttons to source cards |
-| `src/data/inbox.json` | Track lastSync timestamps |
-| `src/components/admin/InboxList.tsx` | Show source badges, sync metadata |
+| `src/pages/Index.tsx` | Implement sticky hover logic (activeMode state) |
+| `src/components/landing/PondBackground.tsx` | Add floating orbs, layered gradients, enhanced ripples, ambient shimmer |
+| `src/components/landing/ModeButton.tsx` | Fixed width/height, flexbox centering, update props to not clear on leave |
 
----
-
-## Part 2: Content Management Upgrade
-
-### Current State Issues
-- No filtering or search
-- Limited editing (only featured/visibility toggles)
-- No bulk operations
-- No actual persistence (console.log only)
-
-### New Content Editor Features
-
-**Search and Filter Bar:**
-- Text search (title, summary)
-- Filter by: type, section, visibility, tags
-- Sort by: date, title, type
-- Clear filters button
-
-**Enhanced Artifact Editor:**
-When editing an artifact, show full form:
-- Title (editable)
-- Summary (textarea)
-- Type dropdown
-- Section dropdown
-- Visibility toggle buttons
-- Tags multi-select (add/remove)
-- Links (repo, demo, paper, website)
-- Collaboration breakdown editor
-- Featured toggle
-- Preview image URL
-
-**Bulk Actions:**
-- Multi-select checkboxes on each card
-- Bulk actions bar appears when items selected:
-  - Set visibility (academic/build/both)
-  - Toggle featured
-  - Delete selected (with confirmation)
-
-**Persistence Strategy (Phase 1):**
-- Store edits in localStorage
-- Show "Unsaved Changes" indicator
-- Export to JSON button (for manual update of artifacts.json)
-- Clear message: "Full persistence coming with Supabase integration"
-
-### Layout: Two-Panel Design
-
+### New CSS Animations (in PondBackground)
 ```text
-+------------------------+---------------------------+
-| Artifact List          | Editor Panel              |
-| [Search...] [Filters]  |                           |
-| +------------------+   | [No artifact selected]    |
-| | Paper: LLMs...   |   |                           |
-| | Project: Kevin   | <-| or                        |
-| | Role: EconLLM    |   |                           |
-| +------------------+   | [Full edit form for       |
-|                        |  selected artifact]       |
-| [+ Add New Artifact]   |                           |
-+------------------------+---------------------------+
+@keyframes float {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(10px, -15px); }
+  50% { transform: translate(-5px, -25px); }
+  75% { transform: translate(-15px, -10px); }
+}
+
+@keyframes shimmer {
+  0%, 100% { opacity: 0.1; }
+  50% { opacity: 0.25; }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { transform: scale(1); opacity: 0.3; }
+  50% { transform: scale(1.1); opacity: 0.5; }
+}
 ```
 
-### Files to Create
-
-| File | Purpose |
-|------|---------|
-| `src/components/admin/ArtifactEditor.tsx` | Full artifact edit form |
-| `src/components/admin/ArtifactFilters.tsx` | Search and filter controls |
-| `src/components/admin/BulkActions.tsx` | Multi-select action bar |
-
-### Files to Modify
-
-| File | Changes |
-|------|---------|
-| `src/components/admin/ContentEditor.tsx` | Complete rewrite with two-panel layout |
-| `src/pages/Admin.tsx` | Integrate new content management |
-
----
-
-## Part 3: Build Page Redesign
-
-### Design Concept: Expandable Grid with Horizontal Scroll
-
-**Layout Options:**
-
-**Option A: Horizontal Scroll (Recommended)**
-- Projects arranged in a horizontal strip
-- Cards are compact by default (1:1 or 4:3 aspect ratio)
-- On hover, card expands to show demo preview + key info
-- Scroll arrows on desktop, swipe on mobile
-- Good for: curated collections, visual impact
-
-**Option B: Vertical Grid with Expansion**
-- Standard grid layout (2-3 columns)
-- Cards expand in-place to cover 1/4 of viewport
-- Other cards fade slightly when one is expanded
-- Good for: more content, traditional browsing
-
-### Proposed: Horizontal Project Showcase
-
+### State Logic Change
 ```text
-+------------------------------------------------------------------+
-| Build Portfolio                                                   |
-|                                                                  |
-| AI-Human Collaboration Principles (collapsed header)            |
-|                                                                  |
-| [Aggregate Matrix - compact view] [Expand]                       |
-|                                                                  |
-| [Tag Filters: vibe-coded | vibe-engineered | ai-assisted | All] |
-|                                                                  |
-| <-  +--------+  +--------+  +--------+  +--------+  +-----  ->  |
-|     |        |  |   *    |  |        |  |        |  |           |
-|     | Smart  |  |EXPANDED|  | Kevin  |  | Website|  |           |
-|     |Surveys |  |        |  | ODQA   |  |        |  |           |
-|     |        |  |[Demo]  |  |        |  |        |  |           |
-|     +--------+  |[Matrix]|  +--------+  +--------+  +-----      |
-|                 |[Links] |                                       |
-|                 +--------+                                       |
-+------------------------------------------------------------------+
+// Current
+const [hoveredMode, setHoveredMode] = useState<Mode | null>(null);
+onMouseLeave={() => setHoveredMode(null)}  // resets
+
+// New
+const [activeMode, setActiveMode] = useState<Mode | null>(null);
+onMouseEnter={() => setActiveMode(mode)}   // sets
+onMouseLeave={() => {}}                     // does nothing - persists!
 ```
 
-### Card States
+---
 
-**Default State:**
-- Compact square/rectangle
-- Project initial or small icon
-- Title overlay at bottom
-- Subtle tag indicator (colored border or dot)
+## Accessibility Considerations
 
-**Hover/Expanded State:**
-- Card grows to ~2x width (or 1/4 viewport)
-- Demo preview appears (iframe, image, or styled placeholder)
-- Title, date, summary visible
-- Mini collaboration matrix
-- Quick links (repo, demo, paper)
-- Tags with full labels
-
-**Click Action:**
-- Full modal or overlay with complete project details
-- Full collaboration breakdown
-- All links and metadata
-
-### Horizontal Scroll Implementation
-
-**Desktop:**
-- CSS scroll-snap for smooth carousel behavior
-- Arrow buttons on edges
-- Keyboard navigation (arrow keys)
-- Mouse wheel horizontal scroll
-
-**Mobile:**
-- Native touch swipe
-- Pagination dots indicator
-- Swipe hint animation on first visit
-
-### Animation Considerations
-
-All animations respect `prefers-reduced-motion`:
-- Expansion: scale + fade
-- Scroll: smooth scroll-behavior
-- Hover effects: subtle transforms only
-
-### Files to Create
-
-| File | Purpose |
-|------|---------|
-| `src/components/build/ProjectShowcase.tsx` | Horizontal scrolling container |
-| `src/components/build/ExpandableProjectCard.tsx` | Card with expand-on-hover |
-| `src/components/build/ProjectModal.tsx` | Full details modal |
-
-### Files to Modify
-
-| File | Changes |
-|------|---------|
-| `src/pages/Build.tsx` | Replace grid with ProjectShowcase |
-| `src/components/build/AggregateMatrix.tsx` | Add compact/expanded toggle |
+- All animations respect `prefers-reduced-motion`
+- Floating elements have reduced/disabled motion for accessibility
+- Buttons maintain clear focus states
+- Sufficient color contrast maintained in all states
 
 ---
 
-## Part 4: Analytics Clarification
+## Expected Result
 
-### Current State
-The Analytics tab is a placeholder with no actual tracking implementation.
-
-### When Will Analytics Work?
-**It will NOT work until:**
-1. The app is published to a live domain, AND
-2. You integrate an analytics service
-
-### Options for Analytics
-
-| Service | Setup | Notes |
-|---------|-------|-------|
-| Lovable Analytics | Publish app, enable in settings | Built-in, simplest option |
-| Plausible | Add script tag, configure domain | Privacy-friendly, paid |
-| Umami | Self-host or cloud, add script | Open source, can self-host |
-| Google Analytics | Add GA4 snippet | Free, but privacy concerns |
-
-### Recommendation
-- Start with **Lovable's built-in analytics** after publishing
-- The Analytics tab can show a message: "Publish your site to enable analytics"
-- Phase 2: Add custom dashboard pulling from analytics API
-
----
-
-## Implementation Order
-
-1. **API Sync System** (high value, enables data discovery)
-   - Edge functions for ORCID and GitHub
-   - Sync buttons in Admin
-   - Repo selection modal
-
-2. **Build Page Redesign** (visual impact, showcases work)
-   - Horizontal showcase component
-   - Expandable cards
-   - Responsive behavior
-
-3. **Content Management Upgrade** (admin productivity)
-   - Two-panel layout
-   - Full artifact editor
-   - Bulk actions
-
----
-
-## Technical Notes
-
-### Supabase Edge Functions Required
-This plan requires Supabase integration for edge functions. You'll need to:
-1. Enable Lovable Cloud or connect an external Supabase project
-2. Deploy edge functions for API syncing
-3. Optionally: store artifacts in Supabase tables instead of JSON
-
-### Local Storage Limitations
-Phase 1 content management uses localStorage, meaning:
-- Edits are per-device only
-- Exporting to JSON is manual
-- Full persistence requires Supabase tables
-
-### API Rate Limits
-- ORCID: Public API has generous limits
-- GitHub: 60 requests/hour unauthenticated, 5000/hour with token
-
----
-
-## Deliverables Summary
-
-1. ORCID sync edge function with inbox integration
-2. GitHub sync edge function with repository filter modal
-3. Enhanced source configuration panel with sync buttons
-4. Redesigned Content Management with two-panel editor
-5. Horizontal scrolling Build page with expandable project cards
-6. Analytics tab updated with publishing guidance
+1. **First Visit**: User sees calm, neutral pond with gentle ambient animation
+2. **First Hover**: Page smoothly transitions to that mode's style (Academic warm tones or Build cool/technical)
+3. **Exploration**: User can hover between buttons, style switches but never reverts to neutral
+4. **Visual Impact**: Background feels alive with floating elements, layered depth, and organic ripples
+5. **Symmetry**: Both buttons are perfectly identical rectangles, creating balanced composition

@@ -49,28 +49,25 @@ export function AggregateMatrix() {
 
   return (
     <TooltipProvider>
-      <div className="bg-white/70 backdrop-blur-sm rounded-xl border border-slate-200/50 p-6 mb-8">
-        <h2 className="text-lg font-semibold text-slate-700 mb-4">
-          AI Collaboration Patterns
-        </h2>
-        <p className="text-sm text-slate-500 mb-4">
+      <div className="hairline p-6 mb-8 bg-background">
+        <p className="text-sm text-muted-foreground mb-6 max-w-2xl">
           Aggregate usage of LLMs across all projects. Cell intensity indicates frequency.
         </p>
-        
+
         <div className="overflow-x-auto">
           <table className="w-full text-sm border-collapse">
             <thead>
               <tr>
-                <th className="p-2 text-left text-slate-500 font-medium border-b border-slate-200">
+                <th className="p-2 text-left font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground hairline-b">
                   Model
                 </th>
-                {usedTasks.map(task => (
-                  <th key={task} className="p-2 text-center border-b border-slate-200">
+                {usedTasks.map((task) => (
+                  <th key={task} className="p-2 text-center hairline-b">
                     <Tooltip>
                       <TooltipTrigger asChild>
                         <div className="flex flex-col items-center gap-0.5 cursor-help">
                           <span className="text-base">{AI_TASK_METADATA[task].icon}</span>
-                          <span className="text-xs text-slate-400 font-normal">
+                          <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-muted-foreground">
                             {AI_TASK_METADATA[task].label}
                           </span>
                         </div>
@@ -83,43 +80,37 @@ export function AggregateMatrix() {
                     </Tooltip>
                   </th>
                 ))}
-                <th className="p-2 text-center border-b border-slate-200 text-slate-400 font-normal text-xs">
+                <th className="p-2 text-center hairline-b font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
                   Total
                 </th>
               </tr>
             </thead>
             <tbody>
-              {usedModels.map(model => (
-                <tr key={model} className="hover:bg-slate-50/50">
-                  <td className="p-2 border-b border-slate-100">
-                    <span 
-                      className="font-medium"
-                      style={{ color: LLM_MODEL_METADATA[model].color }}
-                    >
+              {usedModels.map((model) => (
+                <tr key={model} className="hover:bg-secondary/40">
+                  <td className="p-2 hairline-b">
+                    <span className="font-mono text-xs uppercase tracking-[0.1em]">
                       {LLM_MODEL_METADATA[model].label}
                     </span>
                   </td>
-                  {usedTasks.map(task => {
+                  {usedTasks.map((task) => {
                     const count = counts[model][task];
                     const opacity = maxCount > 0 ? Math.max(0.1, count / maxCount) : 0;
-                    
                     return (
-                      <td key={task} className="p-2 text-center border-b border-slate-100">
+                      <td key={task} className="p-2 text-center hairline-b">
                         <Tooltip>
                           <TooltipTrigger asChild>
-                            <div 
-                              className="w-8 h-8 rounded-lg mx-auto flex items-center justify-center transition-all cursor-help"
-                              style={{ 
-                                backgroundColor: count > 0 
-                                  ? `${LLM_MODEL_METADATA[model].color}${Math.round(opacity * 255).toString(16).padStart(2, '0')}`
-                                  : 'hsl(var(--muted) / 0.2)',
+                            <div
+                              className="w-8 h-8 mx-auto flex items-center justify-center transition-all cursor-help font-mono text-xs"
+                              style={{
+                                backgroundColor:
+                                  count > 0
+                                    ? `hsl(var(--cobalt) / ${opacity})`
+                                    : 'hsl(var(--muted) / 0.4)',
+                                color: count > 0 && opacity > 0.4 ? 'white' : 'hsl(var(--foreground))',
                               }}
                             >
-                              {count > 0 && (
-                                <span className="text-xs font-semibold text-white drop-shadow-sm">
-                                  {count}
-                                </span>
-                              )}
+                              {count > 0 ? count : ''}
                             </div>
                           </TooltipTrigger>
                           <TooltipContent side="top">
@@ -134,51 +125,28 @@ export function AggregateMatrix() {
                       </td>
                     );
                   })}
-                  <td className="p-2 text-center border-b border-slate-100">
-                    <span className="text-sm font-semibold text-slate-600">
-                      {modelTotals[model]}
-                    </span>
+                  <td className="p-2 text-center hairline-b">
+                    <span className="text-sm font-medium tabular-nums">{modelTotals[model]}</span>
                   </td>
                 </tr>
               ))}
             </tbody>
             <tfoot>
-              <tr className="bg-slate-50/50">
-                <td className="p-2 text-slate-500 font-medium text-xs">
+              <tr>
+                <td className="p-2 font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
                   Total
                 </td>
-                {usedTasks.map(task => (
-                  <td key={task} className="p-2 text-center">
-                    <span className="text-xs font-semibold text-slate-500">
-                      {taskTotals[task]}
-                    </span>
+                {usedTasks.map((task) => (
+                  <td key={task} className="p-2 text-center text-xs tabular-nums">
+                    {taskTotals[task]}
                   </td>
                 ))}
-                <td className="p-2 text-center">
-                  <span className="text-sm font-bold text-slate-700">
-                    {Object.values(modelTotals).reduce((a, b) => a + b, 0)}
-                  </span>
+                <td className="p-2 text-center text-sm font-semibold tabular-nums">
+                  {Object.values(modelTotals).reduce((a, b) => a + b, 0)}
                 </td>
               </tr>
             </tfoot>
           </table>
-        </div>
-        
-        {/* Legend */}
-        <div className="mt-4 flex flex-wrap gap-3 text-xs text-slate-500">
-          <span className="font-medium">Models:</span>
-          {usedModels.map(model => (
-            <span 
-              key={model}
-              className="inline-flex items-center gap-1"
-            >
-              <div 
-                className="w-2 h-2 rounded-full"
-                style={{ backgroundColor: LLM_MODEL_METADATA[model].color }}
-              />
-              {LLM_MODEL_METADATA[model].label}
-            </span>
-          ))}
         </div>
       </div>
     </TooltipProvider>

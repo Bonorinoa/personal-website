@@ -15,7 +15,11 @@ interface DbInboxItem {
   created_at: string;
 }
 
-// Transform DB row to InboxItem
+// Detect whether the Supabase backend is configured for this build.
+const BACKEND_READY = Boolean(
+  import.meta.env.VITE_SUPABASE_URL && import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY
+);
+
 function toInboxItem(row: DbInboxItem): InboxItem {
   return {
     id: row.id,
@@ -31,19 +35,21 @@ function toInboxItem(row: DbInboxItem): InboxItem {
 export function useInboxItems(status?: 'pending' | 'approved' | 'rejected') {
   return useQuery({
     queryKey: ['inbox-items', status],
+    enabled: BACKEND_READY,
     queryFn: async () => {
       let query = supabase
         .from('inbox_items')
         .select('*')
         .order('discovered_at', { ascending: false });
-      
-      if (status) {
-        query = query.eq('status', status);
-      }
+
+      if (status) query = query.eq('status', status);
 
       const { data, error } = await query;
-      
-      if (error) throw error;
+      if (error) {
+        // Backend likely paused / unreachable — degrade quietly to empty list.
+        console.warn('[inbox] backend unreachable, returning empty list:', error.message);
+        return [] as InboxItem[];
+      }
       return (data as DbInboxItem[]).map(toInboxItem);
     },
   });
@@ -51,16 +57,12 @@ export function useInboxItems(status?: 'pending' | 'approved' | 'rejected') {
 
 export function useApproveInboxItem() {
   const queryClient = useQueryClient();
-  
   return useMutation({
     mutationFn: async ({ itemId, artifactData }: { itemId: string; artifactData: Record<string, unknown> }) => {
-      // Cast to any to satisfy Supabase JSON type requirements
-      const { data, error } = await supabase
-        .rpc('approve_inbox_item', {
-          p_inbox_id: itemId,
-          p_artifact_data: artifactData as unknown as Record<string, never>,
-        });
-      
+      const { data, error } = await supabase.rpc('approve_inbox_item', {
+        p_inbox_id: itemId,
+        p_artifact_data: artifactData as unknown as Record<string, never>,
+      });
       if (error) throw error;
       return data;
     },
@@ -73,37 +75,34 @@ export function useApproveInboxItem() {
 
 export function useRejectInboxItem() {
   const queryClient = useQueryClient();
-  
   return useMutation({
     mutationFn: async (itemId: string) => {
       const { error } = await supabase
         .from('inbox_items')
         .update({ status: 'rejected', reviewed_at: new Date().toISOString() })
         .eq('id', itemId);
-      
       if (error) throw error;
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['inbox-items'] });
-    },
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['inbox-items'] }),
   });
 }
 
 export function useUpdateInboxItem() {
   const queryClient = useQueryClient();
-  
   return useMutation({
-    mutationFn: async ({ itemId, updates }: { itemId: string; updates: { suggested_artifact?: Record<string, unknown>; notes?: string } }) => {
-      // Cast updates to satisfy Supabase type requirements
+    mutationFn: async ({
+      itemId,
+      updates,
+    }: {
+      itemId: string;
+      updates: { suggested_artifact?: Record<string, unknown>; notes?: string };
+    }) => {
       const { error } = await supabase
         .from('inbox_items')
         .update(updates as { suggested_artifact?: Record<string, never>; notes?: string })
         .eq('id', itemId);
-      
       if (error) throw error;
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['inbox-items'] });
-    },
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['inbox-items'] }),
   });
 }

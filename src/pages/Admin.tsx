@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -11,10 +12,9 @@ import { RepoSelector } from '@/components/admin/RepoSelector';
 import { getInboxConfig } from '@/lib/artifacts';
 import { useAllArtifacts } from '@/hooks/useArtifacts';
 import { useInboxItems } from '@/hooks/useInboxItems';
-import { Inbox, FileEdit, BarChart3, FlaskConical, LogOut, Lock, ExternalLink, Loader2 } from 'lucide-react';
+import { useAdminAuth, ADMIN_EMAILS } from '@/hooks/useAdminAuth';
+import { Inbox, FileEdit, BarChart3, FlaskConical, LogOut, Lock, ExternalLink, Loader2, Mail } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-
-const ADMIN_PASSWORD = 'admin123'; // TODO: Replace with proper auth
 
 interface RepoItem {
   id: string;
@@ -34,9 +34,12 @@ interface RepoItem {
 }
 
 const Admin = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const auth = useAdminAuth();
+  const [email, setEmail] = useState('');
+  const [sending, setSending] = useState(false);
+  const [sentTo, setSentTo] = useState<string | null>(null);
+  const [signInError, setSignInError] = useState<string | null>(null);
+
   const [githubRepos, setGithubRepos] = useState<RepoItem[]>([]);
   const [showRepoSelector, setShowRepoSelector] = useState(false);
   const navigate = useNavigate();
@@ -44,7 +47,7 @@ const Admin = () => {
 
   const { data: artifacts = [], isLoading: artifactsLoading } = useAllArtifacts();
   const { data: pendingItems = [], refetch: refetchInbox } = useInboxItems('pending');
-  
+
   const config = getInboxConfig() as {
     sources?: {
       orcid?: { enabled: boolean; id?: string; lastSync?: string | null };
@@ -52,33 +55,22 @@ const Admin = () => {
       github?: { enabled: boolean; username?: string; lastSync?: string | null };
       openalex?: { enabled: boolean; email_aliases?: string[]; lastSync?: string | null };
     };
-    profile?: {
-      name?: string;
-      emails?: { primary?: string; aliases?: string[] };
-    };
+    profile?: { name?: string; emails?: { primary?: string; aliases?: string[] } };
   };
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (password === ADMIN_PASSWORD) {
-      setIsAuthenticated(true);
-      setError('');
-    } else {
-      setError('Invalid password');
-    }
-  };
-
-  const handleLogout = () => {
-    setIsAuthenticated(false);
-    setPassword('');
+    setSignInError(null);
+    setSending(true);
+    const { error } = await auth.signInWithMagicLink(email);
+    setSending(false);
+    if (error) setSignInError(error);
+    else setSentTo(email);
   };
 
   const handleSyncComplete = (result: { inserted: number; skipped: number }) => {
     refetchInbox();
-    toast({
-      title: 'Sync complete',
-      description: `Added ${result.inserted} new items, ${result.skipped} duplicates skipped.`,
-    });
+    toast({ title: 'Sync complete', description: `Added ${result.inserted} new items, ${result.skipped} duplicates skipped.` });
   };
 
   const handleReposFetched = (repos: unknown[]) => {
@@ -89,324 +81,248 @@ const Admin = () => {
   const handleRepoImport = (result: { inserted: number; skipped: number }) => {
     setShowRepoSelector(false);
     refetchInbox();
-    toast({
-      title: 'Repos imported',
-      description: `Added ${result.inserted} repositories, ${result.skipped} duplicates skipped.`,
-    });
+    toast({ title: 'Repos imported', description: `Added ${result.inserted} repositories, ${result.skipped} duplicates skipped.` });
   };
 
-  // Password prompt
-  if (!isAuthenticated) {
+  // ===== Loading =====
+  if (auth.status === 'loading') {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center p-4">
-        <Card className="w-full max-w-md">
-          <CardHeader className="text-center">
-            <Lock className="w-12 h-12 mx-auto text-muted-foreground mb-4" />
-            <CardTitle>Admin Access</CardTitle>
-            <CardDescription>
-              Enter the admin password to access the dashboard.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <form onSubmit={handleLogin} className="space-y-4">
-              <Input
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className={error ? 'border-destructive' : ''}
-              />
-              {error && (
-                <p className="text-sm text-destructive">{error}</p>
-              )}
-              <Button type="submit" className="w-full">
-                Access Dashboard
-              </Button>
-            </form>
-            <p className="text-xs text-muted-foreground mt-4 text-center">
-              TODO: Replace with proper authentication
-            </p>
-          </CardContent>
-        </Card>
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <Loader2 className="w-5 h-5 animate-spin text-muted-foreground" />
       </div>
     );
   }
 
-  return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="border-b bg-card">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-          <h1 className="text-xl font-semibold text-foreground">Admin Dashboard</h1>
-          <div className="flex items-center gap-4">
-            <Button variant="ghost" size="sm" onClick={() => navigate('/')}>
-              View Site
-            </Button>
-            <Button variant="outline" size="sm" onClick={handleLogout}>
-              <LogOut className="w-4 h-4 mr-2" />
-              Logout
-            </Button>
+  // ===== Unauthorized (signed in with wrong email) =====
+  if (auth.status === 'unauthorized') {
+    return (
+      <>
+        <Helmet><title>Admin — not authorized</title><meta name="robots" content="noindex" /></Helmet>
+        <div className="min-h-screen bg-background flex items-center justify-center px-6">
+          <div className="max-w-md w-full">
+            <div className="font-mono text-[11px] uppercase tracking-[0.22em] text-cobalt mb-6">Admin / forbidden</div>
+            <h1 className="font-serif text-5xl mb-4">Not for you.</h1>
+            <p className="text-muted-foreground text-sm mb-6">
+              You&rsquo;re signed in as <span className="font-mono">{auth.user?.email}</span>, which isn&rsquo;t on the
+              admin allowlist. If this is your site, add this email to <code className="font-mono text-xs bg-secondary px-1.5 py-0.5">ADMIN_EMAILS</code> in <code className="font-mono text-xs bg-secondary px-1.5 py-0.5">src/hooks/useAdminAuth.ts</code>.
+            </p>
+            <div className="flex gap-3">
+              <Button variant="outline" onClick={() => auth.signOut()}>Sign out</Button>
+              <Button variant="ghost" onClick={() => navigate('/')}>Back to site</Button>
+            </div>
           </div>
         </div>
-      </header>
+      </>
+    );
+  }
 
-      {/* Main content */}
-      <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <Tabs defaultValue="inbox" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4 lg:w-auto lg:inline-grid">
-            <TabsTrigger value="inbox" className="gap-2">
-              <Inbox className="w-4 h-4" />
-              <span className="hidden sm:inline">Inbox</span>
-              {pendingItems.length > 0 && (
-                <span className="ml-1 px-1.5 py-0.5 bg-primary/20 text-primary text-xs rounded-full">
-                  {pendingItems.length}
-                </span>
-              )}
-            </TabsTrigger>
-            <TabsTrigger value="content" className="gap-2">
-              <FileEdit className="w-4 h-4" />
-              <span className="hidden sm:inline">Content</span>
-            </TabsTrigger>
-            <TabsTrigger value="analytics" className="gap-2">
-              <BarChart3 className="w-4 h-4" />
-              <span className="hidden sm:inline">Analytics</span>
-            </TabsTrigger>
-            <TabsTrigger value="widgets" className="gap-2">
-              <FlaskConical className="w-4 h-4" />
-              <span className="hidden sm:inline">Widgets</span>
-            </TabsTrigger>
-          </TabsList>
+  // ===== Unauthenticated — magic link form =====
+  if (auth.status === 'unauthenticated') {
+    return (
+      <>
+        <Helmet><title>Admin — sign in</title><meta name="robots" content="noindex" /></Helmet>
+        <div className="min-h-screen bg-background flex items-center justify-center px-6">
+          <div className="max-w-md w-full">
+            <div className="font-mono text-[11px] uppercase tracking-[0.22em] text-cobalt mb-6">Admin / sign in</div>
+            <h1 className="font-serif text-5xl mb-2">Magic link.</h1>
+            <p className="text-muted-foreground text-sm mb-8">
+              Enter your allowlisted email and we&rsquo;ll send a one-time sign-in link. No password.
+            </p>
 
-          {/* Inbox Tab */}
-          <TabsContent value="inbox" className="space-y-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <h2 className="text-lg font-semibold text-foreground">Inbox</h2>
-                <p className="text-sm text-muted-foreground">
-                  Review and approve discovered artifacts from external sources.
+            {sentTo ? (
+              <div className="hairline p-6 bg-secondary/40">
+                <Mail className="w-5 h-5 text-cobalt mb-3" />
+                <p className="text-sm">
+                  Link sent to <span className="font-mono">{sentTo}</span>. Check your inbox and click to sign in.
                 </p>
+                <button
+                  onClick={() => { setSentTo(null); setEmail(''); }}
+                  className="mt-4 font-mono text-xs uppercase tracking-[0.14em] link-cobalt"
+                >
+                  ← use a different email
+                </button>
               </div>
-            </div>
-            <InboxList 
-              onEdit={(item) => console.log('Edit:', item)}
-            />
-
-            {/* Source Configuration Panel with Sync */}
-            <Card className="mt-8">
-              <CardHeader>
-                <CardTitle className="text-base">Source Configuration</CardTitle>
-                <CardDescription>
-                  Configure external sources for automatic artifact discovery. Click "Sync" to fetch new items.
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-                  <SourceCard
-                    name="ORCID"
-                    enabled={config?.sources?.orcid?.enabled ?? false}
-                    configValue={config?.sources?.orcid?.id}
-                    lastSync={config?.sources?.orcid?.lastSync}
-                    description="Sync publications from your ORCID profile"
-                    configNeeded="ORCID ID"
-                    syncButton={
-                      <SyncButton
-                        source="orcid"
-                        sourceId={config?.sources?.orcid?.id || ''}
-                        onSyncComplete={handleSyncComplete}
-                      />
-                    }
-                  />
-                  <SourceCard
-                    name="Google Scholar"
-                    enabled={config?.sources?.google_scholar?.enabled ?? false}
-                    configValue={config?.sources?.google_scholar?.user_id}
-                    lastSync={config?.sources?.google_scholar?.lastSync}
-                    description="Import citations and h-index data"
-                    configNeeded="Scholar User ID"
-                    syncButton={
-                      <SyncButton
-                        source="google_scholar"
-                        sourceId={config?.sources?.google_scholar?.user_id || ''}
-                        onSyncComplete={handleSyncComplete}
-                        disabled // No public API
-                      />
-                    }
-                  />
-                  <SourceCard
-                    name="GitHub"
-                    enabled={config?.sources?.github?.enabled ?? false}
-                    configValue={config?.sources?.github?.username}
-                    lastSync={config?.sources?.github?.lastSync}
-                    description="Import repositories and activity"
-                    configNeeded="Username"
-                    syncButton={
-                      <SyncButton
-                        source="github"
-                        sourceId={config?.sources?.github?.username || ''}
-                        onReposFetched={handleReposFetched}
-                      />
-                    }
-                  />
-                  <SourceCard
-                    name="OpenAlex"
-                    enabled={config?.sources?.openalex?.enabled ?? false}
-                    configValue={
-                      config?.sources?.openalex?.email_aliases && config.sources.openalex.email_aliases.length > 0 
-                        ? `${config.sources.openalex.email_aliases.length} aliases` 
-                        : undefined
-                    }
-                    lastSync={config?.sources?.openalex?.lastSync}
-                    description="Discover works across email aliases"
-                    configNeeded="Email aliases"
-                  />
-                </div>
-                
-                {/* Profile info */}
-                {config?.profile && (
-                  <div className="mt-6 p-4 bg-muted/30 rounded-lg">
-                    <h4 className="text-sm font-medium text-foreground mb-2">Profile Configuration</h4>
-                    <div className="grid gap-2 text-xs text-muted-foreground">
-                      <p><strong>Name:</strong> {config.profile.name}</p>
-                      <p><strong>Primary Email:</strong> {config.profile.emails?.primary}</p>
-                      <p><strong>Aliases:</strong> {config.profile.emails?.aliases?.join(', ')}</p>
-                    </div>
-                  </div>
-                )}
-                
+            ) : (
+              <form onSubmit={handleSignIn} className="space-y-4">
+                <Input
+                  type="email"
+                  autoFocus
+                  required
+                  placeholder="you@example.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className={signInError ? 'border-destructive' : ''}
+                />
+                {signInError && <p className="text-sm text-destructive">{signInError}</p>}
+                <Button type="submit" disabled={sending} className="w-full">
+                  {sending ? <Loader2 className="w-4 h-4 animate-spin" /> : 'Send magic link'}
+                </Button>
                 <p className="text-xs text-muted-foreground">
-                  Edit <code className="bg-muted px-1 rounded">src/data/inbox.json</code> to update source configuration.
+                  Allowlist: {ADMIN_EMAILS.length} email{ADMIN_EMAILS.length !== 1 ? 's' : ''} configured.
                 </p>
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          {/* Content Tab */}
-          <TabsContent value="content" className="space-y-4">
-            <div>
-              <h2 className="text-lg font-semibold text-foreground">Content Management</h2>
-              <p className="text-sm text-muted-foreground">
-                Edit visibility, tags, and featured status for your artifacts.
-              </p>
+              </form>
+            )}
+            <div className="mt-10 hairline-t pt-6">
+              <button onClick={() => navigate('/')} className="font-mono text-xs uppercase tracking-[0.14em] text-muted-foreground hover:text-foreground transition-colors">
+                ← back to site
+              </button>
             </div>
-            {artifactsLoading ? (
-              <Card>
-                <CardContent className="py-12 text-center">
-                  <Loader2 className="w-8 h-8 animate-spin mx-auto text-muted-foreground mb-2" />
-                  <p className="text-muted-foreground">Loading artifacts...</p>
+          </div>
+        </div>
+      </>
+    );
+  }
+
+  // ===== Authenticated dashboard =====
+  return (
+    <>
+      <Helmet><title>Admin Dashboard</title><meta name="robots" content="noindex" /></Helmet>
+      <div className="min-h-screen bg-background">
+        <header className="hairline-b">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between">
+            <div className="flex items-baseline gap-3">
+              <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-cobalt">Admin</span>
+              <span className="font-serif text-lg">Dashboard</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <span className="hidden sm:inline font-mono text-xs text-muted-foreground">{auth.user?.email}</span>
+              <Button variant="ghost" size="sm" onClick={() => navigate('/')}>View site</Button>
+              <Button variant="outline" size="sm" onClick={() => auth.signOut()}>
+                <LogOut className="w-3.5 h-3.5 mr-2" /> Sign out
+              </Button>
+            </div>
+          </div>
+        </header>
+
+        <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <Tabs defaultValue="inbox" className="space-y-6">
+            <TabsList className="grid w-full grid-cols-4 lg:w-auto lg:inline-grid">
+              <TabsTrigger value="inbox" className="gap-2">
+                <Inbox className="w-4 h-4" /><span className="hidden sm:inline">Inbox</span>
+                {pendingItems.length > 0 && (
+                  <span className="ml-1 px-1.5 py-0.5 bg-cobalt/15 text-cobalt text-xs">{pendingItems.length}</span>
+                )}
+              </TabsTrigger>
+              <TabsTrigger value="content" className="gap-2"><FileEdit className="w-4 h-4" /><span className="hidden sm:inline">Content</span></TabsTrigger>
+              <TabsTrigger value="analytics" className="gap-2"><BarChart3 className="w-4 h-4" /><span className="hidden sm:inline">Analytics</span></TabsTrigger>
+              <TabsTrigger value="widgets" className="gap-2"><FlaskConical className="w-4 h-4" /><span className="hidden sm:inline">Widgets</span></TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="inbox" className="space-y-4">
+              <div>
+                <h2 className="font-serif text-2xl">Inbox</h2>
+                <p className="text-sm text-muted-foreground">Review and approve discovered artifacts.</p>
+              </div>
+              <InboxList onEdit={(item) => console.log('Edit:', item)} />
+
+              <Card className="mt-8">
+                <CardHeader>
+                  <CardTitle className="text-base">Source Configuration</CardTitle>
+                  <CardDescription>Configure external sources. Click Sync to fetch new items.</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+                    <SourceCard name="ORCID" enabled={config?.sources?.orcid?.enabled ?? false} configValue={config?.sources?.orcid?.id} lastSync={config?.sources?.orcid?.lastSync} description="Sync publications from ORCID" configNeeded="ORCID ID"
+                      syncButton={<SyncButton source="orcid" sourceId={config?.sources?.orcid?.id || ''} onSyncComplete={handleSyncComplete} />}
+                    />
+                    <SourceCard name="Google Scholar" enabled={config?.sources?.google_scholar?.enabled ?? false} configValue={config?.sources?.google_scholar?.user_id} lastSync={config?.sources?.google_scholar?.lastSync} description="Citations and h-index" configNeeded="Scholar ID"
+                      syncButton={<SyncButton source="google_scholar" sourceId={config?.sources?.google_scholar?.user_id || ''} onSyncComplete={handleSyncComplete} disabled />}
+                    />
+                    <SourceCard name="GitHub" enabled={config?.sources?.github?.enabled ?? false} configValue={config?.sources?.github?.username} lastSync={config?.sources?.github?.lastSync} description="Repositories and activity" configNeeded="Username"
+                      syncButton={<SyncButton source="github" sourceId={config?.sources?.github?.username || ''} onReposFetched={handleReposFetched} />}
+                    />
+                    <SourceCard name="OpenAlex" enabled={config?.sources?.openalex?.enabled ?? false}
+                      configValue={config?.sources?.openalex?.email_aliases && config.sources.openalex.email_aliases.length > 0 ? `${config.sources.openalex.email_aliases.length} aliases` : undefined}
+                      lastSync={config?.sources?.openalex?.lastSync} description="Works across email aliases" configNeeded="Email aliases"
+                    />
+                  </div>
                 </CardContent>
               </Card>
-            ) : (
-              <ContentEditor 
-                artifacts={artifacts}
-                onUpdate={(artifact) => console.log('Update:', artifact)}
-              />
-            )}
-          </TabsContent>
+            </TabsContent>
 
-          {/* Analytics Tab */}
-          <TabsContent value="analytics" className="space-y-4">
-            <div>
-              <h2 className="text-lg font-semibold text-foreground">Analytics</h2>
-              <p className="text-sm text-muted-foreground">
-                Track visitors and engagement across your site.
-              </p>
-            </div>
-            <Card>
-              <CardContent className="py-12 text-center">
-                <BarChart3 className="w-12 h-12 mx-auto text-muted-foreground mb-4" />
-                <p className="text-muted-foreground font-medium">Analytics require a published app</p>
+            <TabsContent value="content" className="space-y-4">
+              <div>
+                <h2 className="font-serif text-2xl">Content</h2>
+                <p className="text-sm text-muted-foreground">Edit visibility, tags, and featured status.</p>
+              </div>
+              {artifactsLoading ? (
+                <Card><CardContent className="py-12 text-center">
+                  <Loader2 className="w-6 h-6 animate-spin mx-auto text-muted-foreground" />
+                </CardContent></Card>
+              ) : (
+                <ContentEditor artifacts={artifacts} onUpdate={(a) => console.log('Update:', a)} />
+              )}
+            </TabsContent>
+
+            <TabsContent value="analytics" className="space-y-4">
+              <div>
+                <h2 className="font-serif text-2xl">Analytics</h2>
+                <p className="text-sm text-muted-foreground">Visitors and engagement.</p>
+              </div>
+              <Card><CardContent className="py-12 text-center">
+                <BarChart3 className="w-10 h-10 mx-auto text-muted-foreground mb-4" />
+                <p className="font-medium">Analytics require a published app</p>
                 <p className="text-sm text-muted-foreground mt-2 max-w-md mx-auto">
-                  Analytics will be available after you publish your site. Lovable's built-in analytics will track 
-                  page views, visitors, and engagement automatically.
+                  Lovable&rsquo;s built-in analytics activate after you publish.
                 </p>
                 <Button variant="outline" className="mt-4 gap-2" onClick={() => window.open('https://docs.lovable.dev/features/analytics', '_blank')}>
-                  <ExternalLink className="w-4 h-4" />
-                  Learn about Analytics
+                  <ExternalLink className="w-4 h-4" /> Learn more
                 </Button>
-              </CardContent>
-            </Card>
-          </TabsContent>
+              </CardContent></Card>
+            </TabsContent>
 
-          {/* Widgets Tab */}
-          <TabsContent value="widgets" className="space-y-4">
-            <div>
-              <h2 className="text-lg font-semibold text-foreground">Private Widgets</h2>
-              <p className="text-sm text-muted-foreground">
-                Experimental features and beta widgets (private only).
-              </p>
-            </div>
-            <Card>
-              <CardContent className="py-12 text-center">
-                <FlaskConical className="w-12 h-12 mx-auto text-muted-foreground mb-4" />
-                <p className="text-muted-foreground">No widgets enabled</p>
-                <p className="text-sm text-muted-foreground mt-2">
-                  Future: News mentions, influence experiments, and more.
-                </p>
-              </CardContent>
-            </Card>
-          </TabsContent>
-        </Tabs>
-      </main>
+            <TabsContent value="widgets" className="space-y-4">
+              <div>
+                <h2 className="font-serif text-2xl">Private widgets</h2>
+                <p className="text-sm text-muted-foreground">Experimental features.</p>
+              </div>
+              <Card><CardContent className="py-12 text-center">
+                <FlaskConical className="w-10 h-10 mx-auto text-muted-foreground mb-4" />
+                <p className="text-muted-foreground">No widgets enabled.</p>
+              </CardContent></Card>
+            </TabsContent>
+          </Tabs>
+        </main>
 
-      {/* GitHub Repo Selector Modal */}
-      <RepoSelector
-        repos={githubRepos}
-        open={showRepoSelector}
-        onOpenChange={setShowRepoSelector}
-        onImport={handleRepoImport}
-        username={config?.sources?.github?.username || ''}
-      />
-    </div>
+        <RepoSelector
+          repos={githubRepos}
+          open={showRepoSelector}
+          onOpenChange={setShowRepoSelector}
+          onImport={handleRepoImport}
+          username={config?.sources?.github?.username || ''}
+        />
+      </div>
+    </>
   );
 };
 
-function SourceCard({ 
-  name, 
-  enabled, 
-  configValue,
-  lastSync,
-  description, 
-  configNeeded,
-  syncButton,
-}: { 
-  name: string; 
-  enabled: boolean; 
-  configValue?: string;
-  lastSync?: string | null;
-  description: string;
-  configNeeded: string;
-  syncButton?: React.ReactNode;
+function SourceCard({
+  name, enabled, configValue, lastSync, description, configNeeded, syncButton,
+}: {
+  name: string; enabled: boolean; configValue?: string; lastSync?: string | null;
+  description: string; configNeeded: string; syncButton?: React.ReactNode;
 }) {
   const isConfigured = !!configValue;
-  
+  const status = enabled ? 'Active' : isConfigured ? 'Ready' : 'Not configured';
+  const dot = enabled ? 'bg-cobalt' : isConfigured ? 'bg-foreground/60' : 'bg-muted-foreground/40';
+
   return (
-    <div className={`p-4 rounded-lg border ${enabled ? 'bg-green-50 border-green-200 dark:bg-green-950/30 dark:border-green-800' : isConfigured ? 'bg-amber-50 border-amber-200 dark:bg-amber-950/30 dark:border-amber-800' : 'bg-muted/50 border-border'}`}>
+    <div className="p-4 hairline bg-background">
       <div className="flex items-center justify-between mb-2">
-        <span className="font-medium text-foreground">{name}</span>
-        <span className={`text-xs px-2 py-0.5 rounded ${enabled ? 'bg-green-200 text-green-800 dark:bg-green-800 dark:text-green-200' : isConfigured ? 'bg-amber-200 text-amber-800 dark:bg-amber-800 dark:text-amber-200' : 'bg-muted text-muted-foreground'}`}>
-          {enabled ? 'Active' : isConfigured ? 'Ready' : 'Not configured'}
+        <span className="font-medium text-sm">{name}</span>
+        <span className="flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground">
+          <span className={`w-1.5 h-1.5 rounded-full ${dot}`} />
+          {status}
         </span>
       </div>
-      <p className="text-xs text-muted-foreground mb-2">{description}</p>
+      <p className="text-xs text-muted-foreground mb-3">{description}</p>
       {configValue ? (
-        <p className="text-xs font-mono bg-muted px-2 py-1 rounded truncate mb-2" title={configValue}>
-          {configValue}
-        </p>
+        <p className="text-xs font-mono bg-secondary px-2 py-1 truncate mb-3" title={configValue}>{configValue}</p>
       ) : (
-        <p className="text-xs text-muted-foreground mb-2">
-          Needs: <code className="bg-muted px-1 rounded">{configNeeded}</code>
-        </p>
+        <p className="text-xs text-muted-foreground mb-3">Needs: <code className="font-mono">{configNeeded}</code></p>
       )}
-      {lastSync && (
-        <p className="text-xs text-muted-foreground mb-2">
-          Last sync: {new Date(lastSync).toLocaleDateString()}
-        </p>
-      )}
-      {syncButton && (
-        <div className="mt-2">
-          {syncButton}
-        </div>
-      )}
+      {lastSync && <p className="text-xs text-muted-foreground mb-2">Last sync: {new Date(lastSync).toLocaleDateString()}</p>}
+      {syncButton && <div className="mt-2">{syncButton}</div>}
     </div>
   );
 }

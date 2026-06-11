@@ -1,95 +1,60 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useMode } from '@/hooks/useMode';
-import { ModeToggle } from './ModeToggle';
-import { Home } from 'lucide-react';
+import { useTheme } from '@/hooks/useTheme';
+import { Moon, Sun } from 'lucide-react';
 
 export function Navigation() {
   const { mode } = useMode();
   const location = useLocation();
-  
-  // Don't show navigation on landing page
+  const { isDark, toggle } = useTheme();
+
   if (location.pathname === '/') return null;
-  
+
   const isAcademic = mode === 'academic';
 
   return (
-    <nav className={`
-      fixed top-0 left-0 right-0 z-50
-      backdrop-blur-md border-b
-      transition-colors duration-300
-      ${isAcademic 
-        ? 'bg-stone-50/80 border-stone-200/50' 
-        : 'bg-slate-50/80 border-slate-200/50'
-      }
-    `}>
+    <nav className="fixed top-0 inset-x-0 z-50 bg-background/85 backdrop-blur hairline-b">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo / Home */}
-          <Link 
+        <div className="flex items-center justify-between h-14">
+          {/* Wordmark — same on both modes, just typeface shifts */}
+          <Link
             to="/"
-            className={`
-              flex items-center gap-2 text-lg font-medium
-              transition-colors duration-200
-              ${isAcademic 
-                ? 'text-stone-700 hover:text-stone-900' 
-                : 'text-slate-700 hover:text-slate-900'
-              }
-            `}
+            className="group flex items-baseline gap-2 text-sm tracking-tight text-foreground"
           >
-            <Home className="w-5 h-5" />
-            <span className={isAcademic ? 'font-serif' : 'font-sans'}>
+            <span className={isAcademic ? 'font-serif text-base' : 'font-mono text-[13px]'}>
               A. González-Bonorino
+            </span>
+            <span className="text-muted-foreground hidden sm:inline">·</span>
+            <span className="hidden sm:inline text-xs uppercase tracking-[0.18em] text-muted-foreground">
+              {isAcademic ? 'Research' : 'Build'}
             </span>
           </Link>
 
-          {/* External Links */}
-          <div className="hidden md:flex items-center gap-6 text-sm">
-            <a 
-              href="https://github.com/Bonorinoa" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className={`
-                transition-colors duration-200
-                ${isAcademic 
-                  ? 'text-stone-600 hover:text-stone-900' 
-                  : 'text-slate-600 hover:text-slate-900'
-                }
-              `}
+          <div className="flex items-center gap-5 text-xs uppercase tracking-[0.14em]">
+            <Link
+              to="/academic"
+              className={`transition-colors hover:text-cobalt ${
+                location.pathname === '/academic' ? 'text-foreground' : 'text-muted-foreground'
+              }`}
             >
-              GitHub
-            </a>
-            <a 
-              href="https://www.econllm-lab.com/" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className={`
-                transition-colors duration-200
-                ${isAcademic 
-                  ? 'text-stone-600 hover:text-stone-900' 
-                  : 'text-slate-600 hover:text-slate-900'
-                }
-              `}
+              Research
+            </Link>
+            <Link
+              to="/build"
+              className={`transition-colors hover:text-cobalt ${
+                location.pathname === '/build' ? 'text-foreground' : 'text-muted-foreground'
+              }`}
             >
-              EconLLM Lab
-            </a>
-            <a 
-              href="https://perwellgroup.com/" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className={`
-                transition-colors duration-200
-                ${isAcademic 
-                  ? 'text-stone-600 hover:text-stone-900' 
-                  : 'text-slate-600 hover:text-slate-900'
-                }
-              `}
+              Build
+            </Link>
+            <button
+              onClick={toggle}
+              aria-label="Toggle theme"
+              className="text-muted-foreground hover:text-foreground transition-colors"
             >
-              Consulting
-            </a>
+              {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+            </button>
           </div>
-
-          {/* Mode Toggle */}
-          <ModeToggle />
         </div>
       </div>
     </nav>

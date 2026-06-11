@@ -1,21 +1,21 @@
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
+import { motion } from 'framer-motion';
 import { useMode } from '@/hooks/useMode';
 import { Navigation } from '@/components/shared/Navigation';
+import { Footer } from '@/components/shared/Footer';
 import { Section, SectionItem } from '@/components/academic/Section';
 import { PublicationList } from '@/components/academic/PublicationList';
 import { getArtifactsBySection, sortByDate } from '@/lib/artifacts';
-import { Github, ExternalLink, Linkedin, BookOpen, GraduationCap } from 'lucide-react';
+import { Github, ExternalLink, Linkedin, BookOpen, GraduationCap, Download, Mail } from 'lucide-react';
+
+const EASE = [0.16, 1, 0.3, 1] as const;
 
 const Academic = () => {
   const { mode, setMode, isLoading } = useMode();
-  const navigate = useNavigate();
 
-  // Set mode if coming directly to this page
   useEffect(() => {
-    if (!isLoading && mode !== 'academic') {
-      setMode('academic');
-    }
+    if (!isLoading && mode !== 'academic') setMode('academic');
   }, [isLoading, mode, setMode]);
 
   const education = sortByDate(getArtifactsBySection('education'));
@@ -28,206 +28,162 @@ const Academic = () => {
   const grants = sortByDate(getArtifactsBySection('grants'));
 
   const formatDateRange = (start: string, end?: string) => {
-    const formatDate = (d: string) => {
+    const fmt = (d: string) => {
       if (d === 'current') return 'Present';
       const date = new Date(d);
       return date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
     };
-    if (!end) return formatDate(start);
-    return `${formatDate(start)} – ${formatDate(end)}`;
+    if (!end) return fmt(start);
+    return `${fmt(start)} – ${fmt(end)}`;
   };
 
   return (
-    <div className="min-h-screen bg-stone-50 font-academic">
-      {/* Paper texture background */}
-      <div 
-        className="fixed inset-0 opacity-30 pointer-events-none"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
-        }}
-      />
+    <>
+      <Helmet>
+        <title>Research — Augusto González-Bonorino</title>
+        <meta
+          name="description"
+          content="Research and academic profile of Augusto González-Bonorino: experimental economics, microeconomic theory, and large language models as engines of human behavior."
+        />
+        <link rel="canonical" href="/academic" />
+      </Helmet>
 
-      <Navigation />
-      
-      <main className="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-16">
-        {/* Header / Bio */}
-        <header className="mb-12 animate-fade-in">
-          <div className="flex flex-col sm:flex-row gap-6 items-start">
-            {/* Profile photo placeholder */}
-            <div className="w-24 h-24 rounded-full bg-gradient-to-br from-stone-200 to-stone-300 flex items-center justify-center shrink-0">
-              <span className="text-2xl text-stone-500">AG</span>
-            </div>
-            
-            <div>
-              <h1 className="text-3xl font-bold text-stone-800 mb-2">
-                Augusto González-Bonorino
-              </h1>
-              <p className="text-lg text-stone-600 mb-3">
-                PhD Student in Economics · Arizona State University
-              </p>
-              <p className="text-stone-600 leading-relaxed mb-2">
-                Originally from Tucumán, Argentina. Economist and researcher specializing in 
-                microeconomic theory, experimental economics, and the application of large language 
-                models to economic research. I explore how LLMs can serve as computational engines 
-                of human behavior through economic games.
-              </p>
-              <p className="text-stone-500 text-sm leading-relaxed">
-                My work spans AI-assisted research methodology, behavioral economics, and computational 
-                approaches to studying non-WEIRD populations.
-              </p>
-              
-              {/* Contact links */}
-              <div className="flex flex-wrap gap-4 mt-4">
-                <a 
-                  href="https://github.com/Bonorinoa" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 text-sm text-stone-600 hover:text-amber-700 transition-colors"
-                >
-                  <Github className="w-4 h-4" /> GitHub
-                </a>
-                <a 
-                  href="https://scholar.google.com/citations?user=xdO0FqwAAAAJ&hl=en" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 text-sm text-stone-600 hover:text-amber-700 transition-colors"
-                >
-                  <GraduationCap className="w-4 h-4" /> Google Scholar
-                </a>
-                <a 
-                  href="https://orcid.org/0000-0002-9355-0831" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 text-sm text-stone-600 hover:text-amber-700 transition-colors"
-                >
-                  <BookOpen className="w-4 h-4" /> ORCID
-                </a>
-                <a 
-                  href="https://www.linkedin.com/in/augustogbono/" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 text-sm text-stone-600 hover:text-amber-700 transition-colors"
-                >
-                  <Linkedin className="w-4 h-4" /> LinkedIn
-                </a>
-                <a 
-                  href="https://www.econllm-lab.com/" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 text-sm text-stone-600 hover:text-amber-700 transition-colors"
-                >
-                  <ExternalLink className="w-4 h-4" /> EconLLM Lab
-                </a>
-              </div>
-            </div>
+      <div className="min-h-screen bg-background text-foreground">
+        <Navigation />
+
+        <main className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 sm:pt-28 pb-8">
+          {/* Top label */}
+          <div className="font-mono text-[11px] uppercase tracking-[0.22em] text-cobalt mb-6">
+            Research / curriculum vitae
           </div>
-        </header>
 
-        {/* Education */}
-        <Section title="Education">
-          {education.map((edu) => (
-            <SectionItem
-              key={edu.id}
-              title={edu.title}
-              subtitle={edu.subtitle}
-              organization={edu.organization}
-              location={edu.location}
-              date={formatDateRange(edu.date, edu.endDate)}
-              details={edu.details}
-            />
-          ))}
-        </Section>
+          {/* Hero */}
+          <motion.header
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease: EASE }}
+            className="mb-16"
+          >
+            <h1 className="font-serif text-5xl md:text-6xl leading-[1.05] tracking-tight font-medium">
+              Augusto<br />González-Bonorino
+            </h1>
+            <p className="mt-6 font-serif italic text-xl text-muted-foreground">
+              PhD Student in Economics · Arizona State University
+            </p>
 
-        {/* Research & Work Experience */}
-        <Section title="Research & Work Experience">
-          {experience.map((exp) => (
-            <SectionItem
-              key={exp.id}
-              title={exp.title}
-              organization={exp.organization}
-              location={exp.location}
-              date={formatDateRange(exp.date, exp.endDate)}
-              summary={exp.summary}
-              details={exp.details}
-              links={exp.links?.website ? [{ label: 'Website', url: exp.links.website }] : undefined}
-            />
-          ))}
-        </Section>
+            <div className="mt-8 max-w-2xl space-y-4 text-[15px] leading-relaxed text-foreground/85">
+              <p>
+                Originally from Tucumán, Argentina. I work at the intersection of
+                microeconomic theory, experimental economics, and large language
+                models — using LLMs as computational engines of human behavior in
+                economic games.
+              </p>
+              <p className="text-muted-foreground">
+                My research spans AI-assisted methodology, behavioral economics, and
+                computational approaches to studying non-WEIRD populations.
+              </p>
+            </div>
 
-        {/* Teaching */}
-        <Section title="Teaching">
-          {teaching.map((teach) => (
-            <SectionItem
-              key={teach.id}
-              title={teach.title}
-              organization={teach.organization}
-              location={teach.location}
-              date={formatDateRange(teach.date, teach.endDate)}
-              details={teach.details}
-            />
-          ))}
-        </Section>
-
-        {/* Publications */}
-        <Section title="Publications & Presentations">
-          <PublicationList publications={publications} />
-        </Section>
-
-        {/* Skills - Collapsible */}
-        <Section title="Computational Skills" collapsible defaultOpen={false}>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            {skills.map((skill) => (
-              <div key={skill.id} className="text-sm">
-                <span className="font-medium text-stone-700">{skill.title}</span>
-                {skill.summary && (
-                  <p className="text-stone-500 text-xs mt-0.5">{skill.summary}</p>
-                )}
+            {/* Currently block */}
+            <div className="mt-10 hairline-t pt-6">
+              <div className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground mb-2">
+                Currently
               </div>
-            ))}
-          </div>
-        </Section>
+              <p className="text-[15px]">
+                Doctoral research at <span className="text-cobalt">ASU</span>; leading{' '}
+                <a
+                  href="https://www.econllm-lab.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="link-cobalt"
+                >
+                  EconLLM Lab
+                </a>
+                . Open to collaboration on experimental designs that use LLM agents.
+              </p>
+            </div>
 
-        {/* Certifications - Collapsible */}
-        {certifications.length > 0 && (
-          <Section title="Certifications" collapsible defaultOpen={false}>
-            {certifications.map((cert) => (
-              <SectionItem
-                key={cert.id}
-                title={cert.title}
-                organization={cert.organization}
-                date={cert.date}
-              />
+            {/* Links */}
+            <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm">
+              <a href="mailto:agonz439@asu.edu" className="inline-flex items-center gap-1.5 text-foreground hover:text-cobalt transition-colors">
+                <Mail className="w-3.5 h-3.5" /> agonz439@asu.edu
+              </a>
+              <a href="/cv.pdf" className="inline-flex items-center gap-1.5 text-foreground hover:text-cobalt transition-colors">
+                <Download className="w-3.5 h-3.5" /> CV (PDF)
+              </a>
+              <a href="https://scholar.google.com/citations?user=xdO0FqwAAAAJ&hl=en" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-muted-foreground hover:text-foreground transition-colors">
+                <GraduationCap className="w-3.5 h-3.5" /> Google Scholar
+              </a>
+              <a href="https://orcid.org/0000-0002-9355-0831" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-muted-foreground hover:text-foreground transition-colors">
+                <BookOpen className="w-3.5 h-3.5" /> ORCID
+              </a>
+              <a href="https://github.com/Bonorinoa" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-muted-foreground hover:text-foreground transition-colors">
+                <Github className="w-3.5 h-3.5" /> GitHub
+              </a>
+              <a href="https://www.linkedin.com/in/augustogbono/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-muted-foreground hover:text-foreground transition-colors">
+                <Linkedin className="w-3.5 h-3.5" /> LinkedIn
+              </a>
+            </div>
+          </motion.header>
+
+          {/* Sections */}
+          <Section title="Education">
+            {education.map((e) => (
+              <SectionItem key={e.id} title={e.title} subtitle={e.subtitle} organization={e.organization} location={e.location} date={formatDateRange(e.date, e.endDate)} details={e.details} />
             ))}
           </Section>
-        )}
 
-        {/* Honors & Awards - Collapsible */}
-        <Section title="Honors & Awards" collapsible defaultOpen={false}>
-          {honors.map((honor) => (
-            <SectionItem
-              key={honor.id}
-              title={honor.title}
-              organization={honor.organization}
-              date={honor.date}
-              summary={honor.summary}
-            />
-          ))}
-        </Section>
+          <Section title="Research & Work">
+            {experience.map((x) => (
+              <SectionItem key={x.id} title={x.title} organization={x.organization} location={x.location} date={formatDateRange(x.date, x.endDate)} summary={x.summary} details={x.details} links={x.links?.website ? [{ label: 'Website', url: x.links.website }] : undefined} />
+            ))}
+          </Section>
 
-        {/* Grants & Fellowships - Collapsible */}
-        <Section title="Grants & Fellowships" collapsible defaultOpen={false}>
-          {grants.map((grant) => (
-            <SectionItem
-              key={grant.id}
-              title={grant.title}
-              organization={grant.organization}
-              date={grant.date}
-              summary={grant.summary}
-            />
-          ))}
-        </Section>
-      </main>
-    </div>
+          <Section title="Teaching">
+            {teaching.map((t) => (
+              <SectionItem key={t.id} title={t.title} organization={t.organization} location={t.location} date={formatDateRange(t.date, t.endDate)} details={t.details} />
+            ))}
+          </Section>
+
+          <Section title="Publications & Presentations">
+            <PublicationList publications={publications} />
+          </Section>
+
+          <Section title="Computational Skills" collapsible defaultOpen={false}>
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+              {skills.map((s) => (
+                <div key={s.id} className="text-sm">
+                  <span className="font-medium">{s.title}</span>
+                  {s.summary && <p className="text-muted-foreground text-xs mt-0.5">{s.summary}</p>}
+                </div>
+              ))}
+            </div>
+          </Section>
+
+          {certifications.length > 0 && (
+            <Section title="Certifications" collapsible defaultOpen={false}>
+              {certifications.map((c) => (
+                <SectionItem key={c.id} title={c.title} organization={c.organization} date={c.date} />
+              ))}
+            </Section>
+          )}
+
+          <Section title="Honors & Awards" collapsible defaultOpen={false}>
+            {honors.map((h) => (
+              <SectionItem key={h.id} title={h.title} organization={h.organization} date={h.date} summary={h.summary} />
+            ))}
+          </Section>
+
+          <Section title="Grants & Fellowships" collapsible defaultOpen={false}>
+            {grants.map((g) => (
+              <SectionItem key={g.id} title={g.title} organization={g.organization} date={g.date} summary={g.summary} />
+            ))}
+          </Section>
+        </main>
+
+        <Footer />
+      </div>
+    </>
   );
 };
 

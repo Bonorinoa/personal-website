@@ -1,355 +1,106 @@
 
-# Test Suite Plan: Admin Panel & Data Pipeline
+# Executive Redesign + Stabilization Plan
 
-## Overview
+A single coordinated pass: lock in a real visual identity (Quiet Modernist), fix the bugs that are actively breaking the app, harden admin, and ship the polish a personal site needs to feel "done."
 
-This plan outlines a comprehensive test suite covering the admin panel functionality and the data collection/sync pipeline. Tests are organized by layer: unit tests for utilities and hooks, integration tests for edge functions, and component tests for the admin UI.
+## Visual identity: Quiet Modernist
 
----
+Paper-white `#fafaf7` and ink-black `#0a0a0a` with a single electric cobalt `#2348ff` accent. Greyscale `#6b6b6b` for secondary. Zero gradients, zero glassmorphism, no purple-on-white. Mode-specific accents stay within this palette — academic leans warm-neutral type weight, build leans tighter mono — so the two modes feel like the same studio, not two skins.
 
-## Test Architecture
+**Typography**: Fraunces (display serif for academic mode) + Geist Sans (UI everywhere) + Geist Mono (build mode + code). Self-hosted via `@fontsource` — kills the Google Fonts request and FOUT.
+
+**Design tokens**: rewrite `index.css` with semantic HSL tokens (`--ink`, `--paper`, `--cobalt`, `--rule`, `--muted-ink`), shadow tokens (`--shadow-hairline`, `--shadow-lift`), radius tokens (mostly `0` and `2px` — Swiss precision, no soft pills), and proper dark mode (`#0a0a0a` paper, `#fafaf7` ink, cobalt stays). Tailwind config consumes them; no hardcoded colors in components.
+
+**Motion**: Framer Motion with a single shared `easeOut [0.16, 1, 0.3, 1]` curve and `120ms / 240ms / 480ms` durations. One hero gesture per page, micro-fades on list items, no parallax theater.
+
+## Landing chooser refinement (keep dual modes)
+
+The pond particle background reads as generic. Replace with a single deliberate gesture: an **animated typographic split** — the name renders once in serif, then on hover/tap a vertical hairline rule slides in from center and the two halves morph (left → Fraunces serif "Research," right → Geist Mono "Build"). Two buttons become two columns of the same screen, each with a one-line preview of what's inside (e.g. "12 publications, 4 working papers" / "9 shipped projects, AI-collab transparency"). Mobile: stacks vertically with the same hairline as a divider. Removes the "which do I pick?" friction by previewing both.
+
+## Per-page improvements
+
+**Academic (`/academic`)**:
+- Replace "AG" avatar stub with a real headshot slot (placeholder image now, swap later) + downloadable CV button (PDF link, configurable).
+- Add a "Currently" block above Education — one-line status (where you are, what you're working on, contact).
+- Publications: real BibTeX / cite-as popover per entry, DOI badges, year-grouped with sticky year column on desktop.
+- Section headings: small-caps Fraunces with cobalt hairline underline.
+- Mobile spacing fixes (current pt-24 collides with nav on small screens).
+
+**Build (`/build`)**:
+- Kill the horizontal scroll-snap pattern — it hides projects below the fold and breaks on touch. Replace with a vertical bento grid (featured project = 2-col, others 1-col) with hover-reveal demo embeds.
+- Move the "AI-Human Collaboration Principles" out of a collapsible into a permanent right-column sidebar on desktop (it's the differentiator, not a footnote).
+- Tag legend becomes a sticky filter bar with active-state cobalt fill.
+- Aggregate matrix gets a real treatment: square cells, monospace labels, intensity ramp from paper to ink with cobalt highlights for top-3.
+
+**Admin (`/admin`)**:
+- Replace hardcoded password with **Google sign-in only**, restricted to your email (`hd` + email allowlist check). Unauthorized users see a polite "not for you" screen.
+- Fix the `ERR_NAME_NOT_RESOLVED` noise — `useArtifacts`/`useInboxItems` are calling Supabase with placeholder URLs during initial render. Guard the queries on a real `SUPABASE_URL`.
+- Add a "Site preview" toggle so you can see exactly how an edit will render in Academic vs Build before approving.
+
+## Bugs / hygiene fixed in this pass
+
+1. **Hardcoded admin password** → Google OAuth with email allowlist (executive decision: your email only).
+2. **Supabase ERR_NAME_NOT_RESOLVED** flooding the console on every page → guarded queries + proper env validation.
+3. **`index.html` SEO defaults** ("Lovable Generated Project") → real title, meta description, canonical (relative), Open Graph + Twitter card, JSON-LD `Person` schema with your affiliations, ORCID, Google Scholar.
+4. **README placeholder** → real project README.
+5. **React Router v7 future-flag warnings** → opt into `v7_startTransition` + `v7_relativeSplatPath` (free, silences noise, future-proofs).
+6. **No `prefers-color-scheme` dark mode** → wire dark mode through the new tokens; toggle in nav.
+7. **No 404 design** → NotFound gets the Quiet Modernist treatment (cobalt 404, hairline rule, return-home link).
+8. **Mobile nav** currently overlaps content on Academic at the top — fixed with proper safe-area padding.
+9. **`useMode` race** — Academic/Build pages call `setMode` in an effect that re-fires; debounce or move to URL-derived mode.
+
+## Technical specifics
 
 ```text
 src/
+├── index.css                  # rewritten tokens, dark mode, no gradients
+├── styles/
+│   └── fonts.ts               # @fontsource imports (Fraunces, Geist Sans/Mono)
+├── pages/
+│   ├── Index.tsx              # new typographic split landing
+│   ├── Academic.tsx           # Currently block, CV button, BibTeX, year column
+│   ├── Build.tsx              # bento grid, sticky philosophy sidebar
+│   ├── Admin.tsx              # Google-auth gate
+│   └── NotFound.tsx           # redesigned
+├── components/
+│   ├── auth/RequireAuth.tsx   # new — Google OAuth + email allowlist
+│   ├── shared/Navigation.tsx  # dark-mode toggle, mobile fix
+│   ├── shared/Footer.tsx      # new — contact + social, hairline top
+│   ├── academic/CitePopover.tsx  # new
+│   └── build/BentoGrid.tsx    # replaces ProjectShowcase scroll-snap
 ├── hooks/
-│   ├── useInboxItems.test.ts       # Hook tests (mocked Supabase)
-│   └── useArtifacts.test.ts        # Hook tests with JSON fallback
-├── lib/
-│   └── artifacts.test.ts           # Pure utility function tests
-├── components/admin/
-│   ├── InboxList.test.tsx          # Component rendering & interactions
-│   ├── SyncButton.test.tsx         # Sync button state machine
-│   ├── RepoSelector.test.tsx       # Repo filtering & selection
-│   └── ContentEditor.test.tsx      # Content management UI
-└── test/
-    └── setup.ts                    # Existing setup file
+│   ├── useArtifacts.ts        # env-guarded queries
+│   ├── useInboxItems.ts       # env-guarded queries
+│   └── useTheme.ts            # new — light/dark
+└── lib/seo.ts                 # new — JSON-LD Person builder
 
-supabase/functions/
-├── sync-orcid/
-│   └── index.test.ts               # Edge function tests (Deno)
-└── sync-github/
-    └── index.test.ts               # Edge function tests (Deno)
+index.html                     # real meta, OG, JSON-LD
+public/cv.pdf                  # placeholder, you swap with real CV
+README.md                      # real readme
 ```
 
----
+**Auth flow**: `RequireAuth` wraps `/admin`. On mount → check `lovable.auth.getUser()`; if null → render Google sign-in button (`lovable.auth.signInWithOAuth("google", { redirect_uri: window.location.origin + "/admin" })`); after callback → verify `user.email` against allowlist constant (`AUGUSTO_EMAIL`); on mismatch → sign out + "not for you" view. No password, no localStorage role check.
 
-## Test Categories
+**Auth setup**: `configure_social_auth({ providers: ["google"], disable_providers: ["email"] })` runs in this build pass.
 
-### 1. Unit Tests: Utility Functions
+**Migration**: delete the `ADMIN_PASSWORD` constant, delete the password state, remove the auth memory note about `admin123` after the swap.
 
-**File: `src/lib/artifacts.test.ts`**
+## Out of scope (this pass)
 
-| Test Case | Description |
-|-----------|-------------|
-| `getArtifacts` returns all artifacts from JSON | Verify JSON loading works |
-| `getAcademicArtifacts` filters by mode_visibility | Only 'academic' or 'both' returned |
-| `getBuildArtifacts` filters by mode + links/tags | Correct filtering logic |
-| `filterByTag` returns artifacts matching tag | Tag filtering works |
-| `filterByTag(null)` returns all artifacts | Null tag returns unfiltered |
-| `sortByDate` orders newest first | Date sorting, handles 'current' |
-| `groupByType` creates correct buckets | Grouping logic |
-| `getAggregateMatrixData` extracts matrix info | Collaboration matrix aggregation |
+- Contact form / email sending (can add later via Lovable AI gateway or Resend).
+- Blog / writing section.
+- Multi-language support.
+- Per-user public profiles (Admin is single-user by design).
 
----
+## Order of operations
 
-### 2. Hook Tests: Data Fetching Layer
+1. Tokens + fonts + Tailwind config + dark mode wiring.
+2. Bug sweep (Supabase env guards, router flags, SEO meta, JSON-LD, README).
+3. Google auth + `/admin` lockdown.
+4. Landing chooser redesign.
+5. Academic page refinements.
+6. Build page bento + sidebar.
+7. NotFound + Footer + nav polish.
+8. Browser QA pass at desktop + mobile viewports, screenshot every route.
 
-**File: `src/hooks/useInboxItems.test.ts`**
-
-| Test Case | Description |
-|-----------|-------------|
-| `useInboxItems()` fetches all items | No filter returns all |
-| `useInboxItems('pending')` filters by status | Status filter applied |
-| transforms DB rows to InboxItem interface | Field mapping correct |
-| handles empty result gracefully | Returns empty array |
-| handles DB error | Error state exposed |
-
-**File: `src/hooks/useArtifacts.test.ts`**
-
-| Test Case | Description |
-|-----------|-------------|
-| `useArtifacts()` fetches from database | DB is primary source |
-| `useArtifacts({ mode: 'academic' })` filters correctly | Mode filter SQL |
-| falls back to JSON when DB is empty | Fallback triggers |
-| falls back to JSON on DB error | Error recovery |
-| `useAllArtifacts()` returns combined data | All artifacts accessible |
-
----
-
-### 3. Mutation Tests: Approve/Reject Flow
-
-**File: `src/hooks/useInboxItems.test.ts` (continued)**
-
-| Test Case | Description |
-|-----------|-------------|
-| `useApproveInboxItem` calls RPC correctly | Correct RPC params |
-| `useApproveInboxItem` invalidates queries | Cache refresh |
-| `useRejectInboxItem` updates status to 'rejected' | Status change |
-| `useRejectInboxItem` sets reviewed_at timestamp | Timestamp set |
-| `useUpdateInboxItem` updates suggested_artifact | Edit before approve |
-
----
-
-### 4. Component Tests: Admin UI
-
-**File: `src/components/admin/InboxList.test.tsx`**
-
-| Test Case | Description |
-|-----------|-------------|
-| renders loading state initially | Spinner shown |
-| renders empty state when no items | "No pending items" message |
-| renders error state with retry button | Error + retry works |
-| renders pending items with title/source | Item cards shown |
-| Approve button calls mutation | Click triggers approve |
-| Approve button shows loading during mutation | Disabled + spinner |
-| Reject button calls mutation with confirmation | Rejection flow |
-| Edit button calls onEdit callback | Edit handler invoked |
-| Refresh button refetches data | Refetch triggered |
-
-**File: `src/components/admin/SyncButton.test.tsx`**
-
-| Test Case | Description |
-|-----------|-------------|
-| renders idle state with "Sync" label | Initial state |
-| shows loading spinner during sync | Syncing state |
-| shows success state with item count | Success feedback |
-| shows error state with message | Error display |
-| disabled when no sourceId provided | Validation |
-| disabled for google_scholar source | Not implemented |
-| calls onSyncComplete with counts | Callback params |
-| calls onReposFetched for GitHub | Two-step flow |
-| resets to idle after 3 seconds | Auto-reset |
-
-**File: `src/components/admin/RepoSelector.test.tsx`**
-
-| Test Case | Description |
-|-----------|-------------|
-| renders repo list when open | Modal content |
-| filters repos by search query | Name/desc/topics |
-| filters repos by language | Language dropdown |
-| filters repos by minimum stars | Star threshold |
-| Select All selects filtered repos | Bulk select |
-| Select None clears selection | Bulk deselect |
-| toggles individual repo selection | Checkbox click |
-| Import button disabled when none selected | Validation |
-| Import calls edge function with selected IDs | API call |
-| closes dialog after successful import | Modal closes |
-
-**File: `src/components/admin/ContentEditor.test.tsx`**
-
-| Test Case | Description |
-|-----------|-------------|
-| renders artifact list | Left panel |
-| filters artifacts by search | Text search |
-| filters artifacts by type | Type dropdown |
-| filters artifacts by visibility | Mode filter |
-| sorts artifacts by date/title/type | Sort options |
-| clicking artifact opens editor | Selection |
-| editor shows all fields | Form fields |
-| saving updates local storage | Persistence |
-| Export JSON downloads file | Export works |
-| Clear Edits resets to initial | Reset function |
-
----
-
-### 5. Edge Function Tests (Deno)
-
-**File: `supabase/functions/sync-orcid/index.test.ts`**
-
-| Test Case | Description |
-|-----------|-------------|
-| returns 400 if orcid_id missing | Input validation |
-| fetches works from ORCID API | API call made |
-| handles ORCID API errors gracefully | Error propagation |
-| transforms ORCID work to inbox item | Field mapping |
-| extracts DOI from external IDs | DOI parsing |
-| skips existing items (deduplication) | external_id check |
-| inserts new items into inbox_items | DB write |
-| returns correct inserted/skipped counts | Response format |
-| handles CORS preflight | OPTIONS request |
-
-**File: `supabase/functions/sync-github/index.test.ts`**
-
-| Test Case | Description |
-|-----------|-------------|
-| returns 400 if username missing | Input validation |
-| fetches repos from GitHub API | API call made |
-| handles GitHub API errors gracefully | Error propagation |
-| excludes forked repositories | Fork filtering |
-| returns repo list for selection (no selected_repos) | Two-step: step 1 |
-| inserts selected repos into inbox_items | Two-step: step 2 |
-| skips existing repos (deduplication) | external_id check |
-| infers vibe-engineered tag from topics | Tag inference |
-| infers ai-assisted tag from recency | Tag inference |
-| returns correct inserted/skipped counts | Response format |
-
----
-
-### 6. Integration Tests: Full Flow
-
-**File: `src/test/admin-integration.test.ts`**
-
-| Test Case | Description |
-|-----------|-------------|
-| Sync ORCID > Items appear in inbox | End-to-end sync |
-| Approve item > Artifact created | Full approval flow |
-| Approved artifact visible in useArtifacts | Query sees new data |
-| Reject item > Status updated | Rejection persists |
-| Edit before approve > Changes saved | Modified approval |
-| Duplicate sync > Items skipped | Deduplication works |
-
----
-
-## Test Implementation Strategy
-
-### Mocking Approach
-
-**Frontend Tests (Vitest)**
-- Mock `@/integrations/supabase/client` for all hook tests
-- Use `@testing-library/react` with `QueryClientProvider` wrapper
-- Mock `localStorage` for ContentEditor tests
-
-**Edge Function Tests (Deno)**
-- Use `Deno.test()` with Deno's standard library
-- Load credentials from `.env` using dotenv
-- Mock external API calls or use live APIs with test data
-- Consume all response bodies to avoid resource leaks
-
-### Test Data Fixtures
-
-Create reusable fixtures:
-
-```typescript
-// src/test/fixtures/inbox-items.ts
-export const mockPendingItem: InboxItem = {
-  id: 'test-1',
-  source: 'orcid',
-  discoveredAt: '2024-01-15T00:00:00Z',
-  status: 'pending',
-  rawData: { /* ORCID response */ },
-  suggestedArtifact: {
-    title: 'Test Publication',
-    type: 'paper',
-    date: '2024-01-01',
-    summary: 'A test paper',
-    mode_visibility: 'both',
-  },
-};
-
-// src/test/fixtures/artifacts.ts  
-export const mockArtifact: Artifact = {
-  id: 'artifact-1',
-  type: 'project',
-  title: 'Test Project',
-  date: '2024-01-01',
-  summary: 'A test project',
-  mode_visibility: 'build',
-  tags: ['ai-assisted'],
-};
-```
-
----
-
-## Files to Create
-
-| File | Purpose |
-|------|---------|
-| `src/lib/artifacts.test.ts` | Pure function unit tests |
-| `src/hooks/useInboxItems.test.ts` | Inbox hook tests |
-| `src/hooks/useArtifacts.test.ts` | Artifacts hook tests |
-| `src/components/admin/InboxList.test.tsx` | Inbox UI tests |
-| `src/components/admin/SyncButton.test.tsx` | Sync button tests |
-| `src/components/admin/RepoSelector.test.tsx` | Repo selector tests |
-| `src/components/admin/ContentEditor.test.tsx` | Content editor tests |
-| `src/test/fixtures/inbox-items.ts` | Test fixtures |
-| `src/test/fixtures/artifacts.ts` | Test fixtures |
-| `supabase/functions/sync-orcid/index.test.ts` | ORCID sync tests |
-| `supabase/functions/sync-github/index.test.ts` | GitHub sync tests |
-
----
-
-## Priority Order
-
-1. **High Priority** (Core Functionality)
-   - `useInboxItems.test.ts` - Approve/reject mutations
-   - `sync-orcid/index.test.ts` - ORCID pipeline
-   - `sync-github/index.test.ts` - GitHub pipeline
-   - `InboxList.test.tsx` - Primary admin interface
-
-2. **Medium Priority** (Supporting Features)
-   - `useArtifacts.test.ts` - Data fetching with fallback
-   - `SyncButton.test.tsx` - Sync UI states
-   - `RepoSelector.test.tsx` - GitHub repo selection
-
-3. **Lower Priority** (Utilities & Secondary UI)
-   - `artifacts.test.ts` - Pure utility functions
-   - `ContentEditor.test.tsx` - Content management
-
----
-
-## Technical Considerations
-
-### Supabase Mocking Pattern
-
-```typescript
-// Example mock for useInboxItems tests
-vi.mock('@/integrations/supabase/client', () => ({
-  supabase: {
-    from: vi.fn(() => ({
-      select: vi.fn(() => ({
-        order: vi.fn(() => ({
-          eq: vi.fn(() => Promise.resolve({ data: mockItems, error: null }))
-        }))
-      }))
-    })),
-    rpc: vi.fn(() => Promise.resolve({ data: 'new-artifact-id', error: null })),
-  }
-}));
-```
-
-### React Query Test Wrapper
-
-```typescript
-const createWrapper = () => {
-  const queryClient = new QueryClient({
-    defaultOptions: { queries: { retry: false } },
-  });
-  return ({ children }) => (
-    <QueryClientProvider client={queryClient}>
-      {children}
-    </QueryClientProvider>
-  );
-};
-```
-
-### Edge Function Test Pattern (Deno)
-
-```typescript
-import "https://deno.land/std@0.224.0/dotenv/load.ts";
-import { assertEquals } from "https://deno.land/std@0.224.0/assert/mod.ts";
-
-const SUPABASE_URL = Deno.env.get("VITE_SUPABASE_URL")!;
-
-Deno.test("sync-orcid returns 400 without orcid_id", async () => {
-  const response = await fetch(`${SUPABASE_URL}/functions/v1/sync-orcid`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({}),
-  });
-  const body = await response.text(); // Always consume body
-  assertEquals(response.status, 400);
-});
-```
-
----
-
-## Estimated Effort
-
-| Category | Test Count | Complexity |
-|----------|------------|------------|
-| Unit Tests (artifacts.ts) | 8 | Low |
-| Hook Tests | 15 | Medium |
-| Component Tests | 25 | Medium |
-| Edge Function Tests | 18 | Medium |
-| Integration Tests | 6 | High |
-| **Total** | ~72 tests | ~3-4 iterations |
+End state: a site that looks like one designer made it on purpose, with no console errors, real auth, real SEO, and room to grow.

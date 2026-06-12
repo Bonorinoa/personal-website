@@ -5,7 +5,7 @@ import { useMode } from '@/hooks/useMode';
 import { Navigation } from '@/components/shared/Navigation';
 import { Footer } from '@/components/shared/Footer';
 import { TagLegend } from '@/components/build/TagLegend';
-import { BentoGrid } from '@/components/build/BentoGrid';
+import { ProjectGrid } from '@/components/build/ProjectGrid';
 import { AggregateMatrix } from '@/components/build/AggregateMatrix';
 import { getBuildArtifacts, filterByTag, sortByDate } from '@/lib/artifacts';
 import type { CollaborationTag } from '@/data/types';
@@ -37,7 +37,7 @@ const Build = () => {
       <div className="min-h-screen bg-background text-foreground">
         <Navigation />
 
-        <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 sm:pt-28 pb-8">
+        <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 sm:pt-28 pb-8">
           {/* Top label */}
           <div className="font-mono text-[11px] uppercase tracking-[0.22em] text-cobalt mb-6">
             Build / portfolio
@@ -48,10 +48,10 @@ const Build = () => {
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: EASE }}
-            className="grid grid-cols-1 lg:grid-cols-3 gap-10 mb-16"
+            className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-10 mb-12 sm:mb-16"
           >
             <div className="lg:col-span-2">
-              <h1 className="font-mono text-5xl md:text-7xl leading-[1.05] tracking-tight font-medium">
+              <h1 className="font-mono text-4xl sm:text-5xl md:text-7xl leading-[1.05] tracking-tight font-medium">
                 Things I&apos;ve<br />built.
               </h1>
               <p className="mt-6 text-base leading-relaxed text-foreground/85 max-w-xl">
@@ -61,8 +61,8 @@ const Build = () => {
               </p>
             </div>
 
-            {/* Permanent collaboration principles sidebar */}
-            <aside className="hairline-l pl-6 lg:border-l">
+            {/* Workspaces sidebar */}
+            <aside className="pt-6 hairline-t lg:pt-0 lg:pl-6 lg:border-t-0 lg:border-l lg:border-border">
               <div className="font-mono text-[11px] uppercase tracking-[0.18em] text-cobalt mb-3">
                 Method note
               </div>
@@ -70,9 +70,8 @@ const Build = () => {
                 AI–Human collaboration, in the open.
               </h2>
               <p className="text-sm text-muted-foreground leading-relaxed mb-4">
-                Tags indicate the rough split between human direction and AI
-                execution per project. The matrix below aggregates which models
-                did which classes of work, across everything shown.
+                Hover (or tap <span className="font-mono text-cobalt">AI ↓</span>) on any
+                card to peek the model-task matrix. Click for the full breakdown.
               </p>
               <div className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground mb-2">
                 Workspaces
@@ -89,10 +88,10 @@ const Build = () => {
           {/* Filter bar */}
           <TagLegend activeTag={activeTag} onTagSelect={setActiveTag} />
 
-          {/* Bento grid */}
+          {/* Project grid */}
           {filtered.length > 0 ? (
-            <section className="mb-20 -mx-px hairline">
-              <BentoGrid artifacts={filtered} />
+            <section className="mb-16 sm:mb-20">
+              <ProjectGrid artifacts={filtered} />
             </section>
           ) : (
             <div className="text-center py-20 hairline-b">
@@ -101,7 +100,7 @@ const Build = () => {
               </p>
               <button
                 onClick={() => setActiveTag(null)}
-                className="mt-3 link-cobalt font-mono text-xs uppercase tracking-[0.14em]"
+                className="mt-3 link-cobalt font-mono text-xs uppercase tracking-[0.14em] min-h-[44px] px-3"
               >
                 ← clear filter
               </button>

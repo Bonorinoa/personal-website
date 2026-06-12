@@ -18,7 +18,7 @@
       "id": "edu-cgu-ma",
       "type": "education",
       "title": "MA in Economics (PhD Track)",
-      "subtitle": "GPA: 4.0/4.0 · Applied Microeconomics - Experimental",
+      "subtitle": "GPA: 4.0/4.0 \u00b7 Applied Microeconomics - Experimental",
       "organization": "Claremont Graduate University",
       "location": "Claremont, CA",
       "date": "2022-08",
@@ -35,7 +35,7 @@
       "id": "edu-marist-ba",
       "type": "education",
       "title": "BA in Economics (Honors)",
-      "subtitle": "Summa Cum Laude · GPA: 3.93/4.0",
+      "subtitle": "Summa Cum Laude \u00b7 GPA: 3.93/4.0",
       "organization": "Marist College",
       "location": "Poughkeepsie, NY",
       "date": "2019-08",
@@ -66,19 +66,36 @@
       "links": {
         "website": "https://www.econllm-lab.com/"
       },
-      "tags": ["vibe-engineered"],
+      "tags": [
+        "vibe-engineered"
+      ],
       "mode_visibility": "both",
       "section": "experience",
       "featured": true,
       "collaboration_breakdown": {
         "human": "Designed research agenda, curated datasets, wrote papers, conducted economic analysis, mentored RAs",
         "matrix": [
-          { "model": "gpt-4", "tasks": ["literature-review", "brainstorming", "writing-editing"] },
-          { "model": "claude-3-sonnet", "tasks": ["code-generation", "data-analysis", "writing-drafting"] }
+          {
+            "model": "gpt-4",
+            "tasks": [
+              "literature-review",
+              "brainstorming",
+              "writing-editing"
+            ]
+          },
+          {
+            "model": "claude-3-sonnet",
+            "tasks": [
+              "code-generation",
+              "data-analysis",
+              "writing-drafting"
+            ]
+          }
         ],
         "verification": "Peer review, replication studies, benchmark comparisons against human subjects"
       },
-      "year": 2023
+      "year": 2023,
+      "org": "EconLLM-Lab"
     },
     {
       "id": "role-cjl",
@@ -111,15 +128,28 @@
         "Applied NLP methods for entity extraction, sparse and dense retrieval, and text cleaning",
         "Deployed production chatbot serving thousands of users"
       ],
-      "tags": ["ai-assisted"],
+      "tags": [
+        "ai-assisted"
+      ],
       "mode_visibility": "both",
       "section": "experience",
       "featured": true,
       "collaboration_breakdown": {
         "human": "Architected system, designed annotation schema, implemented retrieval pipeline, managed deployment, led team",
         "matrix": [
-          { "model": "gpt-3.5", "tasks": ["code-generation", "data-processing"] },
-          { "model": "custom", "tasks": ["simulation"] }
+          {
+            "model": "gpt-3.5",
+            "tasks": [
+              "code-generation",
+              "data-processing"
+            ]
+          },
+          {
+            "model": "custom",
+            "tasks": [
+              "simulation"
+            ]
+          }
         ],
         "verification": "User satisfaction surveys, accuracy benchmarks, A/B testing with real users"
       },
@@ -131,7 +161,8 @@
         "doi": "10.5220/0011059000003182",
         "github": "ODQA_Marist"
       },
-      "year": 2022
+      "year": 2022,
+      "org": "Academic"
     },
     {
       "id": "teaching-pomona",
@@ -203,7 +234,9 @@
       "links": {
         "paper": "http://dx.doi.org/10.2139/ssrn.5082714"
       },
-      "tags": ["vibe-engineered"],
+      "tags": [
+        "vibe-engineered"
+      ],
       "mode_visibility": "both",
       "section": "publications",
       "featured": true,
@@ -214,12 +247,25 @@
       "collaboration_breakdown": {
         "human": "Designed methodology, developed experimental framework, conducted statistical analysis, wrote paper",
         "matrix": [
-          { "model": "gpt-4", "tasks": ["simulation", "data-analysis"] },
-          { "model": "claude-3-sonnet", "tasks": ["writing-editing", "literature-review"] }
+          {
+            "model": "gpt-4",
+            "tasks": [
+              "simulation",
+              "data-analysis"
+            ]
+          },
+          {
+            "model": "claude-3-sonnet",
+            "tasks": [
+              "writing-editing",
+              "literature-review"
+            ]
+          }
         ],
         "verification": "Comparison with human experimental data, statistical validation, peer review"
       },
-      "year": 2024
+      "year": 2024,
+      "org": "EconLLM-Lab"
     },
     {
       "id": "pub-csedu-adaptive-kevin-2023",
@@ -229,7 +275,7 @@
       "date": "2023",
       "summary": "Conference paper describing an adaptive AI assistant architecture for higher education environments.",
       "details": [
-        "Authors: Gonzalez-Bonorino, A., & Lauría, E. J. M.",
+        "Authors: Gonzalez-Bonorino, A., & Laur\u00eda, E. J. M.",
         "Communications in Computer and Information Science (Vol. 1817)"
       ],
       "links": {
@@ -250,7 +296,7 @@
       "date": "2022",
       "summary": "Conference paper presenting methodology for implementing ODQA systems in educational contexts.",
       "details": [
-        "Authors: González Bonorino, A., Lauría, E. J. M., & Presutti, E.",
+        "Authors: Gonz\u00e1lez Bonorino, A., Laur\u00eda, E. J. M., & Presutti, E.",
         "Proceedings of the 14th International Conference on Computer Supported Education"
       ],
       "links": {
@@ -276,7 +322,9 @@
       "links": {
         "paper": "https://doi.org/10.5220/0011985400003470"
       },
-      "tags": ["ai-assisted"],
+      "tags": [
+        "ai-assisted"
+      ],
       "mode_visibility": "both",
       "section": "publications",
       "source_ids": {
@@ -285,12 +333,24 @@
       "collaboration_breakdown": {
         "human": "Designed methodology, conducted experiments, wrote analysis, presented findings",
         "matrix": [
-          { "model": "gpt-4", "tasks": ["survey-design", "data-analysis"] },
-          { "model": "gpt-3.5", "tasks": ["data-processing"] }
+          {
+            "model": "gpt-4",
+            "tasks": [
+              "survey-design",
+              "data-analysis"
+            ]
+          },
+          {
+            "model": "gpt-3.5",
+            "tasks": [
+              "data-processing"
+            ]
+          }
         ],
         "verification": "Comparison with traditional surveys, inter-rater reliability, user studies"
       },
-      "year": 2023
+      "year": 2023,
+      "org": "Academic"
     },
     {
       "id": "talk-esa-2023",
@@ -598,15 +658,30 @@
         "Real-time response quality analysis",
         "Multi-language support for international research"
       ],
-      "tags": ["ai-assisted"],
+      "tags": [
+        "ai-assisted"
+      ],
       "mode_visibility": "build",
       "featured": true,
       "year": 2023,
       "collaboration_breakdown": {
         "human": "Designed methodology, implemented core logic, conducted user testing, wrote paper",
         "matrix": [
-          { "model": "gpt-4", "tasks": ["survey-design", "data-analysis", "brainstorming"] },
-          { "model": "gpt-3.5", "tasks": ["data-processing", "translation"] }
+          {
+            "model": "gpt-4",
+            "tasks": [
+              "survey-design",
+              "data-analysis",
+              "brainstorming"
+            ]
+          },
+          {
+            "model": "gpt-3.5",
+            "tasks": [
+              "data-processing",
+              "translation"
+            ]
+          }
         ],
         "verification": "User studies, comparison with manual survey design, published at CSEDU 2023"
       },
@@ -621,7 +696,8 @@
       "demoInfo": {
         "type": "github",
         "url": "https://github.com/Bonorinoa/smart-surveys"
-      }
+      },
+      "org": "EconLLM-Lab"
     },
     {
       "id": "project-kevin-odqa",
@@ -635,15 +711,29 @@
         "Implemented sparse and dense retrieval pipelines",
         "Deployed production chatbot serving thousands of users"
       ],
-      "tags": ["ai-assisted"],
+      "tags": [
+        "ai-assisted"
+      ],
       "mode_visibility": "build",
       "featured": true,
       "year": 2022,
       "collaboration_breakdown": {
         "human": "System architecture, dataset design and annotation, retrieval pipeline implementation, team leadership, deployment",
         "matrix": [
-          { "model": "custom", "tasks": ["code-generation", "data-processing"] },
-          { "model": "gpt-3.5", "tasks": ["brainstorming", "writing-editing"] }
+          {
+            "model": "custom",
+            "tasks": [
+              "code-generation",
+              "data-processing"
+            ]
+          },
+          {
+            "model": "gpt-3.5",
+            "tasks": [
+              "brainstorming",
+              "writing-editing"
+            ]
+          }
         ],
         "verification": "User satisfaction surveys, accuracy benchmarks, A/B testing, published at CSEDU 2022"
       },
@@ -658,7 +748,8 @@
       "demoInfo": {
         "type": "github",
         "url": "https://github.com/Bonorinoa/ODQA_Marist"
-      }
+      },
+      "org": "Academic"
     },
     {
       "id": "project-personal-site",
@@ -667,14 +758,23 @@
       "organization": "Self",
       "date": "2024",
       "summary": "This website - a dual-mode personal site showcasing academic work and AI collaboration transparency with structured task matrices.",
-      "tags": ["vibe-coded"],
+      "tags": [
+        "vibe-coded"
+      ],
       "mode_visibility": "build",
       "featured": true,
       "year": 2024,
       "collaboration_breakdown": {
         "human": "Designed information architecture, provided design direction, curated all content, defined collaboration taxonomy",
         "matrix": [
-          { "model": "claude-3-sonnet", "tasks": ["code-generation", "ux-design", "writing-editing"] }
+          {
+            "model": "claude-3-sonnet",
+            "tasks": [
+              "code-generation",
+              "ux-design",
+              "writing-editing"
+            ]
+          }
         ],
         "verification": "Manual testing, accessibility checks, responsive design validation"
       },
@@ -684,7 +784,8 @@
       "demoInfo": {
         "type": "vercel",
         "url": "#"
-      }
+      },
+      "org": "Personal"
     },
     {
       "id": "project-llm-weird",
@@ -693,16 +794,38 @@
       "organization": "EconLLM Lab",
       "date": "2024",
       "summary": "Research platform for evaluating LLMs as synthetic cultural agents in experimental economics. Simulates non-WEIRD populations for behavioral research.",
-      "tags": ["vibe-engineered"],
+      "tags": [
+        "vibe-engineered"
+      ],
       "mode_visibility": "build",
       "featured": true,
       "year": 2024,
       "collaboration_breakdown": {
         "human": "Research design, experimental framework, statistical analysis, paper writing",
         "matrix": [
-          { "model": "gpt-4", "tasks": ["simulation", "data-analysis", "brainstorming"] },
-          { "model": "claude-3-sonnet", "tasks": ["writing-drafting", "literature-review", "writing-editing"] },
-          { "model": "gpt-4o", "tasks": ["simulation", "code-review"] }
+          {
+            "model": "gpt-4",
+            "tasks": [
+              "simulation",
+              "data-analysis",
+              "brainstorming"
+            ]
+          },
+          {
+            "model": "claude-3-sonnet",
+            "tasks": [
+              "writing-drafting",
+              "literature-review",
+              "writing-editing"
+            ]
+          },
+          {
+            "model": "gpt-4o",
+            "tasks": [
+              "simulation",
+              "code-review"
+            ]
+          }
         ],
         "verification": "Comparison with human experimental data, statistical validation, under peer review"
       },
@@ -713,7 +836,100 @@
       "source_ids": {
         "ssrn": "5082714",
         "arxiv": "2501.06834"
+      },
+      "org": "EconLLM-Lab"
+    },
+    {
+      "id": "project-leanecon-v3",
+      "type": "project",
+      "title": "LeanEcon v3",
+      "organization": "Personal",
+      "org": "Personal",
+      "date": "2026-01",
+      "year": 2026,
+      "summary": "Experimental rebuild of the LeanEcon framework \u2014 a Lean-style proof-checker and learning surface for microeconomic theorems, with LLM-assisted formalization.",
+      "tags": [
+        "vibe-engineered"
+      ],
+      "mode_visibility": "build",
+      "featured": true,
+      "collaboration_breakdown": {
+        "human": "Architecture, theorem selection, formal grammar, pedagogical design",
+        "matrix": [
+          {
+            "model": "claude-3-sonnet",
+            "tasks": [
+              "code-generation",
+              "code-review"
+            ]
+          },
+          {
+            "model": "gpt-4",
+            "tasks": [
+              "brainstorming",
+              "writing-editing"
+            ]
+          }
+        ],
+        "verification": "Type-checking via Lean, unit tests on theorem coverage, in-progress user studies"
+      },
+      "links": {
+        "repo": "https://github.com/Bonorinoa/leanecon-v3"
+      },
+      "source_ids": {
+        "github": "leanecon-v3"
       }
+    },
+    {
+      "id": "teach-pomona",
+      "type": "role",
+      "title": "Full-Time Visiting Lecturer",
+      "organization": "Department of Economics, Pomona College",
+      "location": "Claremont, CA",
+      "date": "2024-09",
+      "endDate": "2025-05",
+      "summary": "Taught ECON 57 (Economic Statistics with R), ECON 101 (Intermediate Macroeconomics), and ECON 167 (Econometrics with Linear Algebra).",
+      "details": [
+        "Designed and delivered four sections of Intermediate Macroeconomics and one section of Econometrics for AY 24/25",
+        "Mentored 200+ students across seven courses",
+        "Integrated R programming components throughout curriculum"
+      ],
+      "mode_visibility": "academic",
+      "section": "teaching"
+    },
+    {
+      "id": "pub-perma4-chapter-2025",
+      "type": "paper",
+      "title": "Enhancing well-being by leveraging artificial intelligence in coaching practices",
+      "organization": "In J. Passmore (Ed.), The Health and Wellbeing Coaches' Handbook \u00b7 Taylor & Francis",
+      "date": "2025",
+      "year": 2025,
+      "summary": "Book chapter on integrating AI into coaching practice through the PERMA+4 framework.",
+      "details": [
+        "Authors: Olafsson, B., Martin, D., & Gonzalez-Bonorino, A."
+      ],
+      "mode_visibility": "academic",
+      "section": "publications"
+    },
+    {
+      "id": "pub-jqc-quantum-riccati-2022",
+      "type": "paper",
+      "title": "Near term hybrid quantum computing solution to the matrix Riccati equations",
+      "organization": "Journal of Quantum Computing, 4(3), 135\u2013146",
+      "date": "2022",
+      "year": 2022,
+      "summary": "Hybrid classical-quantum algorithm for solving matrix Riccati equations on near-term quantum hardware.",
+      "details": [
+        "Authors: Bonorino, A. G., Ndiaye, M., & DeCusatis, C."
+      ],
+      "links": {
+        "paper": "https://doi.org/10.32604/jqc.2022.036706"
+      },
+      "source_ids": {
+        "doi": "10.32604/jqc.2022.036706"
+      },
+      "mode_visibility": "academic",
+      "section": "publications"
     }
   ]
 }

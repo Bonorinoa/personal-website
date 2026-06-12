@@ -69,11 +69,20 @@ const Build = () => {
               <h2 className="font-serif text-xl mb-3 leading-snug">
                 AI–Human collaboration, in the open.
               </h2>
-              <p className="text-sm text-muted-foreground leading-relaxed">
-                Tags below indicate the rough split between human direction and AI
-                execution per project. The matrix farther down aggregates which
-                models did which classes of work, across everything shown here.
+              <p className="text-sm text-muted-foreground leading-relaxed mb-4">
+                Tags indicate the rough split between human direction and AI
+                execution per project. The matrix below aggregates which models
+                did which classes of work, across everything shown.
               </p>
+              <div className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground mb-2">
+                Workspaces
+              </div>
+              <ul className="text-xs font-mono space-y-1 text-foreground/80">
+                <li><span className="text-cobalt">/</span> Personal — leanecon-v3 et al.</li>
+                <li><span className="text-cobalt">/</span> EconLLM-Lab — research tooling</li>
+                <li><span className="text-cobalt">/</span> Perwell — wellbeing × AI</li>
+                <li><span className="text-cobalt">/</span> Cognitio-EDU — teaching</li>
+              </ul>
             </aside>
           </motion.header>
 

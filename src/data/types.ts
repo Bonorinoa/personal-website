@@ -51,6 +51,8 @@ export interface Evidence {
   benchmarks?: string | null;
 }
 
+export type OrgScope = 'Personal' | 'EconLLM-Lab' | 'Perwell' | 'Cognitio-EDU' | 'Academic' | 'Other';
+
 export interface SourceIds {
   doi?: string | null;
   arxiv?: string | null;
@@ -60,6 +62,7 @@ export interface SourceIds {
 }
 
 export interface Artifact {
+  org?: OrgScope;        // GitHub org / workspace for Build mode grouping
   id: string;
   type: ArtifactType;
   title: string;

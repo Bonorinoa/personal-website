@@ -13,8 +13,10 @@ import { getInboxConfig } from '@/lib/artifacts';
 import { useAllArtifacts } from '@/hooks/useArtifacts';
 import { useInboxItems } from '@/hooks/useInboxItems';
 import { useAdminAuth, ADMIN_EMAILS } from '@/hooks/useAdminAuth';
-import { Inbox, FileEdit, BarChart3, FlaskConical, LogOut, Lock, ExternalLink, Loader2, Mail } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
+import { Inbox, FileEdit, BarChart3, FlaskConical, LogOut, ExternalLink, Loader2, Mail, RefreshCw, CheckCheck } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+
 
 interface RepoItem {
   id: string;
@@ -209,9 +211,21 @@ const Admin = () => {
             </TabsList>
 
             <TabsContent value="inbox" className="space-y-4">
-              <div>
-                <h2 className="font-serif text-2xl">Inbox</h2>
-                <p className="text-sm text-muted-foreground">Review and approve discovered artifacts.</p>
+              <div className="flex items-start justify-between gap-4 flex-wrap">
+                <div>
+                  <h2 className="font-serif text-2xl">Inbox</h2>
+                  <p className="text-sm text-muted-foreground">Review and approve discovered artifacts.</p>
+                </div>
+                <div className="flex gap-2">
+                  <SyncAllGithubButton onDone={(n) => {
+                    refetchInbox();
+                    toast({ title: 'GitHub sync complete', description: `Added ${n} new repos from Bonorinoa + 3 orgs.` });
+                  }} />
+                  <ApproveAllGithubButton pendingCount={pendingItems.filter((p: any) => p.source === 'github').length} onDone={(n) => {
+                    refetchInbox();
+                    toast({ title: 'Bulk approved', description: `Promoted ${n} GitHub items to live artifacts.` });
+                  }} />
+                </div>
               </div>
               <InboxList onEdit={(item) => console.log('Edit:', item)} />
 
@@ -228,7 +242,7 @@ const Admin = () => {
                     <SourceCard name="Google Scholar" enabled={config?.sources?.google_scholar?.enabled ?? false} configValue={config?.sources?.google_scholar?.user_id} lastSync={config?.sources?.google_scholar?.lastSync} description="Citations and h-index" configNeeded="Scholar ID"
                       syncButton={<SyncButton source="google_scholar" sourceId={config?.sources?.google_scholar?.user_id || ''} onSyncComplete={handleSyncComplete} disabled />}
                     />
-                    <SourceCard name="GitHub" enabled={config?.sources?.github?.enabled ?? false} configValue={config?.sources?.github?.username} lastSync={config?.sources?.github?.lastSync} description="Repositories and activity" configNeeded="Username"
+                    <SourceCard name="GitHub (single)" enabled={config?.sources?.github?.enabled ?? false} configValue={config?.sources?.github?.username} lastSync={config?.sources?.github?.lastSync} description="Per-user pick & choose" configNeeded="Username"
                       syncButton={<SyncButton source="github" sourceId={config?.sources?.github?.username || ''} onReposFetched={handleReposFetched} />}
                     />
                     <SourceCard name="OpenAlex" enabled={config?.sources?.openalex?.enabled ?? false}
@@ -239,6 +253,7 @@ const Admin = () => {
                 </CardContent>
               </Card>
             </TabsContent>
+
 
             <TabsContent value="content" className="space-y-4">
               <div>
@@ -327,4 +342,64 @@ function SourceCard({
   );
 }
 
+function SyncAllGithubButton({ onDone }: { onDone: (n: number) => void }) {
+  const [loading, setLoading] = useState(false);
+  const { toast } = useToast();
+  const handle = async () => {
+    setLoading(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('sync-github', {
+        body: { scope: 'all' },
+      });
+      if (error) throw error;
+      if (data?.error) throw new Error(data.error);
+      onDone(data?.inserted ?? 0);
+    } catch (e) {
+      toast({ title: 'Sync failed', description: e instanceof Error ? e.message : 'Unknown error', variant: 'destructive' });
+    } finally {
+      setLoading(false);
+    }
+  };
+  return (
+    <Button size="sm" onClick={handle} disabled={loading} className="gap-2">
+      {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <RefreshCw className="w-4 h-4" />}
+      Sync all GitHub
+    </Button>
+  );
+}
+
+function ApproveAllGithubButton({ pendingCount, onDone }: { pendingCount: number; onDone: (n: number) => void }) {
+  const [loading, setLoading] = useState(false);
+  const { toast } = useToast();
+  const handle = async () => {
+    setLoading(true);
+    try {
+      const { data: pending, error } = await supabase
+        .from('inbox_items').select('id, suggested_artifact')
+        .eq('source', 'github').eq('status', 'pending');
+      if (error) throw error;
+      let approved = 0;
+      for (const item of pending || []) {
+        const { error: rpcErr } = await supabase.rpc('approve_inbox_item', {
+          p_inbox_id: item.id as string,
+          p_artifact_data: item.suggested_artifact as any,
+        });
+        if (!rpcErr) approved++;
+      }
+      onDone(approved);
+    } catch (e) {
+      toast({ title: 'Bulk approve failed', description: e instanceof Error ? e.message : 'Unknown error', variant: 'destructive' });
+    } finally {
+      setLoading(false);
+    }
+  };
+  return (
+    <Button size="sm" variant="outline" onClick={handle} disabled={loading || pendingCount === 0} className="gap-2">
+      {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <CheckCheck className="w-4 h-4" />}
+      Approve all GitHub {pendingCount > 0 && `(${pendingCount})`}
+    </Button>
+  );
+}
+
 export default Admin;
+

@@ -12,7 +12,7 @@ export function TagLegend({ activeTag, onTagSelect }: TagLegendProps) {
   const tags = Object.entries(TAG_DEFINITIONS) as [CollaborationTag, { ratio: string; description: string }][];
 
   const baseBtn =
-    'font-mono text-xs uppercase tracking-[0.12em] px-3 py-1.5 border transition-colors';
+    'font-mono text-xs uppercase tracking-[0.12em] px-3 py-2 border transition-colors min-h-[40px] whitespace-nowrap shrink-0';
   const off = 'border-border text-muted-foreground hover:text-foreground hover:border-foreground';
   const on = 'border-cobalt bg-cobalt text-white';
 
@@ -21,7 +21,7 @@ export function TagLegend({ activeTag, onTagSelect }: TagLegendProps) {
       <div className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground mb-3">
         Filter / collaboration mode
       </div>
-      <div className="flex flex-wrap gap-2">
+      <div className="flex gap-2 overflow-x-auto scrollbar-hide -mx-4 px-4 sm:mx-0 sm:px-0 sm:flex-wrap">
         <button onClick={() => onTagSelect(null)} className={`${baseBtn} ${activeTag === null ? on : off}`}>
           All
         </button>
@@ -61,10 +61,10 @@ export function TagBadge({ tag, size = 'default' }: TagBadgeProps) {
   const sz = size === 'sm' ? 'text-[10px] px-1.5 py-0.5' : 'text-xs px-2 py-0.5';
   return (
     <Tooltip>
-      <TooltipTrigger>
-        <Badge className={`${sz} font-mono uppercase tracking-[0.1em] bg-foreground text-background hover:bg-foreground border-0`}>
+      <TooltipTrigger asChild>
+        <span className={`${sz} font-mono uppercase tracking-[0.1em] bg-foreground text-background inline-block`}>
           {formatTagName(tag)}
-        </Badge>
+        </span>
       </TooltipTrigger>
       <TooltipContent side="top">
         <p>{TAG_DEFINITIONS[tag].description}</p>

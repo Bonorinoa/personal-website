@@ -342,4 +342,64 @@ function SourceCard({
   );
 }
 
+function SyncAllGithubButton({ onDone }: { onDone: (n: number) => void }) {
+  const [loading, setLoading] = useState(false);
+  const { toast } = useToast();
+  const handle = async () => {
+    setLoading(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('sync-github', {
+        body: { scope: 'all' },
+      });
+      if (error) throw error;
+      if (data?.error) throw new Error(data.error);
+      onDone(data?.inserted ?? 0);
+    } catch (e) {
+      toast({ title: 'Sync failed', description: e instanceof Error ? e.message : 'Unknown error', variant: 'destructive' });
+    } finally {
+      setLoading(false);
+    }
+  };
+  return (
+    <Button size="sm" onClick={handle} disabled={loading} className="gap-2">
+      {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <RefreshCw className="w-4 h-4" />}
+      Sync all GitHub
+    </Button>
+  );
+}
+
+function ApproveAllGithubButton({ pendingCount, onDone }: { pendingCount: number; onDone: (n: number) => void }) {
+  const [loading, setLoading] = useState(false);
+  const { toast } = useToast();
+  const handle = async () => {
+    setLoading(true);
+    try {
+      const { data: pending, error } = await supabase
+        .from('inbox_items').select('id, suggested_artifact')
+        .eq('source', 'github').eq('status', 'pending');
+      if (error) throw error;
+      let approved = 0;
+      for (const item of pending || []) {
+        const { error: rpcErr } = await supabase.rpc('approve_inbox_item', {
+          p_inbox_id: item.id as string,
+          p_artifact_data: item.suggested_artifact as any,
+        });
+        if (!rpcErr) approved++;
+      }
+      onDone(approved);
+    } catch (e) {
+      toast({ title: 'Bulk approve failed', description: e instanceof Error ? e.message : 'Unknown error', variant: 'destructive' });
+    } finally {
+      setLoading(false);
+    }
+  };
+  return (
+    <Button size="sm" variant="outline" onClick={handle} disabled={loading || pendingCount === 0} className="gap-2">
+      {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <CheckCheck className="w-4 h-4" />}
+      Approve all GitHub {pendingCount > 0 && `(${pendingCount})`}
+    </Button>
+  );
+}
+
 export default Admin;
+

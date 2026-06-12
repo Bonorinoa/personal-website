@@ -51,7 +51,7 @@ const Academic = () => {
       <div className="min-h-screen bg-background text-foreground">
         <Navigation />
 
-        <main className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 sm:pt-28 pb-8">
+        <main className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 sm:pt-28 pb-8">
           {/* Top label */}
           <div className="font-mono text-[11px] uppercase tracking-[0.22em] text-cobalt mb-6">
             Research / curriculum vitae
@@ -62,12 +62,12 @@ const Academic = () => {
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: EASE }}
-            className="mb-16"
+            className="mb-12 sm:mb-16"
           >
-            <h1 className="font-serif text-5xl md:text-6xl leading-[1.05] tracking-tight font-medium">
+            <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl leading-[1.05] tracking-tight font-medium">
               Augusto<br />González-Bonorino
             </h1>
-            <p className="mt-6 font-serif italic text-xl text-muted-foreground">
+            <p className="mt-6 font-serif italic text-lg sm:text-xl text-muted-foreground">
               PhD Student in Economics · Arizona State University
             </p>
 
@@ -103,28 +103,29 @@ const Academic = () => {
               </p>
             </div>
 
-            {/* Links */}
-            <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm">
-              <a href="mailto:agonz439@asu.edu" className="inline-flex items-center gap-1.5 text-foreground hover:text-cobalt transition-colors">
-                <Mail className="w-3.5 h-3.5" /> agonz439@asu.edu
+            {/* Links — 2-col grid on mobile, flex on sm+ */}
+            <div className="mt-8 grid grid-cols-2 sm:flex sm:flex-wrap sm:items-center gap-x-5 gap-y-1 text-sm">
+              <a href="mailto:agonz439@asu.edu" className="inline-flex items-center gap-1.5 text-foreground hover:text-cobalt transition-colors min-h-[44px] py-2">
+                <Mail className="w-3.5 h-3.5" /> <span className="truncate">agonz439@asu.edu</span>
               </a>
-              <a href="/cv.pdf" className="inline-flex items-center gap-1.5 text-foreground hover:text-cobalt transition-colors">
+              <a href="/cv.pdf" className="inline-flex items-center gap-1.5 text-foreground hover:text-cobalt transition-colors min-h-[44px] py-2">
                 <Download className="w-3.5 h-3.5" /> CV (PDF)
               </a>
-              <a href="https://scholar.google.com/citations?user=xdO0FqwAAAAJ&hl=en" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-muted-foreground hover:text-foreground transition-colors">
-                <GraduationCap className="w-3.5 h-3.5" /> Google Scholar
+              <a href="https://scholar.google.com/citations?user=xdO0FqwAAAAJ&hl=en" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-muted-foreground hover:text-foreground transition-colors min-h-[44px] py-2">
+                <GraduationCap className="w-3.5 h-3.5" /> Scholar
               </a>
-              <a href="https://orcid.org/0000-0002-9355-0831" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-muted-foreground hover:text-foreground transition-colors">
+              <a href="https://orcid.org/0000-0002-9355-0831" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-muted-foreground hover:text-foreground transition-colors min-h-[44px] py-2">
                 <BookOpen className="w-3.5 h-3.5" /> ORCID
               </a>
-              <a href="https://github.com/Bonorinoa" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-muted-foreground hover:text-foreground transition-colors">
+              <a href="https://github.com/Bonorinoa" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-muted-foreground hover:text-foreground transition-colors min-h-[44px] py-2">
                 <Github className="w-3.5 h-3.5" /> GitHub
               </a>
-              <a href="https://www.linkedin.com/in/augustogbono/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-muted-foreground hover:text-foreground transition-colors">
+              <a href="https://www.linkedin.com/in/augustogbono/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-muted-foreground hover:text-foreground transition-colors min-h-[44px] py-2">
                 <Linkedin className="w-3.5 h-3.5" /> LinkedIn
               </a>
             </div>
           </motion.header>
+
 
           {/* Sections */}
           <Section title="Education">

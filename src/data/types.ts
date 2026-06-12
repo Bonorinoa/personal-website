@@ -62,6 +62,7 @@ export interface SourceIds {
 }
 
 export interface Artifact {
+  org?: OrgScope;        // GitHub org / workspace for Build mode grouping
   id: string;
   type: ArtifactType;
   title: string;

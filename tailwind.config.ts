@@ -1,7 +1,6 @@
 import type { Config } from "tailwindcss";
 
 export default {
-  darkMode: ["class"],
   content: ["./pages/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}", "./app/**/*.{ts,tsx}", "./src/**/*.{ts,tsx}"],
   prefix: "",
   theme: {
@@ -27,10 +26,11 @@ export default {
         foreground: "hsl(var(--foreground))",
         rule: "hsl(var(--rule))",
         paper: "hsl(var(--paper))",
+        "paper-deep": "hsl(var(--paper-deep))",
         ink: "hsl(var(--ink))",
-        cobalt: {
-          DEFAULT: "hsl(var(--cobalt))",
-          soft: "hsl(var(--cobalt-soft))",
+        oxblood: {
+          DEFAULT: "hsl(var(--oxblood))",
+          soft: "hsl(var(--oxblood-soft))",
         },
         primary: {
           DEFAULT: "hsl(var(--primary))",

@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
 import { useMode } from '@/hooks/useMode';
+import { useWorld } from '@/hooks/useWorld';
 import { Navigation } from '@/components/shared/Navigation';
 import { Footer } from '@/components/shared/Footer';
 import { Section, SectionItem } from '@/components/academic/Section';
@@ -13,6 +14,7 @@ const EASE = [0.16, 1, 0.3, 1] as const;
 
 const Academic = () => {
   const { mode, setMode, isLoading } = useMode();
+  useWorld('academic');
 
   useEffect(() => {
     if (!isLoading && mode !== 'academic') setMode('academic');

@@ -1,12 +1,9 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useMode } from '@/hooks/useMode';
-import { useTheme } from '@/hooks/useTheme';
-import { Moon, Sun } from 'lucide-react';
 
 export function Navigation() {
   const { mode } = useMode();
   const location = useLocation();
-  const { isDark, toggle } = useTheme();
 
   if (location.pathname === '/') return null;
 
@@ -22,7 +19,7 @@ export function Navigation() {
             to="/"
             className="group flex items-baseline gap-2 text-sm tracking-tight text-foreground min-h-[44px] py-2"
           >
-            <span className={isAcademic ? 'font-serif text-base' : 'font-mono text-[13px]'}>
+            <span className={isAcademic ? 'font-serif text-base italic' : 'font-mono text-[13px]'}>
               A. González-Bonorino
             </span>
             <span className="text-muted-foreground hidden sm:inline">·</span>
@@ -44,13 +41,6 @@ export function Navigation() {
             >
               Build
             </Link>
-            <button
-              onClick={toggle}
-              aria-label="Toggle theme"
-              className="text-muted-foreground hover:text-foreground transition-colors min-h-[44px] min-w-[44px] inline-flex items-center justify-center"
-            >
-              {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-            </button>
           </div>
         </div>
       </div>

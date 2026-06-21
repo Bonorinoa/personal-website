@@ -3,25 +3,30 @@
 @tailwind utilities;
 
 /* ============================================================
-   Quiet Modernist — design tokens
-   Paper white · ink black · electric cobalt · single accent
-   All colors HSL. No gradients. No glassmorphism.
+   Editorial Atelier — design tokens
+   Two worlds: warm Academic press, cool Build studio.
+   Shared landing in warm cream. Light-only.
+   All colors HSL.
    ============================================================ */
 
 @layer base {
   :root {
-    /* Surface */
-    --paper: 60 16% 97%;          /* #fafaf7 */
-    --ink: 0 0% 4%;               /* #0a0a0a */
-    --rule: 0 0% 88%;             /* hairline borders */
-    --muted-ink: 0 0% 42%;        /* #6b6b6b */
-    --subtle: 60 10% 94%;         /* off-paper for cards */
+    /* Shared landing — warm cream paper */
+    --paper: 38 38% 94%;          /* #f6f1e7 */
+    --paper-deep: 36 30% 88%;     /* slight inset */
+    --ink: 24 28% 9%;             /* #1a1410 */
+    --rule: 36 20% 80%;
+    --muted-ink: 28 12% 38%;
+    --subtle: 38 28% 90%;
 
-    /* Single accent */
-    --cobalt: 229 100% 57%;       /* #2348ff */
+    /* Accents */
+    --oxblood: 11 56% 27%;        /* #6b2c1f */
+    --oxblood-soft: 11 56% 92%;
+    --cobalt: 229 100% 47%;       /* used only inside Build world */
     --cobalt-soft: 229 100% 96%;
+    --accent-color: var(--oxblood);
 
-    /* Shadcn semantic tokens — mapped to Quiet Modernist */
+    /* Shadcn semantic tokens — mapped */
     --background: var(--paper);
     --foreground: var(--ink);
 
@@ -40,29 +45,26 @@
     --muted: var(--subtle);
     --muted-foreground: var(--muted-ink);
 
-    --accent: var(--cobalt);
+    --accent: var(--oxblood);
     --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 70% 50%;
+    --destructive: 0 60% 38%;
     --destructive-foreground: 0 0% 100%;
 
     --border: var(--rule);
     --input: var(--rule);
-    --ring: var(--cobalt);
+    --ring: var(--oxblood);
 
     --radius: 2px;
 
-    /* Shadow tokens */
     --shadow-hairline: 0 0 0 1px hsl(var(--rule));
-    --shadow-lift: 0 1px 0 hsl(var(--rule)), 0 8px 24px -12px hsl(var(--ink) / 0.12);
+    --shadow-lift: 0 1px 0 hsl(var(--rule)), 0 18px 40px -24px hsl(var(--ink) / 0.18);
 
-    /* Motion */
     --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
     --dur-fast: 120ms;
     --dur: 240ms;
     --dur-slow: 480ms;
 
-    /* Sidebar (used by shadcn sidebar — keep semantic) */
     --sidebar-background: var(--paper);
     --sidebar-foreground: var(--ink);
     --sidebar-primary: var(--ink);
@@ -70,47 +72,45 @@
     --sidebar-accent: var(--subtle);
     --sidebar-accent-foreground: var(--ink);
     --sidebar-border: var(--rule);
-    --sidebar-ring: var(--cobalt);
+    --sidebar-ring: var(--oxblood);
+
+    /* Body font defaults to serif on landing for editorial feel */
+    --font-body: 'Fraunces', 'Iowan Old Style', Georgia, serif;
+    --font-display: 'Fraunces', 'Iowan Old Style', Georgia, serif;
   }
 
-  .dark {
-    --paper: 0 0% 4%;             /* #0a0a0a */
-    --ink: 60 16% 97%;            /* #fafaf7 */
-    --rule: 0 0% 18%;
-    --muted-ink: 0 0% 62%;
-    --subtle: 0 0% 9%;
+  /* ACADEMIC — aged cream, oxblood ink, Fraunces */
+  [data-world='academic'] {
+    --paper: 38 42% 92%;          /* #f3ecdc */
+    --paper-deep: 36 36% 86%;
+    --ink: 24 32% 12%;            /* #2a1f15 */
+    --rule: 36 24% 76%;
+    --muted-ink: 28 14% 36%;
+    --subtle: 38 32% 88%;
 
-    --cobalt: 229 100% 68%;       /* slightly brighter in dark */
-    --cobalt-soft: 229 50% 14%;
+    --accent-color: var(--oxblood);
+    --accent: var(--oxblood);
+    --ring: var(--oxblood);
 
-    --background: var(--paper);
-    --foreground: var(--ink);
-    --card: var(--paper);
-    --card-foreground: var(--ink);
-    --popover: var(--paper);
-    --popover-foreground: var(--ink);
-    --primary: var(--ink);
-    --primary-foreground: var(--paper);
-    --secondary: var(--subtle);
-    --secondary-foreground: var(--ink);
-    --muted: var(--subtle);
-    --muted-foreground: var(--muted-ink);
+    --font-body: 'Fraunces', 'Iowan Old Style', Georgia, serif;
+    --font-display: 'Fraunces', 'Iowan Old Style', Georgia, serif;
+  }
+
+  /* BUILD — cool graphite paper, cobalt accent, Geist */
+  [data-world='build'] {
+    --paper: 210 8% 93%;          /* #ececec slightly cool */
+    --paper-deep: 210 8% 88%;
+    --ink: 210 12% 8%;            /* #111315 */
+    --rule: 210 10% 78%;
+    --muted-ink: 210 8% 36%;
+    --subtle: 210 8% 90%;
+
+    --accent-color: var(--cobalt);
     --accent: var(--cobalt);
-    --accent-foreground: 0 0% 4%;
-    --destructive: 0 70% 60%;
-    --destructive-foreground: 0 0% 100%;
-    --border: var(--rule);
-    --input: var(--rule);
     --ring: var(--cobalt);
 
-    --sidebar-background: var(--paper);
-    --sidebar-foreground: var(--ink);
-    --sidebar-primary: var(--ink);
-    --sidebar-primary-foreground: var(--paper);
-    --sidebar-accent: var(--subtle);
-    --sidebar-accent-foreground: var(--ink);
-    --sidebar-border: var(--rule);
-    --sidebar-ring: var(--cobalt);
+    --font-body: 'Geist Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-display: 'Geist Mono', ui-monospace, 'SF Mono', monospace;
   }
 }
 
@@ -127,13 +127,13 @@
 
   body {
     @apply bg-background text-foreground;
-    font-family: 'Geist Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: var(--font-body);
     font-feature-settings: 'ss01', 'cv11';
   }
 
   ::selection {
-    background-color: hsl(var(--cobalt));
-    color: white;
+    background-color: hsl(var(--accent-color));
+    color: hsl(var(--paper));
   }
 
   .font-serif,
@@ -147,14 +147,12 @@
     font-feature-settings: 'zero', 'ss01';
   }
 
-  /* Legacy aliases preserved so existing components compile */
   .font-academic { font-family: 'Fraunces', Georgia, serif; }
   .font-build { font-family: 'Geist Mono', ui-monospace, monospace; }
   .font-sans { font-family: 'Geist Sans', -apple-system, BlinkMacSystemFont, sans-serif; }
 }
 
 @layer utilities {
-  /* Reduced motion */
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
       animation-duration: 0.01ms !important;
@@ -163,40 +161,67 @@
     }
   }
 
-  /* Hairline rules */
-  .hairline {
-    border-color: hsl(var(--rule));
-  }
+  .hairline { border-color: hsl(var(--rule)); }
   .hairline-t { border-top: 1px solid hsl(var(--rule)); }
   .hairline-b { border-bottom: 1px solid hsl(var(--rule)); }
   .hairline-l { border-left: 1px solid hsl(var(--rule)); }
   .hairline-r { border-right: 1px solid hsl(var(--rule)); }
 
-  /* Cobalt link underline */
   .link-cobalt {
-    color: hsl(var(--cobalt));
+    color: hsl(var(--accent-color));
     text-decoration: underline;
     text-decoration-thickness: 1px;
     text-underline-offset: 3px;
   }
+  .text-cobalt { color: hsl(var(--accent-color)); }
+  .bg-cobalt { background-color: hsl(var(--accent-color)); }
+  .text-oxblood { color: hsl(var(--oxblood)); }
+  .bg-oxblood { background-color: hsl(var(--oxblood)); }
 
-  /* Scrollbar-hide kept (used by some components) */
   .scrollbar-hide::-webkit-scrollbar { display: none; }
   .scrollbar-hide { scrollbar-width: none; }
 
-  /* Subtle fade-in for entering content */
-  .animate-fade-in {
-    animation: fade-in var(--dur-slow) var(--ease-out) both;
-  }
+  .animate-fade-in { animation: fade-in var(--dur-slow) var(--ease-out) both; }
 
   @keyframes fade-in {
     from { opacity: 0; transform: translateY(4px); }
     to { opacity: 1; transform: translateY(0); }
   }
 
-  /* Small caps for section labels */
   .small-caps {
     font-variant: all-small-caps;
     letter-spacing: 0.08em;
+  }
+
+  /* Editorial paper — subtle grain via layered radial gradients */
+  .paper-grain {
+    background-color: hsl(var(--paper));
+    background-image:
+      radial-gradient(hsl(var(--ink) / 0.025) 1px, transparent 1px),
+      radial-gradient(hsl(var(--ink) / 0.018) 1px, transparent 1px);
+    background-size: 3px 3px, 7px 7px;
+    background-position: 0 0, 1px 2px;
+  }
+
+  /* Baseline grid — invisible until you look */
+  .baseline-grid {
+    background-image: repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent 23px,
+      hsl(var(--ink) / 0.04) 23px,
+      hsl(var(--ink) / 0.04) 24px
+    );
+  }
+
+  /* Drop cap for editorial paragraphs */
+  .drop-cap::first-letter {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 500;
+    float: left;
+    font-size: 4.2em;
+    line-height: 0.86;
+    padding: 0.08em 0.12em 0 0;
+    color: hsl(var(--oxblood));
   }
 }

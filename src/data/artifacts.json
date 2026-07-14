@@ -807,7 +807,7 @@
       "org": "Personal",
       "date": "2026-01",
       "year": 2026,
-      "summary": "Lean 4 verification harness for economic-theory claims. Natural-language economics statements flow through a Planner → Formalizer → Prover pipeline, with the Lean kernel as the sole authority on proof success. Ships a thin Python/FastAPI orchestration layer over a versioned Lean workspace (LeanEcon preamble, Mathlib-pinned Lake package), a claim-type-aware prover with bounded lean-lsp-mcp tool use, and Tier 1 / Tier 2 benchmark buckets for release-reliability vs. frontier diagnostics.",
+      "summary": "A Lean 4 verification harness for economic-theory claims. Natural-language statements are routed through a Planner → Formalizer → Prover pipeline, with the Lean kernel as the only authority on whether a proof holds. Ships tiered benchmarks that separate release-reliable results from frontier diagnostics.",
       "tags": [
         "vibe-engineered"
       ],
@@ -857,7 +857,7 @@
       "org": "Personal",
       "date": "2025",
       "year": 2025,
-      "summary": "Stata replication of Frost, Martinez Jaramillo & Madeira (BIS Working Paper 1314, 2025), built on top of the official World Bank reproducibility package. Wraps the canonical Main_WaterScarcity_FMM_2025 workflow in a portable macOS-friendly runner, restores the raw AQUASTAT / FRED / SDG6 / UN-WPP inputs from the World Bank catalog, and reproduces the paper's figure and table set (Fig 1–6, A1–A2; Table 1–8, A1–A7) as tracked reviewer-facing outputs.",
+      "summary": "A reproducible Stata replication of Frost, Martinez Jaramillo & Madeira's BIS working paper on the economics of water scarcity. Wraps the official World Bank package in a portable runner that pulls the raw data, re-executes the canonical workflow, and regenerates the paper's figures and tables as reviewer-facing outputs.",
       "tags": [
         "ai-assisted"
       ],
@@ -892,7 +892,7 @@
       "org": "Cognitio-EDU",
       "date": "2024",
       "year": 2024,
-      "summary": "Streamlit-powered RAG teaching assistant. Students chat with their course PDFs through a sidebar course picker and a memory-enabled chat UI that cites page numbers and surfaces the exact excerpt. Professors get a password-protected admin console for drag-and-drop PDF upload, duplicate detection, folder-size guards, live OCR + embedding progress, and one-click commit to GitHub — no local git required. OCR via mistral-ocr-latest, embeddings via mistral-embed cached to Parquet, generation via mistral-medium-latest.",
+      "summary": "A Streamlit-based RAG teaching assistant that lets students chat with their course PDFs and get answers grounded in cited page excerpts. Professors manage the corpus from a protected admin console — uploading, previewing, and re-embedding materials in the browser — with OCR, embeddings, and generation handled by a cached Mistral pipeline.",
       "tags": [
         "vibe-engineered"
       ],

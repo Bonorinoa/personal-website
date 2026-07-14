@@ -857,7 +857,7 @@
       "org": "Personal",
       "date": "2025",
       "year": 2025,
-      "summary": "Stata replication of Frost, Martinez Jaramillo & Madeira (BIS Working Paper 1314, 2025), built on top of the official World Bank reproducibility package. Wraps the canonical Main_WaterScarcity_FMM_2025 workflow in a portable macOS-friendly runner, restores the raw AQUASTAT / FRED / SDG6 / UN-WPP inputs from the World Bank catalog, and reproduces the paper's figure and table set (Fig 1–6, A1–A2; Table 1–8, A1–A7) as tracked reviewer-facing outputs.",
+      "summary": "A reproducible Stata replication of Frost, Martinez Jaramillo & Madeira's BIS working paper on the economics of water scarcity. Wraps the official World Bank package in a portable runner that pulls the raw data, re-executes the canonical workflow, and regenerates the paper's figures and tables as reviewer-facing outputs.",
       "tags": [
         "ai-assisted"
       ],

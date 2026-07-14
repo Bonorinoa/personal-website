@@ -80,9 +80,9 @@ const Build = () => {
               </div>
               <ul className="text-xs font-mono space-y-1 text-foreground/80">
                 <li><span className="text-cobalt">/</span> Personal — leanecon-v3 et al.</li>
-                <li><span className="text-cobalt">/</span> EconLLM-Lab — research tooling</li>
+                <li><span className="text-cobalt">/</span> EconLLM-Lab — cultural alignment and open-source research tool</li>
                 <li><span className="text-cobalt">/</span> Perwell — wellbeing × AI</li>
-                <li><span className="text-cobalt">/</span> Cognitio-EDU — teaching</li>
+                <li><span className="text-cobalt">/</span> Cognitio-EDU — teaching and learning technology</li>
               </ul>
             </aside>
           </motion.header>

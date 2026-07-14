@@ -1,5 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useMode } from '@/hooks/useMode';
+import { ModeToggle } from './ModeToggle';
 
 export function Navigation() {
   const { mode } = useMode();
@@ -8,11 +9,9 @@ export function Navigation() {
   if (location.pathname === '/') return null;
 
   const isAcademic = mode === 'academic';
-  const navLink =
-    'transition-colors hover:text-cobalt min-h-[44px] inline-flex items-center px-1';
 
   return (
-    <nav className="fixed top-0 inset-x-0 z-50 bg-background/85 backdrop-blur hairline-b">
+    <nav className="fixed top-0 inset-x-0 z-50 bg-background/70 backdrop-blur-xl backdrop-saturate-150 hairline-b">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-14">
           <Link
@@ -28,22 +27,10 @@ export function Navigation() {
             </span>
           </Link>
 
-          <div className="flex items-center gap-3 sm:gap-5 text-xs uppercase tracking-[0.14em]">
-            <Link
-              to="/academic"
-              className={`${navLink} ${location.pathname === '/academic' ? 'text-foreground' : 'text-muted-foreground'}`}
-            >
-              Research
-            </Link>
-            <Link
-              to="/build"
-              className={`${navLink} ${location.pathname === '/build' ? 'text-foreground' : 'text-muted-foreground'}`}
-            >
-              Build
-            </Link>
-          </div>
+          <ModeToggle />
         </div>
       </div>
     </nav>
   );
 }
+

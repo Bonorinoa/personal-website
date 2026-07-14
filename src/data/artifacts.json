@@ -82,7 +82,7 @@
       "tags": [
         "vibe-engineered"
       ],
-      "mode_visibility": "both",
+      "mode_visibility": "academic",
       "section": "experience",
       "featured": true,
       "collaboration_breakdown": {
@@ -143,7 +143,7 @@
       "tags": [
         "ai-assisted"
       ],
-      "mode_visibility": "both",
+      "mode_visibility": "academic",
       "section": "experience",
       "featured": true,
       "collaboration_breakdown": {
@@ -198,7 +198,7 @@
       "id": "pub-book-chapter-2025",
       "type": "paper",
       "title": "Enhancing well-being by leveraging artificial intelligence in coaching practices",
-      "organization": "In J. Passmore (Ed.), The Health and Wellbeing Coaches' Handbook · Taylor & Francis Publishing",
+      "organization": "In J. Passmore (Ed.), The Health and Wellbeing Coaches' Handbook \u00b7 Taylor & Francis Publishing",
       "date": "2024",
       "year": 2024,
       "summary": "Book chapter exploring how AI can be integrated into coaching practices to enhance well-being outcomes.",
@@ -231,7 +231,7 @@
       "tags": [
         "vibe-engineered"
       ],
-      "mode_visibility": "both",
+      "mode_visibility": "academic",
       "section": "publications",
       "featured": true,
       "source_ids": {
@@ -258,7 +258,6 @@
         ],
         "verification": "Comparison with human experimental data, statistical validation, peer review"
       },
-      "year": 2025,
       "org": "EconLLM-Lab",
       "citations": 6
     },
@@ -322,7 +321,7 @@
       "tags": [
         "ai-assisted"
       ],
-      "mode_visibility": "both",
+      "mode_visibility": "academic",
       "section": "publications",
       "source_ids": {
         "doi": "10.5220/0011985400003470"
@@ -360,7 +359,7 @@
       "date": "2023-06",
       "summary": "Award-winning presentation on semi-autonomous AI architecture for knowledge discovery in higher education.",
       "details": [
-        "Authors: Gonzalez-Bonorino, A., & Lauría, E. J. M."
+        "Authors: Gonzalez-Bonorino, A., & Laur\u00eda, E. J. M."
       ],
       "links": {
         "paper": "https://ecc.marist.edu/documents/2978505/2980816/Augusto+Gonzalez+Bonorino/ff6cdd26-345d-4835-964b-30d5c6a19531"
@@ -626,7 +625,7 @@
       "tags": [
         "ai-assisted"
       ],
-      "mode_visibility": "build",
+      "mode_visibility": "academic",
       "featured": true,
       "year": 2023,
       "collaboration_breakdown": {
@@ -679,7 +678,7 @@
       "tags": [
         "ai-assisted"
       ],
-      "mode_visibility": "build",
+      "mode_visibility": "academic",
       "featured": true,
       "year": 2022,
       "collaboration_breakdown": {
@@ -762,7 +761,7 @@
       "tags": [
         "vibe-engineered"
       ],
-      "mode_visibility": "build",
+      "mode_visibility": "academic",
       "featured": true,
       "year": 2024,
       "collaboration_breakdown": {

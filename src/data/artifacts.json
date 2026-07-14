@@ -202,6 +202,7 @@
       "subtitle": "In J. Passmore (Ed.), The Health and Wellbeing Coaches' Handbook",
       "organization": "Taylor & Francis Publishing",
       "date": "2025",
+      "year": 2025,
       "summary": "Book chapter exploring how AI can be integrated into coaching practices to enhance well-being outcomes.",
       "details": [
         "Authors: Olafsson, B., Martin, D., & Gonzalez-Bonorino, A."
@@ -238,7 +239,8 @@
       "type": "paper",
       "title": "LLMs Can Model Non-WEIRD Populations: Experiments with Synthetic Cultural Agents",
       "organization": "Forthcoming in Review of Experimental Economics",
-      "date": "2024",
+      "date": "2025",
+      "year": 2025,
       "summary": "Empirical study evaluating how large language models can simulate non-WEIRD populations for experimental economics research.",
       "details": [
         "Authors: Gonzalez-Bonorino, A., Capra, M. C., & Pantoja, E.",
@@ -879,8 +881,8 @@
       "type": "paper",
       "title": "Enhancing well-being by leveraging artificial intelligence in coaching practices",
       "organization": "In J. Passmore (Ed.), The Health and Wellbeing Coaches' Handbook \u00b7 Taylor & Francis",
-      "date": "2025",
-      "year": 2025,
+      "date": "2024",
+      "year": 2024,
       "summary": "Book chapter on integrating AI into coaching practice through the PERMA+4 framework.",
       "details": [
         "Authors: Olafsson, B., Martin, D., & Gonzalez-Bonorino, A."

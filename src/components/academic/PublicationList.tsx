@@ -73,17 +73,31 @@ export function PublicationList({ publications }: PublicationListProps) {
                       {pub.organization}
                     </p>
                   )}
-                  {pub.links?.paper && (
-                    <a
-                      href={pub.links.paper}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="link-cobalt inline-flex items-center gap-1 mt-2 text-xs font-mono uppercase tracking-[0.12em] min-h-[44px] py-2"
-                    >
-                      {pub.source_ids?.doi ? 'DOI' : pub.source_ids?.arxiv ? 'arXiv' : pub.source_ids?.ssrn ? 'SSRN' : 'Read'}
-                      <ExternalLink className="w-3 h-3" />
-                    </a>
-                  )}
+                  <div className="flex items-center gap-4 flex-wrap">
+                    {pub.links?.paper && (
+                      <a
+                        href={pub.links.paper}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="link-cobalt inline-flex items-center gap-1 mt-2 text-xs font-mono uppercase tracking-[0.12em] min-h-[44px] py-2"
+                      >
+                        {pub.source_ids?.doi ? 'DOI' : pub.source_ids?.arxiv ? 'arXiv' : pub.source_ids?.ssrn ? 'SSRN' : 'Read'}
+                        <ExternalLink className="w-3 h-3" />
+                      </a>
+                    )}
+                    {typeof pub.citations === 'number' && pub.citations > 0 && (
+                      <a
+                        href="https://scholar.google.com/citations?user=xdO0FqwAAAAJ&hl=en"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        title="Citations on Google Scholar"
+                        className="inline-flex items-center gap-1 mt-2 text-xs font-mono uppercase tracking-[0.12em] text-muted-foreground hover:text-foreground transition-colors min-h-[44px] py-2"
+                      >
+                        Cited by {pub.citations}
+                      </a>
+                    )}
+                  </div>
+
                 </li>
               );
             })}

@@ -210,7 +210,8 @@
       },
       "mode_visibility": "academic",
       "section": "publications",
-      "featured": true
+      "featured": true,
+      "citations": 2
     },
     {
       "id": "pub-ssrn-llm-weird-2024",
@@ -258,7 +259,8 @@
         "verification": "Comparison with human experimental data, statistical validation, peer review"
       },
       "year": 2025,
-      "org": "EconLLM-Lab"
+      "org": "EconLLM-Lab",
+      "citations": 6
     },
     {
       "id": "pub-csedu-adaptive-kevin-2023",
@@ -278,7 +280,8 @@
         "doi": "10.1007/978-3-031-40501-3_7"
       },
       "mode_visibility": "academic",
-      "section": "publications"
+      "section": "publications",
+      "citations": 2
     },
     {
       "id": "pub-csedu-odqa-2022",
@@ -299,7 +302,8 @@
         "doi": "10.5220/0011059000003182"
       },
       "mode_visibility": "academic",
-      "section": "publications"
+      "section": "publications",
+      "citations": 3
     },
     {
       "id": "pub-csedu-smart-surveys-2023",
@@ -343,7 +347,8 @@
         "verification": "Comparison with traditional surveys, inter-rater reliability, user studies"
       },
       "year": 2023,
-      "org": "Academic"
+      "org": "Academic",
+      "citations": 5
     },
     {
       "id": "talk-ecc-2023",

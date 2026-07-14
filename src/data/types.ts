@@ -89,7 +89,10 @@ export interface Artifact {
   demoInfo?: DemoInfo;
   // Year for timeline grouping
   year?: number;
+  // Manually curated citation count (from Google Scholar)
+  citations?: number;
 }
+
 
 // Phase 2: Inbox item for discovered artifacts pending approval
 export interface InboxItem {

@@ -17,7 +17,7 @@
     {
       "id": "edu-cgu-ma",
       "type": "education",
-      "title": "MA in Economics (PhD Track)",
+      "title": "MA in Economics",
       "subtitle": "GPA: 4.0/4.0 \u00b7 Applied Microeconomics - Experimental",
       "organization": "Claremont Graduate University",
       "location": "Claremont, CA",
@@ -25,7 +25,7 @@
       "endDate": "2024-05",
       "summary": "Advanced graduate training in economics with specialization in experimental methods and computational approaches.",
       "details": [
-        "Relevant Coursework: Game Theory, Industrial Organization, Behavioral Economics, Econometrics I & II, Mathematical Economics"
+        "Relevant Coursework: Game Theory, Neuroeconomics, Behavioral Economics, Econometrics I & II, Mathematics for Machine Learning"
       ],
       "mode_visibility": "academic",
       "section": "education",

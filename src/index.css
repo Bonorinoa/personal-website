@@ -81,11 +81,11 @@
 
   /* ACADEMIC — aged cream, oxblood ink, Fraunces */
   [data-world='academic'] {
-    --paper: 38 42% 92%;          /* #f3ecdc */
+    --paper: 38 44% 94%;          /* lighter for stronger contrast */
     --paper-deep: 36 36% 86%;
-    --ink: 24 32% 12%;            /* #2a1f15 */
-    --rule: 36 24% 76%;
-    --muted-ink: 28 14% 36%;
+    --ink: 24 40% 8%;             /* deeper ink */
+    --rule: 36 24% 72%;
+    --muted-ink: 28 18% 28%;      /* darker muted for readability */
     --subtle: 38 32% 88%;
 
     --accent-color: var(--oxblood);

@@ -1,135 +1,82 @@
-## Direction
+# Plan — Academic content pass
 
-**Editorial Atelier** — a rare-books-room landing that opens onto two visually distinct worlds: a warm cream "Academic" press and a cool graphite "Build" studio. Light-only, fully tuned. Cursor leaves a slow ink-bleed trail across the paper.
+## 0. Verify build first
 
-## 1. Remove dark mode
+Run `bun run build:dev` (or equivalent) and confirm no errors before editing. If it fails, fix before proceeding.
 
-- Delete `src/hooks/useTheme.ts`, `ModeToggle.tsx`, and the theme-init script in `main.tsx`.
-- Strip `.dark { … }` block and `darkMode: ["class"]` from `index.css` / `tailwind.config.ts`.
-- Drop any `dark:` utilities currently in components (audit pass).
-- Remove theme toggle from `Navigation.tsx` and `Footer.tsx`.
+## 1. Task list — Academic page changes
 
-## 2. Two-world tokens
+### A. `src/pages/Academic.tsx`
 
-Replace the single Quiet Modernist palette with **three scoped token sets** on `:root`, `[data-world="academic"]`, `[data-world="build"]`.
+1. Remove the ORCID link from the hero links row.
+2. Change the GitHub link `href` from `https://github.com/Bonorinoa` → `https://github.com/EconLLM-Lab` (Academic page only; Build page keeps personal profile).
+3. Reorder `<Section>` calls so **Grants & Fellowships** renders immediately after **Computational Skills** (new order: Education → Research & Work → Teaching → Publications & Presentations → Computational Skills → Grants & Fellowships → Certifications → Honors & Awards).
+4. Make **all** sections collapsible: pass `collapsible defaultOpen` to Education, Research & Work, Teaching, Publications & Presentations, and Computational Skills (currently only the last 4 are collapsible). Keep Education/Research/Teaching/Publications `defaultOpen={true}` so first-load reads the same; the rest stay `defaultOpen={false}`.
 
-```text
-shared (landing)
-  --paper      #f6f1e7   warm cream
-  --ink        #1a1410   dark sepia-black
-  --accent     #6b2c1f   oxblood
+### B. Contrast tweak — `src/index.css`
 
-academic
-  --paper      #f3ecdc   aged cream
-  --ink        #2a1f15   warm ink
-  --accent     #6b2c1f   oxblood red
-  --rule       #d9cfb8
-  font display = Fraunces (italic-leaning)
-  font body    = Fraunces text
-  feel: letterpress, wide margins, drop caps, marginalia
+5. Nudge the Academic-world `--foreground` token slightly darker (or `--paper` slightly lighter) so body copy has stronger contrast against the paper background. Small change — one or two token lines under `[data-world='academic']`. Verify visually.
 
-build
-  --paper      #ececec   cool graphite paper
-  --ink        #111315   near-black
-  --accent     #2348ff   electric cobalt (kept)
-  --rule       #c8ccd1
-  font display = Geist Mono
-  font body    = Geist Sans
-  feel: technical grid, hairlines, monospaced metadata
-```
+### C. `src/data/artifacts.json` — Education
 
-`Academic.tsx` and `Build.tsx` set `<html data-world="…">` on mount (cleared on unmount). All shared components read semantic tokens, so swapping `data-world` re-skins everything without component edits.
+6. `edu-ma-cgu` (line 20): rename title `"MA in Economics (PhD Track)"` → `"MA in Economics"`; in coursework detail replace `"Mathematical Economics"` → `"Mathematics for Machine Learning"` and `"Industrial Organization"` → `"Neuroeconomics"`.
+7. Add new education entry below `edu-ba` (BA in Economics Honors):
+  - id: `edu-bsc-cofc`
+  - title: `BSc in Economics (Honors)`
+  - organization: `College of Charleston`
+  - location: `Charleston, SC`
+  - date: `2018-08`, endDate: `2019-05`
+  - details: `["GPA: 3.6/4.0"]`
+  - section: `education`, mode_visibility: `academic`
 
-## 3. Landing page — Editorial Atelier
+### D. Publications & Presentations (`artifacts.json`)
 
-Rebuild `src/pages/Index.tsx` and `PondBackground` family. New structure:
+8. Add `links.paper` (or update existing) for:
+  - "Enhancing well-being by leveraging AI in coaching practices" → `https://www.taylorfrancis.com/chapters/edit/10.4324/9781003319016-28/...`
+  - "AutoKevin: A Semi-Autonomous AI Knowledge Discovery Architecture" → `https://ecc.marist.edu/documents/2978505/2980816/...`
+  - "LLMs Model Non-WEIRD Populations…" → rename title to `"LLMs Can Model Non-WEIRD Populations: Experiments with Synthetic Cultural Agents"`, add note `(forthcoming in Review of Experimental Economics)` in organization/summary, set `links.paper` to `https://arxiv.org/abs/2501.06834`.
+9. Delete the entry titled `"Large Language Models for the Study of Non-WEIRD Populations"` (ESA North American Meeting, 2023-10) at line ~358.
 
-```text
-┌──────────────────────────────────────────────────────────────┐
-│  AGB · MMXXVI                              Tempe / Tucumán   │  ← small caps meta
-├──────────────────────────────────────────────────────────────┤
-│                                                              │
-│            Augusto González-Bonorino                         │  ← Fraunces 96px italic
-│                                                              │
-│       economist · builder · writer on language models        │  ← single line, muted
-│                                                              │
-│   ╔═══════════════════╗      ╔═══════════════════╗           │
-│   ║   Research        ║      ║   Build           ║           │  ← two folio cards
-│   ║   ——————          ║      ║   ——————          ║           │     hairline frames
-│   ║   serif preview   ║      ║   mono preview    ║           │     hover: warm/cool
-│   ║   "The Academy"   ║      ║   "The Studio"    ║           │     ink bleed
-│   ╚═══════════════════╝      ╚═══════════════════╝           │
-│                                                              │
-│   colophon · set in Fraunces & Geist · est. 2024             │  ← footer marginalia
-└──────────────────────────────────────────────────────────────┘
-```
+### E. Certifications (`artifacts.json`)
 
-### Background
-- Cream paper base with subtle SVG paper-grain noise (already exists, retune opacity).
-- Faint horizontal baseline grid (8px) at 4% opacity — invisible until you look.
-- One restrained ornament: a single hand-drawn flourish in the top-right corner (SVG, oxblood).
-- **Remove** `NodeCanvas`, gradient mesh, shimmer, scan grid — they fight the editorial tone.
+10. Add `links.certificate` (or `links.paper` if schema restricts — will check `types.ts` and extend if needed) to:
+  - `cert-quantum` → Credly badge URL
+    - `cert-beslab` → LinkedIn overlay URL
+    - `cert-ibm-ai` → Coursera share URL (608c6191…)
+    - `cert-ibm-ds` → Coursera share URL (277443785…)
+11. Delete entries `cert-sna` (Social Network Analysis) and `cert-linear-algebra-ml` (Linear Algebra for ML).
+12. If `SectionItem` doesn't currently render cert links, pass them via the existing `links` prop so they appear as `Certificate ↗`.
 
-### Cursor ink-bleed trail
-New `src/components/landing/InkTrail.tsx` — full-screen `<canvas>` behind content:
-- Track cursor with `requestAnimationFrame`, sample every ~16ms.
-- Each sample = a soft ink droplet: radial gradient (warm sepia, ~24px), alpha 0.06.
-- Per frame, draw a translucent paper-colored rect over the canvas (alpha ~0.04) so old drops fade.
-- On mouse stop, droplet "bleeds" — small Perlin offsets expand it for ~600ms.
-- Respects `prefers-reduced-motion` (disables canvas entirely).
+## 2. Verification
 
-### Folio card interactions (framer-motion)
-- Idle: hairline border + tiny serif/mono preview text inside.
-- Hover: card lifts 2px, hairline thickens to 1.5px, accent rule appears beneath the title, ink trail intensifies toward that side of screen.
-- Click: 480ms page transition — chosen card scales up, paper tint cross-fades to that world's palette, route changes.
+- Rebuild.
+- Load `/academic`, confirm: no ORCID, GitHub → EconLLM-Lab, section order correct, all sections collapse, new BSc entry visible, updated coursework, publication links open correctly, deleted entries gone, cert links render.
 
-### Transitions
-- Add `<AnimatePresence>` in `App.tsx` route layer.
-- Landing → Academic: cream paper warms; serif title slides up from behind divider.
-- Landing → Build: paper cools to graphite; mono grid fades in.
-- Back to landing: reverse with the same 480ms ease.
+---
 
-## 4. Academic page polish
+## 3. Discussion (no changes yet)
 
-- Wrap content in centered `max-w-[680px]` measure (book column).
-- Add Fraunces drop-cap to first section paragraph (`::first-letter` 5em float-left, oxblood).
-- Section titles: small-caps, hairline above, year aligned right in muted ink.
-- Replace any `bg-card` / generic shadcn surfaces with the `--paper` token so the page reads as one continuous sheet.
+### CV-alternative display ideas
 
-## 5. Build page polish
+- **PDF-first hero**: keep the on-page CV lean (name, one-paragraph bio, current focus, contact) and promote a prominent "Download full CV (PDF)" button. Replace dense list sections with narrative blocks — "Research & Work" as 2–3 short prose paragraphs telling a story rather than bullet roles. Trade-off: better reading experience, but recruiters/committees skimming for dates/titles lose scanability.
+- **Hybrid "narrative + timeline"**: prose intros per section, followed by a compact right-rail timeline (year · title). Best of both, more design work.
+- **Highlights bento**: replace the CV feel with a bento grid of "signals" — latest paper, current teaching, latest talk, current affiliation — each a card. CV lives only as PDF. Very distinctive; may feel too light for academic reviewers.
+- **Publications as the centerpiece**: since publications are the currency, make them the dominant section with abstracts-on-hover, and demote Education/Teaching to a small sidebar or a `/cv` sub-route.
 
-- Keep the vertical grid from the last turn; restyle with cool tokens.
-- Project card metadata typeset in Geist Mono uppercase 10px / tracking 0.18em (catalog feel).
-- Hairlines stay 1px cool gray; cobalt only on interaction (hover underline, focus ring).
-- Aggregate matrix gains a thin Mono caption ("Fig. 1 — human/AI task distribution").
+### Google Scholar citation counts
 
-## 6. Files
+- **Feasible but fragile.** Google Scholar has no official API. Options:
+  1. `**scholarly` (Python) via a scheduled edge function** — scrape periodically, cache citation counts per work in the DB, render as `Cited by 12 ↗`. Works but Google rate-limits and occasionally blocks scrapers; needs proxy rotation for reliability.
+  2. **SerpAPI Google Scholar endpoint** — reliable, official-ish, ~$50/mo for low volume. Simplest and least likely to break.
+  3. **Semantic Scholar API** — free, official, has citation counts for most papers via DOI/arXiv ID. Coverage is not 100% of Scholar, but usually close and much more stable. Recommended default.
+- Implementation shape: scheduled edge function updates `artifacts.source_ids` → `citation_count` nightly; UI shows a small `Cited by N` chip next to each publication. Low risk with Semantic Scholar.
 
-**Create**
-- `src/components/landing/InkTrail.tsx` — cursor ink canvas
-- `src/components/landing/FolioCard.tsx` — the two large landing cards
-- `src/components/landing/Flourish.tsx` — SVG ornament
-- `src/hooks/useWorld.ts` — sets `data-world` on `<html>`
+### Admin panel vs. "just ask Lovable"
 
-**Edit**
-- `src/index.css` — strip `.dark`, add `[data-world]` blocks, oxblood accent
-- `tailwind.config.ts` — remove `darkMode`, add `oxblood` color
-- `src/pages/Index.tsx` — full rebuild per layout above
-- `src/pages/Academic.tsx` / `Build.tsx` — call `useWorld('academic' | 'build')`
-- `src/App.tsx` — wrap routes in `AnimatePresence` with paper-tint transition
-- `src/main.tsx` — drop theme-init IIFE
-- `src/components/shared/Navigation.tsx`, `Footer.tsx` — remove ModeToggle
-- `src/styles/fonts.ts` — add Fraunces 400-italic & 600-italic weights
+An admin panel already exists at `/admin` (magic-link, allowlisted, writes to Lovable Cloud). Two paths:
 
-**Delete**
-- `src/hooks/useTheme.ts`
-- `src/components/shared/ModeToggle.tsx`
-- `src/components/landing/PondBackground.tsx`
-- `src/components/landing/background/` (NodeCanvas, useNodePhysics, types)
-- `src/components/landing/ModeButton.tsx` (replaced by FolioCard)
+- **Keep and lean into it**: adds inline edit for the fields you actually touch (publication links, add cert, tweak education). ~½ day of work for a real, ergonomic editor with validation. Wins when edits are frequent (weekly), small, and content-only.
+- **Delete it, edit via chat**: every change is a Lovable turn. Wins when edits are infrequent (monthly), often bundled with design/structural tweaks, and you like a code-reviewed history via git. Costs credits per edit and has latency.
+- **Recommendation**: keep admin, but scope it strictly to *content mutations that already have a schema* (add/edit/delete artifacts, edit links, toggle featured). Anything structural (new section type, new field, layout) still comes through chat. This keeps the panel small and useful without becoming a second codebase.
 
-## Out of scope
-
-- No glassmorphism (rejected as fighting the editorial tone — happy to revisit if you want a hybrid).
-- No content/data changes; this is presentation only.
-- GitHub sync and per-card matrix preview already shipped — left untouched.
+I'll wait for your go-ahead before implementing.

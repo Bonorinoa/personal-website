@@ -17,7 +17,7 @@
     {
       "id": "edu-cgu-ma",
       "type": "education",
-      "title": "MA in Economics (PhD Track)",
+      "title": "MA in Economics",
       "subtitle": "GPA: 4.0/4.0 \u00b7 Applied Microeconomics - Experimental",
       "organization": "Claremont Graduate University",
       "location": "Claremont, CA",
@@ -25,7 +25,7 @@
       "endDate": "2024-05",
       "summary": "Advanced graduate training in economics with specialization in experimental methods and computational approaches.",
       "details": [
-        "Relevant Coursework: Game Theory, Industrial Organization, Behavioral Economics, Econometrics I & II, Mathematical Economics"
+        "Relevant Coursework: Game Theory, Neuroeconomics, Behavioral Economics, Econometrics I & II, Mathematics for Machine Learning"
       ],
       "mode_visibility": "academic",
       "section": "education",
@@ -48,6 +48,19 @@
       "mode_visibility": "academic",
       "section": "education",
       "featured": true
+    },
+    {
+      "id": "edu-cofc-bsc",
+      "type": "education",
+      "title": "BSc in Economics (Honors)",
+      "subtitle": "GPA: 3.6/4.0",
+      "organization": "College of Charleston",
+      "location": "Charleston, SC",
+      "date": "2018-08",
+      "endDate": "2019-05",
+      "summary": "Undergraduate honors studies in economics.",
+      "mode_visibility": "academic",
+      "section": "education"
     },
     {
       "id": "role-econllm-lab",
@@ -194,7 +207,7 @@
         "Authors: Olafsson, B., Martin, D., & Gonzalez-Bonorino, A."
       ],
       "links": {
-        "paper": "https://www.routledge.com/The-Health-and-Wellbeing-Coaches-Handbook/Passmore/p/book/9781032674230"
+        "paper": "https://www.taylorfrancis.com/chapters/edit/10.4324/9781003319016-28/artificial-intelligence-coaching-wellbeing-bergsveinn-olafsson-danny-martin-augusto-gonzalez-bonorino"
       },
       "mode_visibility": "academic",
       "section": "publications",
@@ -223,8 +236,8 @@
     {
       "id": "pub-ssrn-llm-weird-2024",
       "type": "paper",
-      "title": "LLMs Model Non-WEIRD Populations: Experiments with Synthetic Cultural Agents",
-      "organization": "SSRN + arXiv Preprint",
+      "title": "LLMs Can Model Non-WEIRD Populations: Experiments with Synthetic Cultural Agents",
+      "organization": "Forthcoming in Review of Experimental Economics",
       "date": "2024",
       "summary": "Empirical study evaluating how large language models can simulate non-WEIRD populations for experimental economics research.",
       "details": [
@@ -232,7 +245,7 @@
         "arXiv: 2501.06834"
       ],
       "links": {
-        "paper": "http://dx.doi.org/10.2139/ssrn.5082714"
+        "paper": "https://arxiv.org/abs/2501.06834"
       },
       "tags": [
         "vibe-engineered"
@@ -353,20 +366,6 @@
       "org": "Academic"
     },
     {
-      "id": "talk-esa-2023",
-      "type": "talk",
-      "title": "Large Language Models for the Study of Non-WEIRD Populations",
-      "organization": "ESA North American Meeting",
-      "location": "Charlotte, NC",
-      "date": "2023-10",
-      "summary": "Conference presentation on using LLMs to study populations underrepresented in experimental economics.",
-      "details": [
-        "Presenters: Capra, M., Gonzalez-Bonorino, A., Feng, M., & Pantoja, E."
-      ],
-      "mode_visibility": "academic",
-      "section": "publications"
-    },
-    {
       "id": "talk-wppa-2024",
       "type": "talk",
       "title": "PERMA+4 in Action: Advancing Well-Being through AI Facilitated Coaching",
@@ -392,6 +391,9 @@
       "details": [
         "Presenters: Gonzalez-Bonorino, A., & Lauria, E. J. M."
       ],
+      "links": {
+        "paper": "https://ecc.marist.edu/documents/2978505/2980816/Augusto+Gonzalez+Bonorino/ff6cdd26-345d-4835-964b-30d5c6a19531"
+      },
       "mode_visibility": "academic",
       "section": "publications"
     },
@@ -402,16 +404,9 @@
       "organization": "Universitat Pompeu Fabra, Spain",
       "date": "2024-06",
       "summary": "Intensive training in experimental and computational economics methods.",
-      "mode_visibility": "academic",
-      "section": "certifications"
-    },
-    {
-      "id": "cert-sna",
-      "type": "certification",
-      "title": "Social Network Analysis",
-      "organization": "Claremont Graduate University",
-      "date": "2022-08",
-      "summary": "Certification in social network analysis methodologies.",
+      "links": {
+        "paper": "https://www.linkedin.com/in/augustogbono/overlay/Certifications/807480233/treasury/?profileId=ACoAACiHhZ0BH6iKmeBhwIlqMtEe0YoFMtqpQcU"
+      },
       "mode_visibility": "academic",
       "section": "certifications"
     },
@@ -422,6 +417,9 @@
       "organization": "Marist College",
       "date": "2021-12",
       "summary": "Training in quantum computing algorithms and programming.",
+      "links": {
+        "paper": "https://www.credly.com/badges/b5e0a405-2268-4fa5-9e5e-87c6d4eea621?source=linked_in_profile"
+      },
       "mode_visibility": "academic",
       "section": "certifications"
     },
@@ -432,16 +430,9 @@
       "organization": "IBM",
       "date": "2020-08",
       "summary": "Professional certification in data science methodologies.",
-      "mode_visibility": "academic",
-      "section": "certifications"
-    },
-    {
-      "id": "cert-linear-algebra-ml",
-      "type": "certification",
-      "title": "Linear Algebra for Machine Learning",
-      "organization": "Imperial College London",
-      "date": "2020-08",
-      "summary": "Specialized training in linear algebra foundations for ML.",
+      "links": {
+        "paper": "https://coursera.org/share/277443785377e08828c67e146b576dec"
+      },
       "mode_visibility": "academic",
       "section": "certifications"
     },
@@ -452,6 +443,9 @@
       "organization": "IBM",
       "date": "2020-08",
       "summary": "Certification in applied artificial intelligence.",
+      "links": {
+        "paper": "https://coursera.org/share/608c6191bc3442cb15074934e8fd6f3f"
+      },
       "mode_visibility": "academic",
       "section": "certifications"
     },

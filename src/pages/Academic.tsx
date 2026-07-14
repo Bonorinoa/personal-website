@@ -115,7 +115,7 @@ const Academic = () => {
                 <Download className="w-3.5 h-3.5" /> CV (PDF)
               </a>
               <a href="https://scholar.google.com/citations?user=xdO0FqwAAAAJ&hl=en" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-muted-foreground hover:text-foreground transition-colors min-h-[44px] py-2">
-                <GraduationCap className="w-3.5 h-3.5" /> Scholar
+                <GraduationCap className="w-3.5 h-3.5" /> Google Scholar
               </a>
               <a href="https://github.com/EconLLM-Lab" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-muted-foreground hover:text-foreground transition-colors min-h-[44px] py-2">
                 <Github className="w-3.5 h-3.5" /> GitHub

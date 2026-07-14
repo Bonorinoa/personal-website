@@ -163,7 +163,7 @@ const Academic = () => {
 
           <Section title="Grants & Fellowships" collapsible defaultOpen={false}>
             {grants.map((g) => (
-              <SectionItem key={g.id} title={g.title} organization={g.organization} date={g.date} summary={g.summary} />
+              <SectionItem key={g.id} title={g.title} subtitle={g.subtitle} organization={g.organization} date={g.date} summary={g.summary} />
             ))}
           </Section>
 

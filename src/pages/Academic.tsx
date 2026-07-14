@@ -133,7 +133,7 @@ const Academic = () => {
                   <GraduationCap className="w-3.5 h-3.5" /> Google Scholar
                 </a>
                 <a href="https://github.com/Bonorinoa" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-muted-foreground hover:text-foreground transition-colors min-h-[44px] py-2">
-                  <Github className="w-3.5 h-3.5" /> EconLLM GitHub
+                  <Github className="w-3.5 h-3.5" /> GitHub
                 </a>
                 <a href="https://perwellgroup.com/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-muted-foreground hover:text-foreground transition-colors min-h-[44px] py-2">
                   <ExternalLink className="w-3.5 h-3.5" /> Perwell Group

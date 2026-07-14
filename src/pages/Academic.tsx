@@ -102,29 +102,46 @@ const Academic = () => {
                 >
                   EconLLM Lab
                 </a>
+                . Advising on applied AI and wellbeing through{' '}
+                <a
+                  href="https://perwellgroup.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="link-cobalt"
+                >
+                  Perwell Group LLC
+                </a>
                 . Open to collaboration on experimental designs that use LLM agents.
               </p>
             </div>
 
-            {/* Links — 2-col grid on mobile, flex on sm+ */}
-            <div className="mt-8 grid grid-cols-2 sm:flex sm:flex-wrap sm:items-center gap-x-5 gap-y-1 text-sm">
-              <a href="mailto:agbonorino@proton.me" className="inline-flex items-center gap-1.5 text-foreground hover:text-cobalt transition-colors min-h-[44px] py-2">
-                <Mail className="w-3.5 h-3.5" /> <span className="truncate">agbonorino@proton.me</span>
-              </a>
-              <a href="/cv.pdf" className="inline-flex items-center gap-1.5 text-foreground hover:text-cobalt transition-colors min-h-[44px] py-2">
-                <Download className="w-3.5 h-3.5" /> CV (PDF)
-              </a>
-              <a href="https://scholar.google.com/citations?user=xdO0FqwAAAAJ&hl=en" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-muted-foreground hover:text-foreground transition-colors min-h-[44px] py-2">
-                <GraduationCap className="w-3.5 h-3.5" /> Google Scholar
-              </a>
-              <a href="https://github.com/EconLLM-Lab" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-muted-foreground hover:text-foreground transition-colors min-h-[44px] py-2">
-                <Github className="w-3.5 h-3.5" /> GitHub
-              </a>
-              <a href="https://www.linkedin.com/in/augustogbono/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-muted-foreground hover:text-foreground transition-colors min-h-[44px] py-2">
-                <Linkedin className="w-3.5 h-3.5" /> LinkedIn
-              </a>
+            {/* Links — two rows: personal / professional */}
+            <div className="mt-8 space-y-1 text-sm">
+              <div className="grid grid-cols-2 sm:flex sm:flex-wrap sm:items-center gap-x-5 gap-y-1">
+                <a href="mailto:agbonorino@proton.me" className="inline-flex items-center gap-1.5 text-foreground hover:text-cobalt transition-colors min-h-[44px] py-2">
+                  <Mail className="w-3.5 h-3.5" /> <span className="truncate">agbonorino@proton.me</span>
+                </a>
+                <a href="/cv.pdf" className="inline-flex items-center gap-1.5 text-foreground hover:text-cobalt transition-colors min-h-[44px] py-2">
+                  <Download className="w-3.5 h-3.5" /> CV (PDF)
+                </a>
+                <a href="https://www.linkedin.com/in/augustogbono/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-foreground hover:text-cobalt transition-colors min-h-[44px] py-2">
+                  <Linkedin className="w-3.5 h-3.5" /> LinkedIn
+                </a>
+              </div>
+              <div className="grid grid-cols-2 sm:flex sm:flex-wrap sm:items-center gap-x-5 gap-y-1">
+                <a href="https://scholar.google.com/citations?user=xdO0FqwAAAAJ&hl=en" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-muted-foreground hover:text-foreground transition-colors min-h-[44px] py-2">
+                  <GraduationCap className="w-3.5 h-3.5" /> Google Scholar
+                </a>
+                <a href="https://github.com/Bonorinoa" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-muted-foreground hover:text-foreground transition-colors min-h-[44px] py-2">
+                  <Github className="w-3.5 h-3.5" /> GitHub
+                </a>
+                <a href="https://perwellgroup.com/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-muted-foreground hover:text-foreground transition-colors min-h-[44px] py-2">
+                  <ExternalLink className="w-3.5 h-3.5" /> Perwell Group
+                </a>
+              </div>
             </div>
           </motion.header>
+
 
 
           {/* Sections */}

@@ -236,8 +236,8 @@
     {
       "id": "pub-ssrn-llm-weird-2024",
       "type": "paper",
-      "title": "LLMs Model Non-WEIRD Populations: Experiments with Synthetic Cultural Agents",
-      "organization": "SSRN + arXiv Preprint",
+      "title": "LLMs Can Model Non-WEIRD Populations: Experiments with Synthetic Cultural Agents",
+      "organization": "Forthcoming in Review of Experimental Economics (arXiv preprint)",
       "date": "2024",
       "summary": "Empirical study evaluating how large language models can simulate non-WEIRD populations for experimental economics research.",
       "details": [
@@ -245,7 +245,7 @@
         "arXiv: 2501.06834"
       ],
       "links": {
-        "paper": "http://dx.doi.org/10.2139/ssrn.5082714"
+        "paper": "https://arxiv.org/abs/2501.06834"
       },
       "tags": [
         "vibe-engineered"

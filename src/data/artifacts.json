@@ -183,13 +183,13 @@
       "title": "Full-Time Visiting Lecturer",
       "organization": "Pomona College",
       "location": "Claremont, CA",
-      "date": "2024-08",
-      "endDate": "2025-05",
+      "date": "2024-07",
+      "endDate": "2025-06",
       "summary": "Teaching undergraduate economics courses with R programming components. Taught and mentored over 200 students across seven courses.",
       "details": [
-        "ECON 57: Economic Statistics with R (2 sections)",
-        "ECON 101: Intermediate Macroeconomics (4 sections)",
-        "ECON 167: Econometrics with Linear Algebra (1 section)"
+        "Designed and delivered four sections of ECON101: Intermediate Macroeconomics, two sections of ECON 57: Economic Statistics with R, and one section of ECON 167: Econometrics with Linear Algebra.",
+        "Mentored 200+ students across the seven courses",
+        "Integrated R programming components into the curriculum, complementing Stata lectures."
       ],
       "mode_visibility": "academic",
       "section": "teaching",
@@ -241,7 +241,7 @@
       "date": "2024",
       "summary": "Empirical study evaluating how large language models can simulate non-WEIRD populations for experimental economics research.",
       "details": [
-        "Authors: Capra, C. M., Gonzalez-Bonorino, A., & Pantoja, E.",
+        "Authors: Gonzalez-Bonorino, A., Capra, M. C., & Pantoja, E.",
         "arXiv: 2501.06834"
       ],
       "links": {

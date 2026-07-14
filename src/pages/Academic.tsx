@@ -29,11 +29,12 @@ const Academic = () => {
   const honors = sortByDate(getArtifactsBySection('honors'));
   const grants = sortByDate(getArtifactsBySection('grants'));
 
-  const formatDateRange = (start: string, end?: string) => {
+  const formatDateRange = (start: string, end?: string, forceUpper = false) => {
     const fmt = (d: string) => {
       if (d === 'current') return 'Present';
       const date = new Date(d);
-      return date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+      const formatted = date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+      return forceUpper ? formatted.toUpperCase() : formatted;
     };
     if (!end) return fmt(start);
     return `${fmt(start)} – ${fmt(end)}`;
@@ -107,8 +108,8 @@ const Academic = () => {
 
             {/* Links — 2-col grid on mobile, flex on sm+ */}
             <div className="mt-8 grid grid-cols-2 sm:flex sm:flex-wrap sm:items-center gap-x-5 gap-y-1 text-sm">
-              <a href="mailto:agonz439@asu.edu" className="inline-flex items-center gap-1.5 text-foreground hover:text-cobalt transition-colors min-h-[44px] py-2">
-                <Mail className="w-3.5 h-3.5" /> <span className="truncate">agonz439@asu.edu</span>
+              <a href="mailto:agbonorino@proton.me" className="inline-flex items-center gap-1.5 text-foreground hover:text-cobalt transition-colors min-h-[44px] py-2">
+                <Mail className="w-3.5 h-3.5" /> <span className="truncate">agbonorino@proton.me</span>
               </a>
               <a href="/cv.pdf" className="inline-flex items-center gap-1.5 text-foreground hover:text-cobalt transition-colors min-h-[44px] py-2">
                 <Download className="w-3.5 h-3.5" /> CV (PDF)
@@ -141,7 +142,7 @@ const Academic = () => {
 
           <Section title="Teaching" collapsible defaultOpen>
             {teaching.map((t) => (
-              <SectionItem key={t.id} title={t.title} organization={t.organization} location={t.location} date={formatDateRange(t.date, t.endDate)} details={t.details} />
+              <SectionItem key={t.id} title={t.title} organization={t.organization} location={t.location} date={formatDateRange(t.date, t.endDate, true)} details={t.details} />
             ))}
           </Section>
 

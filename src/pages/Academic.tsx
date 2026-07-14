@@ -115,9 +115,6 @@ const Academic = () => {
                     Perwell Group LLC
                   </a>, a business consulting company focused on latent structural models and multimodal AI systems applied to wellbeing measurement.
                 </p>
-                <p>
-                  Open to collaboration on cultural modeling.
-                </p>
               </div>
             </div>
 

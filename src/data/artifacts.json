@@ -807,37 +807,122 @@
       "org": "Personal",
       "date": "2026-01",
       "year": 2026,
-      "summary": "Experimental rebuild of the LeanEcon framework \u2014 a Lean-style proof-checker and learning surface for microeconomic theorems, with LLM-assisted formalization.",
+      "summary": "Lean 4 verification harness for economic-theory claims. Natural-language economics statements flow through a Planner → Formalizer → Prover pipeline, with the Lean kernel as the sole authority on proof success. Ships a thin Python/FastAPI orchestration layer over a versioned Lean workspace (LeanEcon preamble, Mathlib-pinned Lake package), a claim-type-aware prover with bounded lean-lsp-mcp tool use, and Tier 1 / Tier 2 benchmark buckets for release-reliability vs. frontier diagnostics.",
       "tags": [
         "vibe-engineered"
       ],
       "mode_visibility": "build",
       "featured": true,
       "collaboration_breakdown": {
-        "human": "Architecture, theorem selection, formal grammar, pedagogical design",
+        "human": "System architecture, Planner/Formalizer/Prover contracts, LeanEcon preamble and theorem stubs, provider strategy, guardrails, benchmark taxonomy (Tier 1 vs Tier 2), and the release-reliability policy.",
         "matrix": [
+          {
+            "model": "mistral",
+            "tasks": [
+              "code-generation",
+              "code-review",
+              "simulation"
+            ]
+          },
           {
             "model": "claude-3-sonnet",
             "tasks": [
               "code-generation",
-              "code-review"
+              "code-review",
+              "writing-editing"
             ]
           },
           {
-            "model": "gpt-4",
+            "model": "custom",
             "tasks": [
-              "brainstorming",
+              "code-generation",
+              "code-review"
+            ]
+          }
+        ],
+        "verification": "Lean kernel type-checking as ground truth; local_gate benchmark runs across tier0_smoke, tier1_core_preamble_definable, and tier2_frontier sets; checked-in benchmark_baselines for audit history; retrieval and prover metrics logged per run."
+      },
+      "links": {
+        "repo": "https://github.com/Bonorinoa/leanecon_v3"
+      },
+      "source_ids": {
+        "github": "leanecon_v3"
+      }
+    },
+    {
+      "id": "project-water-scarcity-replication",
+      "type": "project",
+      "title": "Economics of Water Scarcity — Stata Replication",
+      "organization": "Personal",
+      "org": "Personal",
+      "date": "2025",
+      "year": 2025,
+      "summary": "Stata replication of Frost, Martinez Jaramillo & Madeira (BIS Working Paper 1314, 2025), built on top of the official World Bank reproducibility package. Wraps the canonical Main_WaterScarcity_FMM_2025 workflow in a portable macOS-friendly runner, restores the raw AQUASTAT / FRED / SDG6 / UN-WPP inputs from the World Bank catalog, and reproduces the paper's figure and table set (Fig 1–6, A1–A2; Table 1–8, A1–A7) as tracked reviewer-facing outputs.",
+      "tags": [
+        "ai-assisted"
+      ],
+      "mode_visibility": "build",
+      "year": 2025,
+      "collaboration_breakdown": {
+        "human": "Data restoration workflow, Stata do-file adaptation for macOS, output curation, gitignore policy separating raw data and scratch outputs from reviewer-facing deliverables, and cross-check against the published paper.",
+        "matrix": [
+          {
+            "model": "claude-3-sonnet",
+            "tasks": [
+              "code-review",
               "writing-editing"
             ]
           }
         ],
-        "verification": "Type-checking via Lean, unit tests on theorem coverage, in-progress user studies"
+        "verification": "Figures and tables regenerated end-to-end from the World Bank raw package and compared against the published paper via paper_order_replication.pdf."
       },
       "links": {
-        "repo": "https://github.com/Bonorinoa/leanecon-v3"
+        "repo": "https://github.com/Bonorinoa/economics-of-water-scarcity-replication",
+        "paper": "https://www.bis.org/publ/work1314.pdf"
       },
       "source_ids": {
-        "github": "leanecon-v3"
+        "github": "economics-of-water-scarcity-replication"
+      }
+    },
+    {
+      "id": "project-silicus-ta-2",
+      "type": "project",
+      "title": "Silicus TA 2.0",
+      "organization": "Cognitio-EDU",
+      "org": "Cognitio-EDU",
+      "date": "2024",
+      "year": 2024,
+      "summary": "Streamlit-powered RAG teaching assistant. Students chat with their course PDFs through a sidebar course picker and a memory-enabled chat UI that cites page numbers and surfaces the exact excerpt. Professors get a password-protected admin console for drag-and-drop PDF upload, duplicate detection, folder-size guards, live OCR + embedding progress, and one-click commit to GitHub — no local git required. OCR via mistral-ocr-latest, embeddings via mistral-embed cached to Parquet, generation via mistral-medium-latest.",
+      "tags": [
+        "vibe-engineered"
+      ],
+      "mode_visibility": "build",
+      "collaboration_breakdown": {
+        "human": "Product design for the two-role UX (student chat vs. professor admin), RAG pipeline architecture (OCR → chunk → embed → cosine retrieve → prompt-pack), storage layout (per-course Parquet + meta), admin guardrails (duplicate detection, size cap, password gate), and deploy story on Streamlit Cloud.",
+        "matrix": [
+          {
+            "model": "mistral",
+            "tasks": [
+              "data-processing",
+              "translation"
+            ]
+          },
+          {
+            "model": "claude-3-sonnet",
+            "tasks": [
+              "code-generation",
+              "code-review",
+              "ux-design"
+            ]
+          }
+        ],
+        "verification": "Manual QA on citation accuracy per page, duplicate-upload and size-cap checks in the admin console, and end-to-end deployment on Streamlit Cloud with live courses."
+      },
+      "links": {
+        "repo": "https://github.com/Bonorinoa/Silicus-TA-2.0"
+      },
+      "source_ids": {
+        "github": "Silicus-TA-2.0"
       }
     },
     {

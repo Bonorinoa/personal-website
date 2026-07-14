@@ -24,7 +24,7 @@ const Academic = () => {
   const experience = sortByDate(getArtifactsBySection('experience'));
   const teaching = sortByDate(getArtifactsBySection('teaching'));
   const publications = sortByDate(getArtifactsBySection('publications'));
-  const skills = getArtifactsBySection('skills');
+  
   const certifications = getArtifactsBySection('certifications');
   const honors = sortByDate(getArtifactsBySection('honors'));
   const grants = sortByDate(getArtifactsBySection('grants'));
@@ -150,16 +150,6 @@ const Academic = () => {
             <PublicationList publications={publications} />
           </Section>
 
-          <Section title="Computational Skills" collapsible defaultOpen={false}>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-              {skills.map((s) => (
-                <div key={s.id} className="text-sm">
-                  <span className="font-medium">{s.title}</span>
-                  {s.summary && <p className="text-muted-foreground text-xs mt-0.5">{s.summary}</p>}
-                </div>
-              ))}
-            </div>
-          </Section>
 
           <Section title="Grants & Fellowships" collapsible defaultOpen={false}>
             {grants.map((g) => (

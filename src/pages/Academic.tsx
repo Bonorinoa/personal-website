@@ -116,8 +116,8 @@ const Academic = () => {
               <a href="https://scholar.google.com/citations?user=xdO0FqwAAAAJ&hl=en" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-muted-foreground hover:text-foreground transition-colors min-h-[44px] py-2">
                 <GraduationCap className="w-3.5 h-3.5" /> Scholar
               </a>
-              <a href="https://orcid.org/0000-0002-9355-0831" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-muted-foreground hover:text-foreground transition-colors min-h-[44px] py-2">
-                <BookOpen className="w-3.5 h-3.5" /> ORCID
+              <a href="https://github.com/EconLLM-Lab" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-muted-foreground hover:text-foreground transition-colors min-h-[44px] py-2">
+                <Github className="w-3.5 h-3.5" /> GitHub
               </a>
               <a href="https://github.com/Bonorinoa" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-muted-foreground hover:text-foreground transition-colors min-h-[44px] py-2">
                 <Github className="w-3.5 h-3.5" /> GitHub

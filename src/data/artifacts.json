@@ -875,23 +875,6 @@
       }
     },
     {
-      "id": "teach-pomona",
-      "type": "role",
-      "title": "Full-Time Visiting Lecturer",
-      "organization": "Department of Economics, Pomona College",
-      "location": "Claremont, CA",
-      "date": "2024-09",
-      "endDate": "2025-05",
-      "summary": "Taught ECON 57 (Economic Statistics with R), ECON 101 (Intermediate Macroeconomics), and ECON 167 (Econometrics with Linear Algebra).",
-      "details": [
-        "Designed and delivered four sections of Intermediate Macroeconomics and one section of Econometrics for AY 24/25",
-        "Mentored 200+ students across seven courses",
-        "Integrated R programming components throughout curriculum"
-      ],
-      "mode_visibility": "academic",
-      "section": "teaching"
-    },
-    {
       "id": "pub-perma4-chapter-2025",
       "type": "paper",
       "title": "Enhancing well-being by leveraging artificial intelligence in coaching practices",

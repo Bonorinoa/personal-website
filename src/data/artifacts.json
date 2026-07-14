@@ -892,7 +892,7 @@
       "org": "Cognitio-EDU",
       "date": "2024",
       "year": 2024,
-      "summary": "Streamlit-powered RAG teaching assistant. Students chat with their course PDFs through a sidebar course picker and a memory-enabled chat UI that cites page numbers and surfaces the exact excerpt. Professors get a password-protected admin console for drag-and-drop PDF upload, duplicate detection, folder-size guards, live OCR + embedding progress, and one-click commit to GitHub — no local git required. OCR via mistral-ocr-latest, embeddings via mistral-embed cached to Parquet, generation via mistral-medium-latest.",
+      "summary": "A Streamlit-based RAG teaching assistant that lets students chat with their course PDFs and get answers grounded in cited page excerpts. Professors manage the corpus from a protected admin console — uploading, previewing, and re-embedding materials in the browser — with OCR, embeddings, and generation handled by a cached Mistral pipeline.",
       "tags": [
         "vibe-engineered"
       ],

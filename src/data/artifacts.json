@@ -366,20 +366,6 @@
       "org": "Academic"
     },
     {
-      "id": "talk-esa-2023",
-      "type": "talk",
-      "title": "Large Language Models for the Study of Non-WEIRD Populations",
-      "organization": "ESA North American Meeting",
-      "location": "Charlotte, NC",
-      "date": "2023-10",
-      "summary": "Conference presentation on using LLMs to study populations underrepresented in experimental economics.",
-      "details": [
-        "Presenters: Capra, M., Gonzalez-Bonorino, A., Feng, M., & Pantoja, E."
-      ],
-      "mode_visibility": "academic",
-      "section": "publications"
-    },
-    {
       "id": "talk-wppa-2024",
       "type": "talk",
       "title": "PERMA+4 in Action: Advancing Well-Being through AI Facilitated Coaching",

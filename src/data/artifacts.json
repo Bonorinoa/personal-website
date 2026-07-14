@@ -135,7 +135,7 @@
       "location": "Poughkeepsie, NY",
       "date": "2020-09",
       "endDate": "2022-05",
-      "summary": "Led a team of 5 students and 2 faculty in developing 'Kevin,' an open-source Open Domain Question-Answering (ODQA) system for college information retrieval, achieving 100% cost savings.",
+      "summary": "Led a team of 5 students and 2 faculty in developing 'Kevin,' an Open Domain Question-Answering (ODQA) system for college information retrieval, achieving ~80% cost savings relative to prior implementation by switching the technology stack to open-source alternatives.",
       "details": [
         "Designed and annotated custom question-answer pair dataset for fine-tuning BERT, ELECTRA, and RoBERTa",
         "Applied NLP methods for entity extraction, sparse and dense retrieval, and text cleaning"

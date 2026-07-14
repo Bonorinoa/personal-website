@@ -114,11 +114,11 @@
       "id": "role-cjl",
       "type": "role",
       "title": "Research Assistant",
-      "organization": "Computational Justice Lab",
+      "organization": "Computational Justice Lab, Claremont Graduate University",
       "location": "Claremont, CA",
       "date": "2022-09",
       "endDate": "2023-06",
-      "summary": "Collaborated with Riverside County's District Attorney Office to identify causal implications of sentencing choices.",
+      "summary": "Collaborated with Riverside County's District Attorney Office to identify causal implications of sentencing choices; supervised by Gregory DeAngelo and Jeffrey Borowitz.",
       "details": [
         "Assisted the quantitative team in feature engineering and EDA",
         "Developed panel data causal inference models",

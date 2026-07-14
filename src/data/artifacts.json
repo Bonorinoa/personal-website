@@ -207,7 +207,7 @@
         "Authors: Olafsson, B., Martin, D., & Gonzalez-Bonorino, A."
       ],
       "links": {
-        "paper": "https://www.routledge.com/The-Health-and-Wellbeing-Coaches-Handbook/Passmore/p/book/9781032674230"
+        "paper": "https://www.taylorfrancis.com/chapters/edit/10.4324/9781003319016-28/artificial-intelligence-coaching-wellbeing-bergsveinn-olafsson-danny-martin-augusto-gonzalez-bonorino"
       },
       "mode_visibility": "academic",
       "section": "publications",
@@ -236,8 +236,8 @@
     {
       "id": "pub-ssrn-llm-weird-2024",
       "type": "paper",
-      "title": "LLMs Model Non-WEIRD Populations: Experiments with Synthetic Cultural Agents",
-      "organization": "SSRN + arXiv Preprint",
+      "title": "LLMs Can Model Non-WEIRD Populations: Experiments with Synthetic Cultural Agents",
+      "organization": "Forthcoming in Review of Experimental Economics",
       "date": "2024",
       "summary": "Empirical study evaluating how large language models can simulate non-WEIRD populations for experimental economics research.",
       "details": [
@@ -245,7 +245,7 @@
         "arXiv: 2501.06834"
       ],
       "links": {
-        "paper": "http://dx.doi.org/10.2139/ssrn.5082714"
+        "paper": "https://arxiv.org/abs/2501.06834"
       },
       "tags": [
         "vibe-engineered"
@@ -366,19 +366,6 @@
       "org": "Academic"
     },
     {
-      "id": "talk-esa-2023",
-      "type": "talk",
-      "title": "Large Language Models for the Study of Non-WEIRD Populations",
-      "organization": "ESA North American Meeting",
-      "location": "Charlotte, NC",
-      "date": "2023-10",
-      "summary": "Conference presentation on using LLMs to study populations underrepresented in experimental economics.",
-      "details": [
-        "Presenters: Capra, M., Gonzalez-Bonorino, A., Feng, M., & Pantoja, E."
-      ],
-      "mode_visibility": "academic",
-      "section": "publications"
-    },
     {
       "id": "talk-wppa-2024",
       "type": "talk",
@@ -405,6 +392,9 @@
       "details": [
         "Presenters: Gonzalez-Bonorino, A., & Lauria, E. J. M."
       ],
+      "links": {
+        "paper": "https://ecc.marist.edu/documents/2978505/2980816/Augusto+Gonzalez+Bonorino/ff6cdd26-345d-4835-964b-30d5c6a19531"
+      },
       "mode_visibility": "academic",
       "section": "publications"
     },

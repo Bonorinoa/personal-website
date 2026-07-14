@@ -807,7 +807,7 @@
       "org": "Personal",
       "date": "2026-01",
       "year": 2026,
-      "summary": "Lean 4 verification harness for economic-theory claims. Natural-language economics statements flow through a Planner → Formalizer → Prover pipeline, with the Lean kernel as the sole authority on proof success. Ships a thin Python/FastAPI orchestration layer over a versioned Lean workspace (LeanEcon preamble, Mathlib-pinned Lake package), a claim-type-aware prover with bounded lean-lsp-mcp tool use, and Tier 1 / Tier 2 benchmark buckets for release-reliability vs. frontier diagnostics.",
+      "summary": "A Lean 4 verification harness for economic-theory claims. Natural-language statements are routed through a Planner → Formalizer → Prover pipeline, with the Lean kernel as the only authority on whether a proof holds. Ships tiered benchmarks that separate release-reliable results from frontier diagnostics.",
       "tags": [
         "vibe-engineered"
       ],

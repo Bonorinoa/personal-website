@@ -201,7 +201,7 @@
       "title": "Enhancing well-being by leveraging artificial intelligence in coaching practices",
       "subtitle": "In J. Passmore (Ed.), The Health and Wellbeing Coaches' Handbook",
       "organization": "Taylor & Francis Publishing",
-      "date": "2024",
+      "date": "2025",
       "summary": "Book chapter exploring how AI can be integrated into coaching practices to enhance well-being outcomes.",
       "details": [
         "Authors: Olafsson, B., Martin, D., & Gonzalez-Bonorino, A."
@@ -238,7 +238,7 @@
       "type": "paper",
       "title": "LLMs Can Model Non-WEIRD Populations: Experiments with Synthetic Cultural Agents",
       "organization": "Forthcoming in Review of Experimental Economics",
-      "date": "2025",
+      "date": "2024",
       "summary": "Empirical study evaluating how large language models can simulate non-WEIRD populations for experimental economics research.",
       "details": [
         "Authors: Gonzalez-Bonorino, A., Capra, M. C., & Pantoja, E.",
@@ -366,6 +366,20 @@
       "org": "Academic"
     },
     {
+      "id": "talk-wppa-2024",
+      "type": "talk",
+      "title": "PERMA+4 in Action: Advancing Well-Being through AI Facilitated Coaching",
+      "organization": "Western Positive Psychology Association 8th Annual Conference",
+      "location": "Albuquerque, NM",
+      "date": "2024-02",
+      "summary": "Conference presentation on applying the PERMA+4 framework to AI-facilitated coaching.",
+      "details": [
+        "Presenters: Olafsson, B., Martin, D., & Gonzalez-Bonorino, A."
+      ],
+      "mode_visibility": "academic",
+      "section": "publications"
+    },
+    {
       "id": "talk-ecc-2023",
       "type": "talk",
       "title": "AutoKevin: A Semi-Autonomous AI Knowledge Discovery Architecture",
@@ -375,7 +389,7 @@
       "date": "2023-06",
       "summary": "Award-winning presentation on semi-autonomous AI architecture for knowledge discovery in higher education.",
       "details": [
-        "Presenters: Gonzalez-Bonorino, A., & Laur\u00eda, E. J. M."
+        "Presenters: Gonzalez-Bonorino, A., & Lauria, E. J. M."
       ],
       "links": {
         "paper": "https://ecc.marist.edu/documents/2978505/2980816/Augusto+Gonzalez+Bonorino/ff6cdd26-345d-4835-964b-30d5c6a19531"
@@ -876,6 +890,40 @@
       ],
       "mode_visibility": "academic",
       "section": "teaching"
+    },
+    {
+      "id": "pub-perma4-chapter-2025",
+      "type": "paper",
+      "title": "Enhancing well-being by leveraging artificial intelligence in coaching practices",
+      "organization": "In J. Passmore (Ed.), The Health and Wellbeing Coaches' Handbook \u00b7 Taylor & Francis",
+      "date": "2025",
+      "year": 2025,
+      "summary": "Book chapter on integrating AI into coaching practice through the PERMA+4 framework.",
+      "details": [
+        "Authors: Olafsson, B., Martin, D., & Gonzalez-Bonorino, A."
+      ],
+      "mode_visibility": "academic",
+      "section": "publications"
+    },
+    {
+      "id": "pub-jqc-quantum-riccati-2022",
+      "type": "paper",
+      "title": "Near term hybrid quantum computing solution to the matrix Riccati equations",
+      "organization": "Journal of Quantum Computing, 4(3), 135\u2013146",
+      "date": "2022",
+      "year": 2022,
+      "summary": "Hybrid classical-quantum algorithm for solving matrix Riccati equations on near-term quantum hardware.",
+      "details": [
+        "Authors: Bonorino, A. G., Ndiaye, M., & DeCusatis, C."
+      ],
+      "links": {
+        "paper": "https://doi.org/10.32604/jqc.2022.036706"
+      },
+      "source_ids": {
+        "doi": "10.32604/jqc.2022.036706"
+      },
+      "mode_visibility": "academic",
+      "section": "publications"
     }
   ]
 }

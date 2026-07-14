@@ -21,10 +21,7 @@ export function Navigation() {
             <span className={isAcademic ? 'font-serif text-base italic' : 'font-mono text-[13px]'}>
               A. González-Bonorino
             </span>
-            <span className="text-muted-foreground hidden sm:inline">·</span>
-            <span className="hidden sm:inline text-xs uppercase tracking-[0.18em] text-muted-foreground">
-              {isAcademic ? 'Research' : 'Build'}
-            </span>
+
           </Link>
 
           <ModeToggle />

@@ -75,15 +75,39 @@ const Build = () => {
                 Hover (or tap <span className="font-mono text-cobalt">AI ↓</span>) on any
                 card to peek the model-task matrix. Click for the full breakdown.
               </p>
-              <div className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground mb-2">
+              <div className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground mb-3">
                 Workspaces
               </div>
-              <ul className="text-xs font-mono space-y-1 text-foreground/80">
-                <li><span className="text-cobalt">/</span> Personal — leanecon-v3 et al.</li>
-                <li><span className="text-cobalt">/</span> EconLLM-Lab — cultural alignment and open-source research tool</li>
-                <li><span className="text-cobalt">/</span> Perwell — wellbeing × AI</li>
-                <li><span className="text-cobalt">/</span> Cognitio-EDU — teaching and learning technology</li>
+              <ul className="grid grid-cols-1 gap-2">
+                {[
+                  { key: 'Personal', desc: 'leanecon-v3 et al.', url: 'https://github.com/Bonorinoa' },
+                  { key: 'EconLLM-Lab', desc: 'cultural alignment & open-source tooling', url: 'https://github.com/orgs/EconLLM-Lab/repositories' },
+                  { key: 'Perwell', desc: 'wellbeing × AI', url: 'https://github.com/orgs/Perwell/repositories' },
+                  { key: 'Cognitio-EDU', desc: 'teaching & learning technology', url: 'https://github.com/orgs/Cognitio-EDU/repositories' },
+                ].map((w) => (
+                  <li key={w.key}>
+                    <a
+                      href={w.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group block hairline border border-border bg-background hover:bg-foreground/[0.02] hover:border-cobalt/50 transition-colors px-3 py-2.5"
+                    >
+                      <div className="flex items-center justify-between gap-2">
+                        <span className="font-mono text-xs text-foreground">
+                          <span className="text-cobalt">/</span> {w.key}
+                        </span>
+                        <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground group-hover:text-cobalt transition-colors">
+                          github ↗
+                        </span>
+                      </div>
+                      <div className="mt-1 text-[11px] text-muted-foreground leading-snug">
+                        {w.desc}
+                      </div>
+                    </a>
+                  </li>
+                ))}
               </ul>
+
             </aside>
           </motion.header>
 

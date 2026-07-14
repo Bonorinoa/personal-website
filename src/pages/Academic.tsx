@@ -116,8 +116,8 @@ const Academic = () => {
               <a href="https://scholar.google.com/citations?user=xdO0FqwAAAAJ&hl=en" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-muted-foreground hover:text-foreground transition-colors min-h-[44px] py-2">
                 <GraduationCap className="w-3.5 h-3.5" /> Scholar
               </a>
-              <a href="https://github.com/EconLLM-Lab" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-muted-foreground hover:text-foreground transition-colors min-h-[44px] py-2">
-                <Github className="w-3.5 h-3.5" /> GitHub
+              <a href="https://orcid.org/0000-0002-9355-0831" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-muted-foreground hover:text-foreground transition-colors min-h-[44px] py-2">
+                <BookOpen className="w-3.5 h-3.5" /> ORCID
               </a>
               <a href="https://github.com/Bonorinoa" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-muted-foreground hover:text-foreground transition-colors min-h-[44px] py-2">
                 <Github className="w-3.5 h-3.5" /> GitHub
@@ -130,25 +130,25 @@ const Academic = () => {
 
 
           {/* Sections */}
-          <Section title="Education" collapsible defaultOpen={true}>
+          <Section title="Education">
             {education.map((e) => (
               <SectionItem key={e.id} title={e.title} subtitle={e.subtitle} organization={e.organization} location={e.location} date={formatDateRange(e.date, e.endDate)} details={e.details} />
             ))}
           </Section>
 
-          <Section title="Research & Work" collapsible defaultOpen={true}>
+          <Section title="Research & Work">
             {experience.map((x) => (
               <SectionItem key={x.id} title={x.title} organization={x.organization} location={x.location} date={formatDateRange(x.date, x.endDate)} summary={x.summary} details={x.details} links={x.links?.website ? [{ label: 'Website', url: x.links.website }] : undefined} />
             ))}
           </Section>
 
-          <Section title="Teaching" collapsible defaultOpen={true}>
+          <Section title="Teaching">
             {teaching.map((t) => (
               <SectionItem key={t.id} title={t.title} organization={t.organization} location={t.location} date={formatDateRange(t.date, t.endDate)} details={t.details} />
             ))}
           </Section>
 
-          <Section title="Publications & Presentations" collapsible defaultOpen={true}>
+          <Section title="Publications & Presentations">
             <PublicationList publications={publications} />
           </Section>
 
@@ -163,16 +163,10 @@ const Academic = () => {
             </div>
           </Section>
 
-          <Section title="Grants & Fellowships" collapsible defaultOpen={false}>
-            {grants.map((g) => (
-              <SectionItem key={g.id} title={g.title} organization={g.organization} date={g.date} summary={g.summary} />
-            ))}
-          </Section>
-
           {certifications.length > 0 && (
             <Section title="Certifications" collapsible defaultOpen={false}>
               {certifications.map((c) => (
-                <SectionItem key={c.id} title={c.title} organization={c.organization} date={c.date} links={c.links?.website ? [{ label: 'Verify', url: c.links.website }] : undefined} />
+                <SectionItem key={c.id} title={c.title} organization={c.organization} date={c.date} />
               ))}
             </Section>
           )}
@@ -180,6 +174,12 @@ const Academic = () => {
           <Section title="Honors & Awards" collapsible defaultOpen={false}>
             {honors.map((h) => (
               <SectionItem key={h.id} title={h.title} organization={h.organization} date={h.date} summary={h.summary} />
+            ))}
+          </Section>
+
+          <Section title="Grants & Fellowships" collapsible defaultOpen={false}>
+            {grants.map((g) => (
+              <SectionItem key={g.id} title={g.title} organization={g.organization} date={g.date} summary={g.summary} />
             ))}
           </Section>
         </main>

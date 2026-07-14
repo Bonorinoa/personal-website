@@ -367,20 +367,6 @@
       "org": "Academic"
     },
     {
-      "id": "talk-wppa-2024",
-      "type": "talk",
-      "title": "PERMA+4 in Action: Advancing Well-Being through AI Facilitated Coaching",
-      "organization": "Western Positive Psychology Association 8th Annual Conference",
-      "location": "Albuquerque, NM",
-      "date": "2024-02",
-      "summary": "Conference presentation on applying the PERMA+4 framework to AI-facilitated coaching.",
-      "details": [
-        "Presenters: Olafsson, B., Martin, D., & Gonzalez-Bonorino, A."
-      ],
-      "mode_visibility": "academic",
-      "section": "publications"
-    },
-    {
       "id": "talk-ecc-2023",
       "type": "talk",
       "title": "AutoKevin: A Semi-Autonomous AI Knowledge Discovery Architecture",
@@ -874,20 +860,6 @@
       "source_ids": {
         "github": "leanecon-v3"
       }
-    },
-    {
-      "id": "pub-perma4-chapter-2025",
-      "type": "paper",
-      "title": "Enhancing well-being by leveraging artificial intelligence in coaching practices",
-      "organization": "In J. Passmore (Ed.), The Health and Wellbeing Coaches' Handbook \u00b7 Taylor & Francis",
-      "date": "2024",
-      "year": 2024,
-      "summary": "Book chapter on integrating AI into coaching practice through the PERMA+4 framework.",
-      "details": [
-        "Authors: Olafsson, B., Martin, D., & Gonzalez-Bonorino, A."
-      ],
-      "mode_visibility": "academic",
-      "section": "publications"
     },
     {
       "id": "pub-jqc-quantum-riccati-2022",

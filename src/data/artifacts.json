@@ -50,6 +50,19 @@
       "featured": true
     },
     {
+      "id": "edu-cofc-bsc",
+      "type": "education",
+      "title": "BSc in Economics (Honors)",
+      "subtitle": "GPA: 3.6/4.0",
+      "organization": "College of Charleston",
+      "location": "Charleston, SC",
+      "date": "2018-08",
+      "endDate": "2019-05",
+      "summary": "Honors coursework in economics prior to transferring to Marist College.",
+      "mode_visibility": "academic",
+      "section": "education"
+    },
+    {
       "id": "role-econllm-lab",
       "type": "role",
       "title": "Lead Graduate Researcher",

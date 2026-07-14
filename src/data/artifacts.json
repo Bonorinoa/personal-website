@@ -214,26 +214,6 @@
       "featured": true
     },
     {
-      "id": "pub-journal-quantum-2022",
-      "type": "paper",
-      "title": "Near term hybrid quantum computing solution to the matrix Riccati equations",
-      "organization": "Journal of Quantum Computing",
-      "date": "2022",
-      "summary": "Novel approach to solving matrix Riccati equations using hybrid quantum-classical algorithms.",
-      "details": [
-        "Authors: Bonorino, A. G., Ndiaye, M., & DeCusatis, C.",
-        "Journal of Quantum Computing, 4(3), 135-146"
-      ],
-      "links": {
-        "paper": "https://doi.org/10.32604/jqc.2022.036706"
-      },
-      "source_ids": {
-        "doi": "10.32604/jqc.2022.036706"
-      },
-      "mode_visibility": "academic",
-      "section": "publications"
-    },
-    {
       "id": "pub-ssrn-llm-weird-2024",
       "type": "paper",
       "title": "LLMs Can Model Non-WEIRD Populations: Experiments with Synthetic Cultural Agents",

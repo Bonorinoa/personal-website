@@ -405,16 +405,9 @@
       "organization": "Universitat Pompeu Fabra, Spain",
       "date": "2024-06",
       "summary": "Intensive training in experimental and computational economics methods.",
-      "mode_visibility": "academic",
-      "section": "certifications"
-    },
-    {
-      "id": "cert-sna",
-      "type": "certification",
-      "title": "Social Network Analysis",
-      "organization": "Claremont Graduate University",
-      "date": "2022-08",
-      "summary": "Certification in social network analysis methodologies.",
+      "links": {
+        "paper": "https://www.linkedin.com/in/augustogbono/overlay/Certifications/807480233/treasury/?profileId=ACoAACiHhZ0BH6iKmeBhwIlqMtEe0YoFMtqpQcU"
+      },
       "mode_visibility": "academic",
       "section": "certifications"
     },
@@ -425,6 +418,9 @@
       "organization": "Marist College",
       "date": "2021-12",
       "summary": "Training in quantum computing algorithms and programming.",
+      "links": {
+        "paper": "https://www.credly.com/badges/b5e0a405-2268-4fa5-9e5e-87c6d4eea621?source=linked_in_profile"
+      },
       "mode_visibility": "academic",
       "section": "certifications"
     },
@@ -435,16 +431,9 @@
       "organization": "IBM",
       "date": "2020-08",
       "summary": "Professional certification in data science methodologies.",
-      "mode_visibility": "academic",
-      "section": "certifications"
-    },
-    {
-      "id": "cert-linear-algebra-ml",
-      "type": "certification",
-      "title": "Linear Algebra for Machine Learning",
-      "organization": "Imperial College London",
-      "date": "2020-08",
-      "summary": "Specialized training in linear algebra foundations for ML.",
+      "links": {
+        "paper": "https://coursera.org/share/277443785377e08828c67e146b576dec"
+      },
       "mode_visibility": "academic",
       "section": "certifications"
     },
@@ -455,6 +444,9 @@
       "organization": "IBM",
       "date": "2020-08",
       "summary": "Certification in applied artificial intelligence.",
+      "links": {
+        "paper": "https://coursera.org/share/608c6191bc3442cb15074934e8fd6f3f"
+      },
       "mode_visibility": "academic",
       "section": "certifications"
     },

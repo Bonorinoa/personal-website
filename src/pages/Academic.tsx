@@ -130,25 +130,25 @@ const Academic = () => {
 
 
           {/* Sections */}
-          <Section title="Education">
+          <Section title="Education" collapsible defaultOpen={true}>
             {education.map((e) => (
               <SectionItem key={e.id} title={e.title} subtitle={e.subtitle} organization={e.organization} location={e.location} date={formatDateRange(e.date, e.endDate)} details={e.details} />
             ))}
           </Section>
 
-          <Section title="Research & Work">
+          <Section title="Research & Work" collapsible defaultOpen={true}>
             {experience.map((x) => (
               <SectionItem key={x.id} title={x.title} organization={x.organization} location={x.location} date={formatDateRange(x.date, x.endDate)} summary={x.summary} details={x.details} links={x.links?.website ? [{ label: 'Website', url: x.links.website }] : undefined} />
             ))}
           </Section>
 
-          <Section title="Teaching">
+          <Section title="Teaching" collapsible defaultOpen={true}>
             {teaching.map((t) => (
               <SectionItem key={t.id} title={t.title} organization={t.organization} location={t.location} date={formatDateRange(t.date, t.endDate)} details={t.details} />
             ))}
           </Section>
 
-          <Section title="Publications & Presentations">
+          <Section title="Publications & Presentations" collapsible defaultOpen={true}>
             <PublicationList publications={publications} />
           </Section>
 
@@ -163,10 +163,16 @@ const Academic = () => {
             </div>
           </Section>
 
+          <Section title="Grants & Fellowships" collapsible defaultOpen={false}>
+            {grants.map((g) => (
+              <SectionItem key={g.id} title={g.title} organization={g.organization} date={g.date} summary={g.summary} />
+            ))}
+          </Section>
+
           {certifications.length > 0 && (
             <Section title="Certifications" collapsible defaultOpen={false}>
               {certifications.map((c) => (
-                <SectionItem key={c.id} title={c.title} organization={c.organization} date={c.date} />
+                <SectionItem key={c.id} title={c.title} organization={c.organization} date={c.date} links={c.links?.website ? [{ label: 'Verify', url: c.links.website }] : undefined} />
               ))}
             </Section>
           )}
@@ -174,12 +180,6 @@ const Academic = () => {
           <Section title="Honors & Awards" collapsible defaultOpen={false}>
             {honors.map((h) => (
               <SectionItem key={h.id} title={h.title} organization={h.organization} date={h.date} summary={h.summary} />
-            ))}
-          </Section>
-
-          <Section title="Grants & Fellowships" collapsible defaultOpen={false}>
-            {grants.map((g) => (
-              <SectionItem key={g.id} title={g.title} organization={g.organization} date={g.date} summary={g.summary} />
             ))}
           </Section>
         </main>

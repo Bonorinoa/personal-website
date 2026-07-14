@@ -92,27 +92,33 @@ const Academic = () => {
               <div className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground mb-2">
                 Currently
               </div>
-              <p className="text-[15px]">
-                Doctoral research at <span className="text-cobalt">ASU</span>; leading{' '}
-                <a
-                  href="https://www.econllm-lab.com/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="link-cobalt"
-                >
-                  EconLLM Lab
-                </a>
-                . Advising on applied AI and wellbeing through{' '}
-                <a
-                  href="https://perwellgroup.com/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="link-cobalt"
-                >
-                  Perwell Group LLC
-                </a>
-                . Open to collaboration on experimental designs that use LLM agents.
-              </p>
+              <div className="text-[15px] space-y-3">
+                <p>
+                  Leading research on cultural alignment and multi-agent systems at{' '}
+                  <a
+                    href="https://www.econllm-lab.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="link-cobalt"
+                  >
+                    EconLLM Lab
+                  </a>.
+                </p>
+                <p>
+                  Co-founder of{' '}
+                  <a
+                    href="https://perwellgroup.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="link-cobalt"
+                  >
+                    Perwell Group LLC
+                  </a>, a business consulting company focused on latent structural models and multimodal AI systems applied to wellbeing measurement.
+                </p>
+                <p>
+                  Open to collaboration on cultural modeling.
+                </p>
+              </div>
             </div>
 
             {/* Links — two rows: personal / professional */}

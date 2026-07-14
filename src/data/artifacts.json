@@ -743,11 +743,7 @@
         "verification": "Manual testing, accessibility checks, responsive design validation"
       },
       "links": {
-        "repo": "https://github.com/Bonorinoa/personal-site"
-      },
-      "demoInfo": {
-        "type": "vercel",
-        "url": "#"
+        "website": "https://augustogonzalezbonorino.com"
       },
       "org": "Personal"
     },

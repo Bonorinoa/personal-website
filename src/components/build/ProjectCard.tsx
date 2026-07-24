@@ -1,13 +1,77 @@
-import { ExternalLink, Github, FileText, Star } from 'lucide-react';
+import { ExternalLink, Github, FileText, Star, GitCommit } from 'lucide-react';
 import type { Artifact } from '@/data/types';
 import { TagBadge } from './TagLegend';
 import { CommitSparkline } from './CommitSparkline';
 import { parseGithubRepo } from '@/lib/github';
+import { useCommitActivity } from '@/hooks/useCommitActivity';
 import { cn } from '@/lib/utils';
 
 interface ProjectCardProps {
   artifact: Artifact;
   onOpen?: () => void;
+}
+
+function relTime(iso: string) {
+  if (!iso) return '';
+  const days = Math.round((Date.now() - new Date(iso).getTime()) / 86400000);
+  if (days < 1) return 'today';
+  if (days < 7) return `${days}d ago`;
+  const w = Math.round(days / 7);
+  if (w < 8) return `${w}w ago`;
+  const m = Math.round(days / 30);
+  if (m < 12) return `${m}mo ago`;
+  return `${Math.round(days / 365)}y ago`;
+}
+
+function RepoSignals({ owner, repo, fallbackLang, stars }: {
+  owner: string; repo: string; fallbackLang?: string; stars?: number;
+}) {
+  const { languages, lastCommit } = useCommitActivity(owner, repo);
+  const langs = languages && languages.length > 0
+    ? languages.slice(0, 2).map(l => l.name)
+    : (fallbackLang ? [fallbackLang] : []);
+
+  if (langs.length === 0 && !lastCommit && stars === undefined) return null;
+
+  return (
+    <div className="mb-3 space-y-1.5">
+      {(langs.length > 0 || stars !== undefined) && (
+        <div className="flex items-center gap-1.5 flex-wrap font-mono text-[10px]">
+          {langs.map((name) => (
+            <span
+              key={name}
+              className="px-1.5 py-0.5 hairline text-muted-foreground uppercase tracking-[0.12em]"
+            >
+              {name}
+            </span>
+          ))}
+          {stars !== undefined && (
+            <span className="inline-flex items-center gap-1 text-muted-foreground">
+              <Star className="w-3 h-3" /> {stars}
+            </span>
+          )}
+        </div>
+      )}
+      {lastCommit && (
+        <a
+          href={lastCommit.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={(e) => e.stopPropagation()}
+          className="group/cm block font-mono text-[11px] text-muted-foreground hover:text-cobalt transition-colors"
+          title={`${lastCommit.sha} · ${new Date(lastCommit.date).toLocaleString()}`}
+        >
+          <span className="inline-flex items-center gap-1.5 max-w-full">
+            <GitCommit className="w-3 h-3 shrink-0" />
+            <span className="truncate">{lastCommit.message}</span>
+          </span>
+          <span className="block pl-[18px] text-[10px] tabular-nums opacity-80">
+            {lastCommit.sha} · {relTime(lastCommit.date)}
+          </span>
+        </a>
+      )}
+    </div>
+  );
 }
 
 export function ProjectCard({ artifact, onOpen }: ProjectCardProps) {
@@ -43,16 +107,22 @@ export function ProjectCard({ artifact, onOpen }: ProjectCardProps) {
         {artifact.title}
       </h3>
 
-      {/* Tech meta (language + stars from GitHub sync) */}
-      {(lang || stars !== undefined) && (
-        <div className="font-mono text-[11px] text-muted-foreground mb-3 flex items-center gap-3">
-          {lang && <span>{lang}</span>}
-          {stars !== undefined && (
-            <span className="inline-flex items-center gap-1">
-              <Star className="w-3 h-3" /> {stars}
-            </span>
-          )}
+      {/* Live GitHub signals: languages + last commit */}
+      {gh ? (
+        <div onClick={(e) => e.stopPropagation()}>
+          <RepoSignals owner={gh.owner} repo={gh.repo} fallbackLang={lang} stars={stars} />
         </div>
+      ) : (
+        (lang || stars !== undefined) && (
+          <div className="font-mono text-[11px] text-muted-foreground mb-3 flex items-center gap-3">
+            {lang && <span>{lang}</span>}
+            {stars !== undefined && (
+              <span className="inline-flex items-center gap-1">
+                <Star className="w-3 h-3" /> {stars}
+              </span>
+            )}
+          </div>
+        )
       )}
 
       {/* Summary */}

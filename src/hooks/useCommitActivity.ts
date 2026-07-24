@@ -10,6 +10,16 @@ export interface LastCommit {
   url: string;
   author?: string;
 }
+export interface RepoMeta {
+  createdAt: string;
+  pushedAt: string;
+  updatedAt: string;
+  homepage?: string;
+  description?: string;
+  stars?: number;
+  url: string;
+  defaultBranch?: string;
+}
 export type CommitStatus = 'idle' | 'loading' | 'pending' | 'ready' | 'error';
 
 interface State {
@@ -17,6 +27,7 @@ interface State {
   weeks: CommitWeek[];
   languages?: RepoLanguage[];
   lastCommit?: LastCommit;
+  repo?: RepoMeta;
   error?: string;
 }
 
@@ -31,8 +42,9 @@ async function fetchOnce(owner: string, repo: string): Promise<State> {
   if (error) return { status: 'error', weeks: [], error: error.message };
   const languages = data?.languages;
   const lastCommit = data?.lastCommit;
-  if (data?.status === 'ready') return { status: 'ready', weeks: data.weeks ?? [], languages, lastCommit };
-  if (data?.status === 'pending') return { status: 'pending', weeks: [], languages, lastCommit };
+  const repoMeta = data?.repo;
+  if (data?.status === 'ready') return { status: 'ready', weeks: data.weeks ?? [], languages, lastCommit, repo: repoMeta };
+  if (data?.status === 'pending') return { status: 'pending', weeks: [], languages, lastCommit, repo: repoMeta };
   return { status: 'error', weeks: [], error: data?.message ?? 'unknown' };
 }
 

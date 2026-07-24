@@ -2,11 +2,21 @@ import { useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 
 export interface CommitWeek { w: number; total: number; days: number[] }
+export interface RepoLanguage { name: string; bytes: number }
+export interface LastCommit {
+  sha: string;
+  message: string;
+  date: string;
+  url: string;
+  author?: string;
+}
 export type CommitStatus = 'idle' | 'loading' | 'pending' | 'ready' | 'error';
 
 interface State {
   status: CommitStatus;
   weeks: CommitWeek[];
+  languages?: RepoLanguage[];
+  lastCommit?: LastCommit;
   error?: string;
 }
 
@@ -19,8 +29,10 @@ async function fetchOnce(owner: string, repo: string): Promise<State> {
     body: { owner, repo },
   });
   if (error) return { status: 'error', weeks: [], error: error.message };
-  if (data?.status === 'ready') return { status: 'ready', weeks: data.weeks ?? [] };
-  if (data?.status === 'pending') return { status: 'pending', weeks: [] };
+  const languages = data?.languages;
+  const lastCommit = data?.lastCommit;
+  if (data?.status === 'ready') return { status: 'ready', weeks: data.weeks ?? [], languages, lastCommit };
+  if (data?.status === 'pending') return { status: 'pending', weeks: [], languages, lastCommit };
   return { status: 'error', weeks: [], error: data?.message ?? 'unknown' };
 }
 

@@ -23,19 +23,48 @@ function relTime(iso: string) {
   return `${Math.round(days / 365)}y ago`;
 }
 
-function RepoSignals({ owner, repo, fallbackLang, stars }: {
+function formatYm(iso?: string) {
+  if (!iso) return '';
+  const d = new Date(iso);
+  if (isNaN(d.getTime())) return '';
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+}
+
+interface SignalsResult {
+  langs: string[];
+  lastCommit?: ReturnType<typeof useCommitActivity>['lastCommit'];
+  repo?: ReturnType<typeof useCommitActivity>['repo'];
+  headerDate?: string; // YYYY-MM derived from pushed_at
+  homepage?: string;
+}
+
+function RepoSignals({ owner, repo, fallbackLang, stars, onData }: {
   owner: string; repo: string; fallbackLang?: string; stars?: number;
+  onData?: (r: SignalsResult) => void;
 }) {
-  const { languages, lastCommit } = useCommitActivity(owner, repo);
+  const { languages, lastCommit, repo: repoMeta } = useCommitActivity(owner, repo);
   const langs = languages && languages.length > 0
     ? languages.slice(0, 2).map(l => l.name)
     : (fallbackLang ? [fallbackLang] : []);
+  const starsShown = repoMeta?.stars ?? stars;
 
-  if (langs.length === 0 && !lastCommit && stars === undefined) return null;
+  // Push derived data to the parent so header date / demo link stay verifiable.
+  useEffect(() => {
+    onData?.({
+      langs,
+      lastCommit,
+      repo: repoMeta,
+      headerDate: formatYm(repoMeta?.pushedAt),
+      homepage: repoMeta?.homepage,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [repoMeta?.pushedAt, repoMeta?.homepage, lastCommit?.sha, languages?.map(l => l.name).join('|')]);
+
+  if (langs.length === 0 && !lastCommit && starsShown === undefined) return null;
 
   return (
     <div className="mb-3 space-y-1.5">
-      {(langs.length > 0 || stars !== undefined) && (
+      {(langs.length > 0 || starsShown !== undefined) && (
         <div className="flex items-center gap-1.5 flex-wrap font-mono text-[10px]">
           {langs.map((name) => (
             <span
@@ -45,9 +74,9 @@ function RepoSignals({ owner, repo, fallbackLang, stars }: {
               {name}
             </span>
           ))}
-          {stars !== undefined && (
+          {starsShown !== undefined && (
             <span className="inline-flex items-center gap-1 text-muted-foreground">
-              <Star className="w-3 h-3" /> {stars}
+              <Star className="w-3 h-3" /> {starsShown}
             </span>
           )}
         </div>

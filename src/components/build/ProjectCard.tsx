@@ -147,7 +147,7 @@ export function ProjectCard({ artifact, onOpen }: ProjectCardProps) {
       {/* Live GitHub signals: languages + last commit */}
       {gh ? (
         <div onClick={(e) => e.stopPropagation()}>
-          <RepoSignals owner={gh.owner} repo={gh.repo} fallbackLang={lang} stars={stars} />
+          <RepoSignals owner={gh.owner} repo={gh.repo} fallbackLang={lang} stars={stars} onData={setSignals} />
         </div>
       ) : (
         (lang || stars !== undefined) && (

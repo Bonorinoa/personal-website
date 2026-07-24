@@ -64,6 +64,28 @@ async function fetchLastCommit(owner: string, repo: string) {
   } catch { return undefined; }
 }
 
+async function fetchRepoMeta(owner: string, repo: string) {
+  try {
+    const r = await fetch(`https://api.github.com/repos/${owner}/${repo}`, { headers: ghHeaders() });
+    if (!r.ok) return undefined;
+    const j = await r.json() as {
+      created_at: string; pushed_at: string; updated_at: string;
+      homepage?: string | null; description?: string | null;
+      stargazers_count?: number; html_url: string; default_branch?: string;
+    };
+    return {
+      createdAt: j.created_at,
+      pushedAt: j.pushed_at,
+      updatedAt: j.updated_at,
+      homepage: j.homepage && /^https?:\/\//i.test(j.homepage) ? j.homepage : undefined,
+      description: j.description ?? undefined,
+      stars: j.stargazers_count,
+      url: j.html_url,
+      defaultBranch: j.default_branch,
+    };
+  } catch { return undefined; }
+}
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
 

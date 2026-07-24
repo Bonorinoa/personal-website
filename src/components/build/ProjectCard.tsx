@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { ExternalLink, Github, FileText, Star, GitCommit } from 'lucide-react';
 import type { Artifact } from '@/data/types';
 import { TagBadge } from './TagLegend';
@@ -23,19 +24,48 @@ function relTime(iso: string) {
   return `${Math.round(days / 365)}y ago`;
 }
 
-function RepoSignals({ owner, repo, fallbackLang, stars }: {
+function formatYm(iso?: string) {
+  if (!iso) return '';
+  const d = new Date(iso);
+  if (isNaN(d.getTime())) return '';
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+}
+
+interface SignalsResult {
+  langs: string[];
+  lastCommit?: ReturnType<typeof useCommitActivity>['lastCommit'];
+  repo?: ReturnType<typeof useCommitActivity>['repo'];
+  headerDate?: string; // YYYY-MM derived from pushed_at
+  homepage?: string;
+}
+
+function RepoSignals({ owner, repo, fallbackLang, stars, onData }: {
   owner: string; repo: string; fallbackLang?: string; stars?: number;
+  onData?: (r: SignalsResult) => void;
 }) {
-  const { languages, lastCommit } = useCommitActivity(owner, repo);
+  const { languages, lastCommit, repo: repoMeta } = useCommitActivity(owner, repo);
   const langs = languages && languages.length > 0
     ? languages.slice(0, 2).map(l => l.name)
     : (fallbackLang ? [fallbackLang] : []);
+  const starsShown = repoMeta?.stars ?? stars;
 
-  if (langs.length === 0 && !lastCommit && stars === undefined) return null;
+  // Push derived data to the parent so header date / demo link stay verifiable.
+  useEffect(() => {
+    onData?.({
+      langs,
+      lastCommit,
+      repo: repoMeta,
+      headerDate: formatYm(repoMeta?.pushedAt),
+      homepage: repoMeta?.homepage,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [repoMeta?.pushedAt, repoMeta?.homepage, lastCommit?.sha, languages?.map(l => l.name).join('|')]);
+
+  if (langs.length === 0 && !lastCommit && starsShown === undefined) return null;
 
   return (
     <div className="mb-3 space-y-1.5">
-      {(langs.length > 0 || stars !== undefined) && (
+      {(langs.length > 0 || starsShown !== undefined) && (
         <div className="flex items-center gap-1.5 flex-wrap font-mono text-[10px]">
           {langs.map((name) => (
             <span
@@ -45,9 +75,9 @@ function RepoSignals({ owner, repo, fallbackLang, stars }: {
               {name}
             </span>
           ))}
-          {stars !== undefined && (
+          {starsShown !== undefined && (
             <span className="inline-flex items-center gap-1 text-muted-foreground">
-              <Star className="w-3 h-3" /> {stars}
+              <Star className="w-3 h-3" /> {starsShown}
             </span>
           )}
         </div>
@@ -78,6 +108,11 @@ export function ProjectCard({ artifact, onOpen }: ProjectCardProps) {
   const gh = parseGithubRepo(artifact.links?.repo);
   const lang = (artifact as unknown as { language?: string }).language;
   const stars = (artifact as unknown as { stars?: number }).stars;
+  const [signals, setSignals] = useState<SignalsResult | null>(null);
+
+  const headerDate = signals?.headerDate || (artifact.date || '').slice(0, 7);
+  const demoHref = artifact.links?.demo ?? signals?.homepage;
+  const demoIsHomepage = !artifact.links?.demo && !!signals?.homepage;
 
   return (
     <article
@@ -96,10 +131,12 @@ export function ProjectCard({ artifact, onOpen }: ProjectCardProps) {
         }
       }}
     >
-      {/* Header row: org/year monoline */}
+      {/* Header row: org/year monoline (year sourced from GitHub pushed_at when available) */}
       <div className="flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground mb-3">
         <span className="text-cobalt">{artifact.org ?? 'Project'}</span>
-        <span>{(artifact.date || '').slice(0, 7)}</span>
+        <span title={signals?.repo?.pushedAt ? `Last pushed ${new Date(signals.repo.pushedAt).toLocaleDateString()}` : undefined}>
+          {headerDate}
+        </span>
       </div>
 
       {/* Title */}
@@ -110,7 +147,7 @@ export function ProjectCard({ artifact, onOpen }: ProjectCardProps) {
       {/* Live GitHub signals: languages + last commit */}
       {gh ? (
         <div onClick={(e) => e.stopPropagation()}>
-          <RepoSignals owner={gh.owner} repo={gh.repo} fallbackLang={lang} stars={stars} />
+          <RepoSignals owner={gh.owner} repo={gh.repo} fallbackLang={lang} stars={stars} onData={setSignals} />
         </div>
       ) : (
         (lang || stars !== undefined) && (
@@ -160,16 +197,17 @@ export function ProjectCard({ artifact, onOpen }: ProjectCardProps) {
             <Github className="w-3.5 h-3.5" /> repo
           </a>
         )}
-        {artifact.links?.demo && (
+        {demoHref && (
           <a
-            href={artifact.links.demo}
+            href={demoHref}
             target="_blank"
             rel="noopener noreferrer"
             onClick={(e) => e.stopPropagation()}
             className="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-cobalt transition-colors min-h-[44px] py-2"
-            aria-label="Open demo"
+            aria-label={demoIsHomepage ? 'Open project website' : 'Open demo'}
+            title={demoIsHomepage ? 'Homepage from GitHub' : undefined}
           >
-            <ExternalLink className="w-3.5 h-3.5" /> demo
+            <ExternalLink className="w-3.5 h-3.5" /> {demoIsHomepage ? 'site' : 'demo'}
           </a>
         )}
         {artifact.links?.paper && (

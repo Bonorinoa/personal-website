@@ -64,6 +64,28 @@ async function fetchLastCommit(owner: string, repo: string) {
   } catch { return undefined; }
 }
 
+async function fetchRepoMeta(owner: string, repo: string) {
+  try {
+    const r = await fetch(`https://api.github.com/repos/${owner}/${repo}`, { headers: ghHeaders() });
+    if (!r.ok) return undefined;
+    const j = await r.json() as {
+      created_at: string; pushed_at: string; updated_at: string;
+      homepage?: string | null; description?: string | null;
+      stargazers_count?: number; html_url: string; default_branch?: string;
+    };
+    return {
+      createdAt: j.created_at,
+      pushedAt: j.pushed_at,
+      updatedAt: j.updated_at,
+      homepage: j.homepage && /^https?:\/\//i.test(j.homepage) ? j.homepage : undefined,
+      description: j.description ?? undefined,
+      stars: j.stargazers_count,
+      url: j.html_url,
+      defaultBranch: j.default_branch,
+    };
+  } catch { return undefined; }
+}
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
 
@@ -93,15 +115,16 @@ serve(async (req) => {
       });
     }
 
-    const [statsRes, languages, lastCommit] = await Promise.all([
+    const [statsRes, languages, lastCommit, repoMeta] = await Promise.all([
       fetch(`https://api.github.com/repos/${owner}/${repo}/stats/commit_activity`, { headers: ghHeaders() }),
       fetchLanguages(owner, repo),
       fetchLastCommit(owner, repo),
+      fetchRepoMeta(owner, repo),
     ]);
 
     if (statsRes.status === 202) {
       // Stats still computing — return other signals now, don't cache.
-      return new Response(JSON.stringify({ status: 'pending', languages, lastCommit }), {
+      return new Response(JSON.stringify({ status: 'pending', languages, lastCommit, repo: repoMeta }), {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     }
@@ -120,6 +143,7 @@ serve(async (req) => {
       weeks: weeks.map(w => ({ w: w.week, total: w.total, days: w.days })),
       languages,
       lastCommit,
+      repo: repoMeta,
     };
     CACHE.set(key, { at: Date.now(), body });
 

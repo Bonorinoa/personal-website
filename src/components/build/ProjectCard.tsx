@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { ExternalLink, Github, FileText, Star, GitCommit } from 'lucide-react';
 import type { Artifact } from '@/data/types';
 import { TagBadge } from './TagLegend';

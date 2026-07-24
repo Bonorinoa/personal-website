@@ -108,6 +108,11 @@ export function ProjectCard({ artifact, onOpen }: ProjectCardProps) {
   const gh = parseGithubRepo(artifact.links?.repo);
   const lang = (artifact as unknown as { language?: string }).language;
   const stars = (artifact as unknown as { stars?: number }).stars;
+  const [signals, setSignals] = useState<SignalsResult | null>(null);
+
+  const headerDate = signals?.headerDate || (artifact.date || '').slice(0, 7);
+  const demoHref = artifact.links?.demo ?? signals?.homepage;
+  const demoIsHomepage = !artifact.links?.demo && !!signals?.homepage;
 
   return (
     <article

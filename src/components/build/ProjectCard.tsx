@@ -131,10 +131,12 @@ export function ProjectCard({ artifact, onOpen }: ProjectCardProps) {
         }
       }}
     >
-      {/* Header row: org/year monoline */}
+      {/* Header row: org/year monoline (year sourced from GitHub pushed_at when available) */}
       <div className="flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground mb-3">
         <span className="text-cobalt">{artifact.org ?? 'Project'}</span>
-        <span>{(artifact.date || '').slice(0, 7)}</span>
+        <span title={signals?.repo?.pushedAt ? `Last pushed ${new Date(signals.repo.pushedAt).toLocaleDateString()}` : undefined}>
+          {headerDate}
+        </span>
       </div>
 
       {/* Title */}

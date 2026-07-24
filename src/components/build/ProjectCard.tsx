@@ -197,16 +197,17 @@ export function ProjectCard({ artifact, onOpen }: ProjectCardProps) {
             <Github className="w-3.5 h-3.5" /> repo
           </a>
         )}
-        {artifact.links?.demo && (
+        {demoHref && (
           <a
-            href={artifact.links.demo}
+            href={demoHref}
             target="_blank"
             rel="noopener noreferrer"
             onClick={(e) => e.stopPropagation()}
             className="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-cobalt transition-colors min-h-[44px] py-2"
-            aria-label="Open demo"
+            aria-label={demoIsHomepage ? 'Open project website' : 'Open demo'}
+            title={demoIsHomepage ? 'Homepage from GitHub' : undefined}
           >
-            <ExternalLink className="w-3.5 h-3.5" /> demo
+            <ExternalLink className="w-3.5 h-3.5" /> {demoIsHomepage ? 'site' : 'demo'}
           </a>
         )}
         {artifact.links?.paper && (

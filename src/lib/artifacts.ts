@@ -68,29 +68,6 @@ export function groupByType(artifacts: Artifact[]): Record<string, Artifact[]> {
   }, {} as Record<string, Artifact[]>);
 }
 
-// Get aggregate collaboration matrix data
-export function getAggregateMatrixData() {
-  const artifacts = getBuildArtifacts();
-  const data: { model: string; task: string; count: number; projects: string[] }[] = [];
-  
-  artifacts.forEach(artifact => {
-    if (artifact.collaboration_breakdown?.matrix) {
-      artifact.collaboration_breakdown.matrix.forEach(({ model, tasks }) => {
-        tasks.forEach(task => {
-          const existing = data.find(d => d.model === model && d.task === task);
-          if (existing) {
-            existing.count++;
-            existing.projects.push(artifact.title);
-          } else {
-            data.push({ model, task, count: 1, projects: [artifact.title] });
-          }
-        });
-      });
-    }
-  });
-  
-  return data;
-}
 
 // Get artifacts grouped by year for timeline view
 export function getArtifactsByYear(): Record<number, Artifact[]> {

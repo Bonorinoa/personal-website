@@ -9,7 +9,8 @@ import { ExternalLink, Github, FileText, Calendar, MapPin, Building } from 'luci
 import type { Artifact } from '@/data/types';
 import { TagBadge, TAG_DEFINITIONS } from './TagLegend';
 import { DemoEmbed } from './DemoEmbed';
-import { CollaborationMatrix } from './CollaborationMatrix';
+import { CommitCalendar } from './CommitCalendar';
+import { parseGithubRepo } from '@/lib/github';
 
 interface ProjectModalProps {
   artifact: Artifact | null;
@@ -20,7 +21,9 @@ interface ProjectModalProps {
 export function ProjectModal({ artifact, open, onOpenChange }: ProjectModalProps) {
   if (!artifact) return null;
 
-  const hasMatrix = artifact.collaboration_breakdown?.matrix && artifact.collaboration_breakdown.matrix.length > 0;
+  const gh = parseGithubRepo(artifact.links?.repo);
+
+
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -95,36 +98,32 @@ export function ProjectModal({ artifact, open, onOpenChange }: ProjectModalProps
           </div>
         )}
 
-        {/* Collaboration Breakdown */}
-        {artifact.collaboration_breakdown && (
-          <div className="space-y-4 border-t pt-4">
-            <h3 className="font-semibold">AI-Human Collaboration</h3>
-            
-            <div>
-              <h4 className="text-sm font-medium text-muted-foreground mb-1">My Contribution</h4>
-              <p className="text-sm">{artifact.collaboration_breakdown.human}</p>
-            </div>
-
-            {hasMatrix && (
-              <div>
-                <h4 className="text-sm font-medium text-muted-foreground mb-2">AI Tools × Tasks</h4>
-                <CollaborationMatrix matrix={artifact.collaboration_breakdown.matrix!} />
-              </div>
-            )}
-
-            {!hasMatrix && artifact.collaboration_breakdown.ai_tools && (
-              <div>
-                <h4 className="text-sm font-medium text-muted-foreground mb-1">AI Tools Used</h4>
-                <p className="text-sm">{artifact.collaboration_breakdown.ai_tools}</p>
-              </div>
-            )}
-
-            <div>
-              <h4 className="text-sm font-medium text-muted-foreground mb-1">Verification</h4>
-              <p className="text-sm">{artifact.collaboration_breakdown.verification}</p>
-            </div>
+        {/* Commit activity (real signal) */}
+        {gh && (
+          <div className="border-t pt-4">
+            <CommitCalendar owner={gh.owner} repo={gh.repo} />
           </div>
         )}
+
+        {/* Collaboration Breakdown — human-written prose only */}
+        {artifact.collaboration_breakdown && (
+          <div className="space-y-4 border-t pt-4">
+            <h3 className="font-semibold">Notes</h3>
+            {artifact.collaboration_breakdown.human && (
+              <div>
+                <h4 className="text-sm font-medium text-muted-foreground mb-1">My Contribution</h4>
+                <p className="text-sm">{artifact.collaboration_breakdown.human}</p>
+              </div>
+            )}
+            {artifact.collaboration_breakdown.verification && (
+              <div>
+                <h4 className="text-sm font-medium text-muted-foreground mb-1">Verification</h4>
+                <p className="text-sm">{artifact.collaboration_breakdown.verification}</p>
+              </div>
+            )}
+          </div>
+        )}
+
 
         {/* Links */}
         {(artifact.links?.repo || artifact.links?.demo || artifact.links?.paper || artifact.links?.website) && (

@@ -7,7 +7,7 @@ import { Navigation } from '@/components/shared/Navigation';
 import { Footer } from '@/components/shared/Footer';
 import { TagLegend } from '@/components/build/TagLegend';
 import { ProjectGrid } from '@/components/build/ProjectGrid';
-import { AggregateMatrix } from '@/components/build/AggregateMatrix';
+
 import { getBuildArtifacts, filterByTag, sortByDate } from '@/lib/artifacts';
 import type { CollaborationTag } from '@/data/types';
 
@@ -133,13 +133,6 @@ const Build = () => {
             </div>
           )}
 
-          {/* Aggregate matrix */}
-          <section className="mb-12">
-            <div className="font-mono text-[11px] uppercase tracking-[0.22em] text-cobalt mb-6">
-              Provenance / aggregate matrix
-            </div>
-            <AggregateMatrix />
-          </section>
         </main>
 
         <Footer />

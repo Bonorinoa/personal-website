@@ -1,6 +1,11 @@
-// Returns 52-week commit activity for a public GitHub repo.
-// Response: { status: 'ready', weeks: Week[] } | { status: 'pending' } | { status: 'error', message }
-// Week = { w: number (unix seconds, week start), total: number, days: number[7] }
+// Returns 52-week commit activity + top languages + latest commit for a public GitHub repo.
+// Response: {
+//   status: 'ready' | 'pending' | 'error',
+//   weeks?: Week[],
+//   languages?: { name: string; bytes: number }[],
+//   lastCommit?: { sha: string; message: string; date: string; url: string; author?: string },
+//   message?: string
+// }
 
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 
@@ -24,6 +29,39 @@ function ghHeaders() {
 
 function isSafeSegment(s: string) {
   return /^[A-Za-z0-9._-]{1,100}$/.test(s);
+}
+
+async function fetchLanguages(owner: string, repo: string) {
+  try {
+    const r = await fetch(`https://api.github.com/repos/${owner}/${repo}/languages`, { headers: ghHeaders() });
+    if (!r.ok) return undefined;
+    const obj = await r.json() as Record<string, number>;
+    return Object.entries(obj)
+      .map(([name, bytes]) => ({ name, bytes }))
+      .sort((a, b) => b.bytes - a.bytes)
+      .slice(0, 3);
+  } catch { return undefined; }
+}
+
+async function fetchLastCommit(owner: string, repo: string) {
+  try {
+    const r = await fetch(`https://api.github.com/repos/${owner}/${repo}/commits?per_page=1`, { headers: ghHeaders() });
+    if (!r.ok) return undefined;
+    const arr = await r.json() as Array<{
+      sha: string;
+      html_url: string;
+      commit: { message: string; author: { date: string; name?: string } };
+    }>;
+    const c = arr[0];
+    if (!c) return undefined;
+    return {
+      sha: c.sha.slice(0, 7),
+      message: (c.commit.message ?? '').split('\n')[0].slice(0, 140),
+      date: c.commit.author?.date ?? '',
+      url: c.html_url,
+      author: c.commit.author?.name,
+    };
+  } catch { return undefined; }
 }
 
 serve(async (req) => {
@@ -55,29 +93,33 @@ serve(async (req) => {
       });
     }
 
-    const res = await fetch(
-      `https://api.github.com/repos/${owner}/${repo}/stats/commit_activity`,
-      { headers: ghHeaders() },
-    );
+    const [statsRes, languages, lastCommit] = await Promise.all([
+      fetch(`https://api.github.com/repos/${owner}/${repo}/stats/commit_activity`, { headers: ghHeaders() }),
+      fetchLanguages(owner, repo),
+      fetchLastCommit(owner, repo),
+    ]);
 
-    if (res.status === 202) {
-      return new Response(JSON.stringify({ status: 'pending' }), {
+    if (statsRes.status === 202) {
+      // Stats still computing — return other signals now, don't cache.
+      return new Response(JSON.stringify({ status: 'pending', languages, lastCommit }), {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     }
-    if (!res.ok) {
-      const text = await res.text();
-      console.error(`github-commits ${key} failed [${res.status}]: ${text}`);
+    if (!statsRes.ok) {
+      const text = await statsRes.text();
+      console.error(`github-commits ${key} failed [${statsRes.status}]: ${text}`);
       return new Response(
-        JSON.stringify({ status: 'error', message: `GitHub ${res.status}`, details: text.slice(0, 200) }),
-        { status: res.status, headers: { ...corsHeaders, 'Content-Type': 'application/json' } },
+        JSON.stringify({ status: 'error', message: `GitHub ${statsRes.status}`, details: text.slice(0, 200) }),
+        { status: statsRes.status, headers: { ...corsHeaders, 'Content-Type': 'application/json' } },
       );
     }
 
-    const weeks = await res.json() as Array<{ week: number; total: number; days: number[] }>;
+    const weeks = await statsRes.json() as Array<{ week: number; total: number; days: number[] }>;
     const body = {
       status: 'ready',
       weeks: weeks.map(w => ({ w: w.week, total: w.total, days: w.days })),
+      languages,
+      lastCommit,
     };
     CACHE.set(key, { at: Date.now(), body });
 

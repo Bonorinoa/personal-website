@@ -28,6 +28,10 @@ export default {
         paper: "hsl(var(--paper))",
         "paper-deep": "hsl(var(--paper-deep))",
         ink: "hsl(var(--ink))",
+        cobalt: {
+          DEFAULT: "hsl(var(--cobalt))",
+          soft: "hsl(var(--cobalt-soft))",
+        },
         oxblood: {
           DEFAULT: "hsl(var(--oxblood))",
           soft: "hsl(var(--oxblood-soft))",

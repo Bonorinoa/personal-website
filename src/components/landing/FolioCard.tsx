@@ -83,11 +83,27 @@ export function FolioCard({
         <div className="py-8 sm:py-10">
           {isAcademic ? (
             <>
-              <h3 className="font-serif italic text-5xl sm:text-6xl lg:text-7xl leading-[0.92] tracking-tight text-ink">
+              <h3 className="relative inline-block font-serif italic text-5xl sm:text-6xl lg:text-7xl leading-[0.92] tracking-tight text-ink">
                 {title}
+                {/* Calligraphic signature flourish — draws itself on hover */}
+                <svg
+                  aria-hidden
+                  viewBox="0 0 220 40"
+                  preserveAspectRatio="none"
+                  className="pointer-events-none absolute left-0 right-0 -bottom-4 w-full h-6 overflow-visible"
+                >
+                  <path
+                    d="M4 22 C 40 6, 80 34, 120 18 S 200 10, 216 26"
+                    fill="none"
+                    stroke="hsl(var(--oxblood))"
+                    strokeWidth="1.25"
+                    strokeLinecap="round"
+                    className="folio-sign"
+                  />
+                </svg>
               </h3>
               {/* Engraved rule beneath title — asserts order */}
-              <div className="mt-5 flex items-center gap-3">
+              <div className="mt-8 flex items-center gap-3">
                 <span className="h-px w-10 bg-ink/40" />
                 <span className="font-serif italic text-xs text-ink/45">§</span>
                 <span className="h-px w-6 bg-ink/25" />

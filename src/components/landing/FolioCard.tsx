@@ -83,7 +83,7 @@ export function FolioCard({
         <div className="py-8 sm:py-10">
           {isAcademic ? (
             <>
-              <h3 className="font-serif italic text-5xl sm:text-6xl lg:text-7xl leading-[0.92] tracking-tight text-ink">
+              <h3 className="font-serif italic text-5xl sm:text-6xl lg:text-7xl leading-[0.95] tracking-tight text-ink pt-[0.08em]">
                 {title}
               </h3>
               {/* Engraved rule beneath title — asserts order */}

@@ -100,7 +100,7 @@ export function FolioCard({
             <>
               <h3 className="font-mono text-4xl sm:text-5xl lg:text-6xl leading-[0.95] tracking-tight text-ink flex items-baseline">
                 <span className="text-oxblood/70 mr-2 opacity-0 group-hover:opacity-100 transition-opacity">/</span>
-                {title}
+                <span className="whitespace-pre-line">{title}</span>
                 <motion.span
                   aria-hidden
                   animate={{ opacity: [1, 0, 1] }}

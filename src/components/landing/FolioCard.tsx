@@ -45,7 +45,7 @@ export function FolioCard({
       {/* Folio frame */}
       <div
         className={
-          'relative border bg-[hsl(var(--paper))]/60 backdrop-blur-[2px] p-6 sm:p-8 lg:p-10 min-h-[320px] sm:min-h-[380px] flex flex-col justify-between transition-[border-color,background-color,box-shadow] duration-300 ' +
+          'relative overflow-hidden border bg-[hsl(var(--paper))]/60 backdrop-blur-[2px] p-6 sm:p-8 lg:p-10 min-h-[320px] sm:min-h-[380px] flex flex-col justify-between transition-[border-color,background-color,box-shadow] duration-300 ' +
           (isAcademic
             ? 'border-ink/25 group-hover:border-ink/60 group-hover:bg-[hsl(var(--paper))]/90'
             : 'border-ink/25 group-hover:border-oxblood/70 group-hover:bg-[hsl(var(--paper))]/85 group-hover:shadow-[6px_6px_0_0_hsl(var(--oxblood)/0.18)]')
@@ -134,9 +134,6 @@ export function FolioCard({
                 : 'bg-oxblood group-hover:!w-32')
             }
           />
-          <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-ink/55">
-            {meta}
-          </span>
         </div>
       </div>
     </motion.button>

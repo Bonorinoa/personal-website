@@ -107,13 +107,12 @@ export function FolioCard({
                   /
                 </span>
                 <span className="whitespace-pre-line">{title}</span>
-                <motion.span
+                <span
                   aria-hidden
-                  animate={{ opacity: [1, 0, 1] }}
-                  transition={{ duration: 1.05, repeat: Infinity, ease: 'linear' }}
-                  className="absolute left-full ml-2 top-[0.05em] inline-block w-[0.5em] h-[0.85em] bg-oxblood opacity-0 group-hover:opacity-100"
+                  className="absolute left-full ml-2 top-[0.05em] inline-block w-[0.5em] h-[0.85em] bg-oxblood opacity-0 group-hover:opacity-100 group-hover:cursor-blink"
                 />
               </h3>
+
               <p className="mt-4 font-mono text-xs sm:text-sm text-ink/55 uppercase tracking-[0.18em]">
                 {preview}
               </p>

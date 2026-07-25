@@ -134,9 +134,6 @@ export function FolioCard({
                 : 'bg-oxblood group-hover:!w-32')
             }
           />
-          <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-ink/55">
-            {meta}
-          </span>
         </div>
       </div>
     </motion.button>

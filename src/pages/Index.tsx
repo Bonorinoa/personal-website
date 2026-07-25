@@ -6,6 +6,7 @@ import { useMode, type Mode } from '@/hooks/useMode';
 import { useWorld } from '@/hooks/useWorld';
 import { InkTrail } from '@/components/landing/InkTrail';
 import { FolioCard } from '@/components/landing/FolioCard';
+import { Footer } from '@/components/shared/Footer';
 
 import { getAcademicArtifacts, getBuildArtifacts } from '@/lib/artifacts';
 

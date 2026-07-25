@@ -93,7 +93,7 @@ const Index = () => {
                 kind="academic"
                 roman="Vol. I"
                 label="Research"
-                title="The Academy"
+                title="Resume"
                 preview={`Microeconomic theory, experimental economics, LLM-driven agents. ${academicCount}+ entries.`}
                 meta="→ enter the reading room"
                 dimmed={hovered !== null && hovered !== 'academic'}
@@ -104,7 +104,7 @@ const Index = () => {
                 kind="build"
                 roman="Vol. II"
                 label="Build"
-                title="The Studio"
+                title="Portfolio"
                 preview={`SHIPPED · ${buildCount} PROJECTS · HUMAN ⋈ AI`}
                 meta="→ enter the workshop"
                 dimmed={hovered !== null && hovered !== 'build'}

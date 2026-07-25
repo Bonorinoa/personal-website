@@ -35,6 +35,21 @@ interface State {
 const CACHE = new Map<string, State>();
 const INFLIGHT = new Map<string, Promise<State>>();
 
+// Track the most recent successful GitHub sync across all cards.
+let LAST_SYNCED_AT: number | null = null;
+const SYNC_LISTENERS = new Set<(t: number | null) => void>();
+function markSynced() {
+  LAST_SYNCED_AT = Date.now();
+  SYNC_LISTENERS.forEach((fn) => fn(LAST_SYNCED_AT));
+}
+export function getLastSyncedAt(): number | null {
+  return LAST_SYNCED_AT;
+}
+export function subscribeLastSynced(fn: (t: number | null) => void): () => void {
+  SYNC_LISTENERS.add(fn);
+  return () => SYNC_LISTENERS.delete(fn);
+}
+
 async function fetchOnce(owner: string, repo: string): Promise<State> {
   const { data, error } = await supabase.functions.invoke('github-commits', {
     body: { owner, repo },
@@ -69,6 +84,7 @@ export function useCommitActivity(owner?: string | null, repo?: string | null): 
       }
       CACHE.set(key, result);
       INFLIGHT.delete(key);
+      if (result.status === 'ready' || result.status === 'pending') markSynced();
       return result;
     })();
     INFLIGHT.set(key, run);

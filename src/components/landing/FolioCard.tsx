@@ -98,7 +98,7 @@ export function FolioCard({
             </>
           ) : (
             <>
-              <h3 className="font-mono text-4xl sm:text-5xl lg:text-6xl leading-[0.95] tracking-tight text-ink flex items-baseline">
+              <h3 className="font-mono text-4xl sm:text-5xl lg:text-6xl leading-[0.92] tracking-tight text-ink flex items-baseline pt-[0.12em]">
                 <span className="text-oxblood/70 mr-2 opacity-0 group-hover:opacity-100 transition-opacity">/</span>
                 <span className="whitespace-pre-line">{title}</span>
                 <motion.span

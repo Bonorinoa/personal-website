@@ -98,14 +98,20 @@ export function FolioCard({
             </>
           ) : (
             <>
-              <h3 className="font-mono text-5xl sm:text-6xl lg:text-7xl leading-[0.92] tracking-tight text-ink flex items-baseline -mt-[0.18em]">
-                <span className="text-oxblood/70 mr-2 opacity-0 group-hover:opacity-100 transition-opacity">/</span>
+              <h3 className="relative font-mono text-5xl sm:text-6xl lg:text-7xl leading-[0.92] tracking-tight text-ink">
+                {/* Decorations positioned absolutely so they never affect resting layout */}
+                <span
+                  aria-hidden
+                  className="absolute right-full mr-2 top-0 text-oxblood/70 opacity-0 group-hover:opacity-100 transition-opacity"
+                >
+                  /
+                </span>
                 <span className="whitespace-pre-line">{title}</span>
                 <motion.span
                   aria-hidden
                   animate={{ opacity: [1, 0, 1] }}
                   transition={{ duration: 1.05, repeat: Infinity, ease: 'linear' }}
-                  className="ml-2 inline-block w-[0.5em] h-[0.9em] bg-oxblood align-baseline opacity-0 group-hover:opacity-100"
+                  className="absolute left-full ml-2 top-[0.05em] inline-block w-[0.5em] h-[0.85em] bg-oxblood opacity-0 group-hover:opacity-100"
                 />
               </h3>
               <p className="mt-4 font-mono text-xs sm:text-sm text-ink/55 uppercase tracking-[0.18em]">
@@ -113,6 +119,7 @@ export function FolioCard({
               </p>
             </>
           )}
+
         </div>
 
         {/* Bottom: meta + animated rule */}

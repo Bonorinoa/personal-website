@@ -194,6 +194,19 @@
   }
   .cursor-blink { animation: cursor-blink 1.05s linear infinite; }
 
+  /* Calligraphic signature — draws on hover of the parent .group */
+  .folio-sign {
+    stroke-dasharray: 320;
+    stroke-dashoffset: 320;
+    opacity: 0;
+    transition: stroke-dashoffset 1.1s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+  }
+  .group:hover .folio-sign,
+  .group:focus-visible .folio-sign {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+
 
   .small-caps {
     font-variant: all-small-caps;

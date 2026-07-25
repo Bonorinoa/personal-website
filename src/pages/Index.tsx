@@ -6,7 +6,7 @@ import { useMode, type Mode } from '@/hooks/useMode';
 import { useWorld } from '@/hooks/useWorld';
 import { InkTrail } from '@/components/landing/InkTrail';
 import { FolioCard } from '@/components/landing/FolioCard';
-import { Flourish } from '@/components/landing/Flourish';
+import { Monogram } from '@/components/landing/Monogram';
 import { getAcademicArtifacts, getBuildArtifacts } from '@/lib/artifacts';
 
 const EASE = [0.16, 1, 0.3, 1] as const;

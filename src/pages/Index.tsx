@@ -50,28 +50,29 @@ const Index = () => {
 
 
           {/* Hero */}
-          <section className="px-5 sm:px-10 lg:px-16 pt-10 sm:pt-16 pb-10 sm:pb-14">
+          <section className="px-5 sm:px-10 lg:px-16 pt-16 sm:pt-24 lg:pt-28 pb-12 sm:pb-16">
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, ease: EASE }}
               className="max-w-5xl"
             >
-              <div className="font-mono text-[10px] uppercase tracking-[0.32em] text-oxblood mb-5 sm:mb-7">
+              <div className="font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.32em] text-oxblood mb-6 sm:mb-8">
                 A personal almanac &mdash; in two volumes
               </div>
-              <h1 className="font-serif text-[clamp(2.6rem,8vw,7rem)] leading-[0.92] tracking-[-0.015em] text-ink">
+              <h1 className="font-serif text-[clamp(2.25rem,8.5vw,7.5rem)] leading-[0.9] tracking-[-0.02em] text-ink break-words">
                 <span className="italic font-medium">Augusto</span>{' '}
                 <span className="font-medium">González</span>
                 <span className="text-oxblood">·</span>
                 <span className="font-medium">Bonorino</span>
               </h1>
-              <p className="mt-5 sm:mt-7 font-serif italic text-lg sm:text-xl lg:text-2xl text-ink/70 max-w-3xl leading-snug">
+              <p className="mt-6 sm:mt-8 font-serif italic text-lg sm:text-xl lg:text-2xl text-ink/65 max-w-3xl leading-snug">
                 economist, builder, and writer on language models as engines of
                 human behavior.
               </p>
             </motion.div>
           </section>
+
 
           {/* Two folios */}
           <section className="flex-1 px-5 sm:px-10 lg:px-16 pb-10">

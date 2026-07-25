@@ -6,7 +6,7 @@ import { useMode, type Mode } from '@/hooks/useMode';
 import { useWorld } from '@/hooks/useWorld';
 import { InkTrail } from '@/components/landing/InkTrail';
 import { FolioCard } from '@/components/landing/FolioCard';
-import { Flourish } from '@/components/landing/Flourish';
+import { Monogram } from '@/components/landing/Monogram';
 import { getAcademicArtifacts, getBuildArtifacts } from '@/lib/artifacts';
 
 const EASE = [0.16, 1, 0.3, 1] as const;
@@ -43,19 +43,36 @@ const Index = () => {
         <div className="absolute inset-0 baseline-grid opacity-60 pointer-events-none" aria-hidden />
         <InkTrail />
 
-        {/* Top-right ornament */}
-        <Flourish className="absolute top-6 right-6 sm:top-10 sm:right-10 w-24 sm:w-32 text-oxblood/70 z-10 pointer-events-none" />
-
         {/* Content */}
         <div className="relative z-10 min-h-screen flex flex-col">
-          {/* Header strip */}
-          <header className="px-5 sm:px-10 lg:px-16 pt-6 sm:pt-8">
-            <div className="flex items-center justify-between text-[10px] uppercase tracking-[0.3em] text-ink/55 font-mono">
-              <span>AGB &middot; MMXXVI</span>
-              <span className="hidden sm:inline">Tempe / Tucumán</span>
+          {/* Masthead */}
+          <header className="px-5 sm:px-10 lg:px-16 pt-5 sm:pt-8">
+            <div className="flex items-center justify-between gap-3">
+              {/* Left: monogram + wordmark */}
+              <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
+                <Monogram className="text-ink shrink-0" size={26} />
+                <div className="flex flex-col leading-tight min-w-0">
+                  <span className="font-serif italic text-[13px] sm:text-sm text-ink truncate">
+                    A. González&middot;Bonorino
+                  </span>
+                  <span className="font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.28em] text-ink/50">
+                    Est. MMXXVI
+                  </span>
+                </div>
+              </div>
+              {/* Right: periodical mark */}
+              <div className="flex flex-col items-end leading-tight shrink-0">
+                <span className="font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.28em] text-ink/55">
+                  N<span className="lowercase">º</span> 01
+                </span>
+                <span className="font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.28em] text-ink/40">
+                  Almanac
+                </span>
+              </div>
             </div>
-            <div className="mt-5 h-px bg-ink/25" />
+            <div className="mt-4 sm:mt-5 h-px bg-ink/20" />
           </header>
+
 
           {/* Hero */}
           <section className="px-5 sm:px-10 lg:px-16 pt-10 sm:pt-16 pb-10 sm:pb-14">

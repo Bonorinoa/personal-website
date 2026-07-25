@@ -118,14 +118,14 @@ export function FolioCard({
                 {/* Decorations positioned absolutely so they never affect resting layout */}
                 <span
                   aria-hidden
-                  className="absolute right-full mr-2 top-0 text-oxblood/70 opacity-0 group-hover:opacity-100 transition-opacity"
+                  className="absolute right-full mr-0 top-0 text-oxblood/70 opacity-0 -translate-x-1 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300"
                 >
                   /
                 </span>
                 <span className="whitespace-pre-line">{title}</span>
                 <span
                   aria-hidden
-                  className="absolute left-full ml-2 top-[0.05em] inline-block w-[0.5em] h-[0.85em] bg-oxblood opacity-0 group-hover:opacity-100 group-hover:cursor-blink"
+                  className="absolute left-full -ml-1 top-[0.05em] inline-block w-[0.5em] h-[0.85em] bg-oxblood opacity-0 group-hover:opacity-100 group-hover:cursor-blink"
                 />
               </h3>
 

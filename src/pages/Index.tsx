@@ -109,24 +109,8 @@ const Index = () => {
 
           {/* Colophon */}
           <footer className="px-5 sm:px-10 lg:px-16 pb-6 sm:pb-8">
-            <div className="h-px bg-ink/20 mb-4" />
-            <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 text-[10px] uppercase tracking-[0.28em] text-ink/50 font-mono">
-              <div className="flex flex-col gap-1.5">
-                <span className="text-ink/70">© {new Date().getFullYear()} Augusto Gonzalez-Bonorino</span>
-                <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-                  <a href="mailto:agbonorino@proton.me" className="hover:text-cobalt transition-colors">Email</a>
-                  <span className="text-ink/25">·</span>
-                  <a href="https://github.com/Bonorinoa" target="_blank" rel="noreferrer" className="hover:text-cobalt transition-colors">GitHub</a>
-                  <span className="text-ink/25">·</span>
-                  <a href="https://scholar.google.com/citations?user=nGrz2xUAAAAJ" target="_blank" rel="noreferrer" className="hover:text-cobalt transition-colors">Scholar</a>
-                  <span className="text-ink/25">·</span>
-                  <a href="https://www.linkedin.com/in/augusto-bonorino/" target="_blank" rel="noreferrer" className="hover:text-cobalt transition-colors">LinkedIn</a>
-                </div>
-              </div>
-              <div className="flex flex-col sm:items-end gap-1.5 text-ink/40">
-                <span>Set in Fraunces &amp; Geist Mono</span>
-                <span>Hand-tuned in Claremont, CA</span>
-              </div>
+            <div className="text-[10px] uppercase tracking-[0.28em] text-ink/40 font-mono">
+              © {new Date().getFullYear()} Augusto Gonzalez-Bonorino
             </div>
           </footer>
         </div>

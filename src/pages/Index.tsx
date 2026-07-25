@@ -107,12 +107,8 @@ const Index = () => {
             </motion.div>
           </section>
 
-          {/* Colophon */}
-          <footer className="px-5 sm:px-10 lg:px-16 pb-6 sm:pb-8">
-            <div className="text-[10px] uppercase tracking-[0.28em] text-ink/40 font-mono">
-              © {new Date().getFullYear()} Augusto Gonzalez-Bonorino
-            </div>
-          </footer>
+          <Footer />
+
         </div>
       </div>
     </>

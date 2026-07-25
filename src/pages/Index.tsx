@@ -45,33 +45,8 @@ const Index = () => {
 
         {/* Content */}
         <div className="relative z-10 min-h-screen flex flex-col">
-          {/* Masthead */}
-          <header className="px-5 sm:px-10 lg:px-16 pt-5 sm:pt-8">
-            <div className="flex items-center justify-between gap-3">
-              {/* Left: monogram + wordmark */}
-              <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
-                <Monogram className="text-ink shrink-0" size={26} />
-                <div className="flex flex-col leading-tight min-w-0">
-                  <span className="font-serif italic text-[13px] sm:text-sm text-ink truncate">
-                    A. González&middot;Bonorino
-                  </span>
-                  <span className="font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.28em] text-ink/50">
-                    Est. MMXXVI
-                  </span>
-                </div>
-              </div>
-              {/* Right: periodical mark */}
-              <div className="flex flex-col items-end leading-tight shrink-0">
-                <span className="font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.28em] text-ink/55">
-                  N<span className="lowercase">º</span> 01
-                </span>
-                <span className="font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.28em] text-ink/40">
-                  Almanac
-                </span>
-              </div>
-            </div>
-            <div className="mt-4 sm:mt-5 h-px bg-ink/20" />
-          </header>
+
+
 
 
           {/* Hero */}

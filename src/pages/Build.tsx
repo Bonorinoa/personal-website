@@ -7,6 +7,7 @@ import { Navigation } from '@/components/shared/Navigation';
 import { Footer } from '@/components/shared/Footer';
 import { TagLegend } from '@/components/build/TagLegend';
 import { ProjectGrid } from '@/components/build/ProjectGrid';
+import { LastSynced } from '@/components/build/LastSynced';
 
 import { getBuildArtifacts, filterByTag, sortByDate } from '@/lib/artifacts';
 import type { CollaborationTag } from '@/data/types';
@@ -112,7 +113,11 @@ const Build = () => {
           </motion.header>
 
           {/* Filter bar */}
-          <TagLegend activeTag={activeTag} onTagSelect={setActiveTag} />
+          <div className="flex items-center justify-between gap-4 flex-wrap mb-2">
+            <TagLegend activeTag={activeTag} onTagSelect={setActiveTag} />
+            <LastSynced />
+          </div>
+
 
           {/* Project grid */}
           {filtered.length > 0 ? (

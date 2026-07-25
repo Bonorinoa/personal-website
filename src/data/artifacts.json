@@ -927,6 +927,78 @@
       }
     },
     {
+      "id": "project-quals-arena",
+      "type": "project",
+      "title": "Quals Arena",
+      "organization": "Cognitio-EDU",
+      "org": "Cognitio-EDU",
+      "date": "2025-12",
+      "year": 2025,
+      "summary": "A study tracker with commitment and enforcement mechanisms for PhD qualifier prep. Users pre-commit to session durations (Kydland–Prescott style), and the app records deficits vs. surpluses, streaks, and a GitHub-style consistency heatmap — turning cognitive effort into an auditable scoreboard.",
+      "tags": [
+        "vibe-engineered"
+      ],
+      "mode_visibility": "build",
+      "featured": true,
+      "collaboration_breakdown": {
+        "human": "Mechanism design (commitment device, surplus caps, anti-gaming rules), product framing (Arena / Scoreboard / Signal Integrity), auth and cloud-sync architecture on Firebase, accessibility target (WCAG 2.1 AA), and PWA/offline-first policy.",
+        "matrix": [
+          {
+            "model": "claude-3-sonnet",
+            "tasks": [
+              "code-generation",
+              "code-review",
+              "ux-design"
+            ]
+          }
+        ],
+        "verification": "173 automated tests passing, end-to-end tests on the deployed app, and live use at quals-arena.vercel.app."
+      },
+      "links": {
+        "repo": "https://github.com/Cognitio-EDU/Quals-Arena",
+        "demo": "https://quals-arena.vercel.app"
+      },
+      "source_ids": {
+        "github": "Quals-Arena"
+      }
+    },
+    {
+      "id": "project-health-e",
+      "type": "project",
+      "title": "Health-E",
+      "organization": "Personal",
+      "org": "Personal",
+      "date": "2022-11",
+      "year": 2022,
+      "summary": "A Cohere-powered conversational assistant for healthcare intake — combining a custom conversant persona with grounded QA to help process patients, extract information for forms, and answer common-knowledge questions. Built with a six-person team as an exploration of virtual advisors for underserved regions.",
+      "details": [
+        "Team: Shambhavi Mishra, Augusto Gonzalez Bonorino, Mostafa Azazy, rebelgiri, Darrell Keller, Hugo Adolfsson"
+      ],
+      "tags": [
+        "ai-assisted"
+      ],
+      "mode_visibility": "build",
+      "collaboration_breakdown": {
+        "human": "Conversant persona design, grounded QA pipeline, Streamlit UX, team coordination, and the framing around underserved-region applications.",
+        "matrix": [
+          {
+            "model": "custom",
+            "tasks": [
+              "code-generation",
+              "data-processing"
+            ]
+          }
+        ],
+        "verification": "Live Streamlit demo, hackathon presentation, and manual QA over intake conversations."
+      },
+      "links": {
+        "repo": "https://github.com/Bonorinoa/Health_E"
+      },
+      "source_ids": {
+        "github": "Health_E"
+      }
+    },
+    {
       "id": "pub-jqc-quantum-riccati-2022",
       "type": "paper",
       "title": "Near term hybrid quantum computing solution to the matrix Riccati equations",

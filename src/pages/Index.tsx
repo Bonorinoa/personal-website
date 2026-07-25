@@ -60,7 +60,7 @@ const Index = () => {
               <div className="font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.32em] text-oxblood mb-6 sm:mb-8">
                 A personal almanac &mdash; in two volumes
               </div>
-              <h1 className="font-serif text-[clamp(2.75rem,8.5vw,7.5rem)] leading-[0.9] tracking-[-0.02em] text-ink">
+              <h1 className="font-serif text-[clamp(2.25rem,8.5vw,7.5rem)] leading-[0.9] tracking-[-0.02em] text-ink break-words">
                 <span className="italic font-medium">Augusto</span>{' '}
                 <span className="font-medium">González</span>
                 <span className="text-oxblood">·</span>

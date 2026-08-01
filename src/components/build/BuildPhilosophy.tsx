@@ -4,16 +4,16 @@ const EASE = [0.16, 1, 0.3, 1] as const;
 
 const PRINCIPLES = [
   {
-    label: 'Systems over parts',
-    body: 'A faster agent moves the bottleneck; it rarely removes it. Design for wherever it lands next.',
+    label: 'Generalist by choice',
+    body: 'I would rather know how the pieces fit than be the best in the world at one of them.',
+  },
+  {
+    label: 'Fewer proxies',
+    body: 'If a variable stands in for the thing I care about, I treat that substitution as the finding, not the method.',
   },
   {
     label: 'Observable by default',
     body: "If I can't see what a step did, I don't trust it, no matter how good the output looks.",
-  },
-  {
-    label: 'Cheap to reject',
-    body: "Scope the work so throwing it out costs nothing. That's what makes it safe to let an agent run.",
   },
 ];
 
@@ -39,24 +39,28 @@ export const BuildPhilosophy = () => {
             id="how-i-work"
             className="font-mono text-2xl sm:text-3xl leading-[1.15] tracking-tight font-medium mb-5"
           >
-            Most AI work is reductionist.
+            I keep looking at the whole system.
           </h2>
           <div className="space-y-4 max-w-xl text-base leading-relaxed text-foreground/85">
             <p>
-              You shrink a task until a model can do it, then call the shrinking
-              progress. That works fine for a function. It&apos;s a bad way to think
-              about a research pipeline, a classroom, or an economy.
+              Modern science leans reductionist, and for good reason: breaking a
+              hard problem into tractable pieces is how most of the last century&apos;s
+              progress happened. The cost is that the interesting behaviour usually
+              lives in how the pieces interact, and that part gets assumed away.
             </p>
             <p>
-              What I actually care about is what happens to the whole system when
-              one part gets ten times faster. Usually the bottleneck doesn&apos;t
-              disappear, it just moves somewhere less visible. In my own work it
-              moved from writing code to reading it.
+              I&apos;ve always been pulled toward the bigger picture — the economy
+              behind the model, the system behind the software. That means favouring
+              general knowledge over deep specialisation, which used to be a bad
+              trade. Specialists had the tools.
             </p>
             <p>
-              So I build the parts so I can see them: small, logged, replaceable,
-              and cheap to throw away when they&apos;re wrong. That&apos;s the whole
-              method. It has outlived every model I&apos;ve used it with.
+              I think AI changes that trade. A lot of reductionism was a budget
+              constraint: proxies because the real variable was unmeasurable,
+              pre-specified questions because exploration was expensive. Less of that
+              binds now. So the work is to actually go after the messy questions —
+              and to build things I can see into, because complex systems punish you
+              for guessing.
             </p>
           </div>
         </div>

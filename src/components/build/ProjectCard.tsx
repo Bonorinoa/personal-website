@@ -10,7 +10,10 @@ import { cn } from '@/lib/utils';
 interface ProjectCardProps {
   artifact: Artifact;
   onOpen?: () => void;
+  /** Reports the verified GitHub last-push date so parents can sort chronologically. */
+  onPushedAt?: (id: string, iso: string) => void;
 }
+
 
 function relTime(iso: string) {
   if (!iso) return '';
@@ -104,7 +107,7 @@ function RepoSignals({ owner, repo, fallbackLang, stars, onData }: {
   );
 }
 
-export function ProjectCard({ artifact, onOpen }: ProjectCardProps) {
+export function ProjectCard({ artifact, onOpen, onPushedAt }: ProjectCardProps) {
   const gh = parseGithubRepo(artifact.links?.repo);
   const lang = (artifact as unknown as { language?: string }).language;
   const stars = (artifact as unknown as { stars?: number }).stars;
@@ -113,6 +116,14 @@ export function ProjectCard({ artifact, onOpen }: ProjectCardProps) {
   const headerDate = signals?.headerDate || (artifact.date || '').slice(0, 7);
   const demoHref = artifact.links?.demo ?? signals?.homepage;
   const demoIsHomepage = !artifact.links?.demo && !!signals?.homepage;
+
+  const pushedAt = signals?.repo?.pushedAt;
+  useEffect(() => {
+    if (pushedAt) onPushedAt?.(artifact.id, pushedAt);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pushedAt, artifact.id]);
+
+
 
   return (
     <article

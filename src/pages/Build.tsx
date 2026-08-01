@@ -34,7 +34,7 @@ const Build = () => {
         <title>Build — Augusto González-Bonorino</title>
         <meta
           name="description"
-          content="Projects, tools, and experiments by Augusto González-Bonorino, with transparent human/AI collaboration breakdowns."
+          content="Research tools, teaching software, and experiments by Augusto González-Bonorino, with live commit history pulled from GitHub."
         />
         <link rel="canonical" href="/build" />
       </Helmet>

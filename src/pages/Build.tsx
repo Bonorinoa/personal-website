@@ -8,6 +8,8 @@ import { Footer } from '@/components/shared/Footer';
 import { TagLegend } from '@/components/build/TagLegend';
 import { ProjectGrid } from '@/components/build/ProjectGrid';
 import { LastSynced } from '@/components/build/LastSynced';
+import { BuildPhilosophy } from '@/components/build/BuildPhilosophy';
+import { WorkspaceStrip } from '@/components/build/WorkspaceStrip';
 
 import { getBuildArtifacts, filterByTag, sortByDate } from '@/lib/artifacts';
 import type { CollaborationTag } from '@/data/types';

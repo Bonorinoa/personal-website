@@ -10,7 +10,10 @@ import { cn } from '@/lib/utils';
 interface ProjectCardProps {
   artifact: Artifact;
   onOpen?: () => void;
+  /** Reports the verified GitHub last-push date so parents can sort chronologically. */
+  onPushedAt?: (id: string, iso: string) => void;
 }
+
 
 function relTime(iso: string) {
   if (!iso) return '';

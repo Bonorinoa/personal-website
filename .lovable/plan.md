@@ -1,82 +1,53 @@
-# Plan — Academic content pass
+## Goal
 
-## 0. Verify build first
+Give the Build page a real point of view — a systems-vs-reductionist stance on working with AI — and restructure it into three clean sections instead of a hero with a crowded sidebar.
 
-Run `bun run build:dev` (or equivalent) and confirm no errors before editing. If it fails, fix before proceeding.
+```text
+1. HERO              name the page, short honest framing
+2. HOW I WORK        the philosophy (new)  + workspaces
+3. SELECTED PROJECTS filters + last-synced + grid
+```
 
-## 1. Task list — Academic page changes
+## 1. Hero (tighten)
 
-### A. `src/pages/Academic.tsx`
+Keep "Things I've built." Rewrite the paragraph — it currently promises an "honest human/AI collaboration ratio," which no longer exists on the page. Replacement, roughly:
 
-1. Remove the ORCID link from the hero links row.
-2. Change the GitHub link `href` from `https://github.com/Bonorinoa` → `https://github.com/EconLLM-Lab` (Academic page only; Build page keeps personal profile).
-3. Reorder `<Section>` calls so **Grants & Fellowships** renders immediately after **Computational Skills** (new order: Education → Research & Work → Teaching → Publications & Presentations → Computational Skills → Grants & Fellowships → Certifications → Honors & Awards).
-4. Make **all** sections collapsible: pass `collapsible defaultOpen` to Education, Research & Work, Teaching, Publications & Presentations, and Computational Skills (currently only the last 4 are collapsible). Keep Education/Research/Teaching/Publications `defaultOpen={true}` so first-load reads the same; the rest stay `defaultOpen={false}`.
+> Research tools, teaching software, and experiments — mostly built with agents, all of it under version control. The commit history is on each card, so you can check the shape of the work yourself.
 
-### B. Contrast tweak — `src/index.css`
+Drop the `Method note` block and the workspace list out of the sidebar so the hero is a single-column statement with breathing room.
 
-5. Nudge the Academic-world `--foreground` token slightly darker (or `--paper` slightly lighter) so body copy has stronger contrast against the paper background. Small change — one or two token lines under `[data-world='academic']`. Verify visually.
+## 2. "How I work" section (new)
 
-### C. `src/data/artifacts.json` — Education
+Sits directly after the hero, above the projects. Two-column on desktop, stacked on mobile. Section label in mono: `02 / How I work`.
 
-6. `edu-ma-cgu` (line 20): rename title `"MA in Economics (PhD Track)"` → `"MA in Economics"`; in coursework detail replace `"Mathematical Economics"` → `"Mathematics for Machine Learning"` and `"Industrial Organization"` → `"Neuroeconomics"`.
-7. Add new education entry below `edu-ba` (BA in Economics Honors):
-  - id: `edu-bsc-cofc`
-  - title: `BSc in Economics (Honors)`
-  - organization: `College of Charleston`
-  - location: `Charleston, SC`
-  - date: `2018-08`, endDate: `2019-05`
-  - details: `["GPA: 3.6/4.0"]`
-  - section: `education`, mode_visibility: `academic`
+Voice: casual and specific, the way a smart student explains something they actually believe — no "leveraging," no "empowering," no em-dash-heavy marketing cadence. Short sentences. One concrete example. Willing to say what's wrong with the common view.
 
-### D. Publications & Presentations (`artifacts.json`)
+Left column — the stance (~90 words), close to:
 
-8. Add `links.paper` (or update existing) for:
-  - "Enhancing well-being by leveraging AI in coaching practices" → `https://www.taylorfrancis.com/chapters/edit/10.4324/9781003319016-28/...`
-  - "AutoKevin: A Semi-Autonomous AI Knowledge Discovery Architecture" → `https://ecc.marist.edu/documents/2978505/2980816/...`
-  - "LLMs Model Non-WEIRD Populations…" → rename title to `"LLMs Can Model Non-WEIRD Populations: Experiments with Synthetic Cultural Agents"`, add note `(forthcoming in Review of Experimental Economics)` in organization/summary, set `links.paper` to `https://arxiv.org/abs/2501.06834`.
-9. Delete the entry titled `"Large Language Models for the Study of Non-WEIRD Populations"` (ESA North American Meeting, 2023-10) at line ~358.
+> Most AI work is reductionist. You shrink a task until a model can do it, then call the shrinking "progress." That's fine for a function. It's a bad way to think about a research pipeline, a classroom, or an economy.
+>
+> I care more about what happens to the whole system when one part gets ten times faster. Usually the bottleneck just moves somewhere less visible. So I build the parts so I can see them: small, logged, replaceable, cheap to throw away when they're wrong.
 
-### E. Certifications (`artifacts.json`)
+Right column — three short principles as a hairline-ruled list, each a label plus one sentence. Drafts:
 
-10. Add `links.certificate` (or `links.paper` if schema restricts — will check `types.ts` and extend if needed) to:
-  - `cert-quantum` → Credly badge URL
-    - `cert-beslab` → LinkedIn overlay URL
-    - `cert-ibm-ai` → Coursera share URL (608c6191…)
-    - `cert-ibm-ds` → Coursera share URL (277443785…)
-11. Delete entries `cert-sna` (Social Network Analysis) and `cert-linear-algebra-ml` (Linear Algebra for ML).
-12. If `SectionItem` doesn't currently render cert links, pass them via the existing `links` prop so they appear as `Certificate ↗`.
+- **Systems over parts.** A faster agent moves the bottleneck; it rarely removes it. Design for where it lands next.
+- **Observable by default.** If I can't see what a step did, I don't trust it, no matter how good the output looks.
+- **Cheap to reject.** Scope agent work so throwing it out costs nothing. That's what makes it safe to let it run.
 
-## 2. Verification
+Model/framework names stay out — this should survive the next release cycle.
 
-- Rebuild.
-- Load `/academic`, confirm: no ORCID, GitHub → EconLLM-Lab, section order correct, all sections collapse, new BSc entry visible, updated coursework, publication links open correctly, deleted entries gone, cert links render.
+## 3. Selected projects
 
----
+- Rename the old sidebar `Method note` to **`What you're looking at`** and move it *below* the workspaces, at the end of the section. Same content (live GitHub data, hover the sparkline, click for detail) — it's a legend, so it belongs near the thing it explains.
+- Workspaces list moves under the philosophy section as a compact horizontal strip on desktop, stacked on mobile.
+- Filter bar, `LastSynced`, and `ProjectGrid` stay exactly as they are, under a `03 / Selected projects` label.
 
-## 3. Discussion (no changes yet)
+## Technical notes
 
-### CV-alternative display ideas
+- All edits in `src/pages/Build.tsx`. The philosophy block and workspaces strip get extracted into `src/components/build/BuildPhilosophy.tsx` and `src/components/build/WorkspaceStrip.tsx` to keep the page readable.
+- Reuse existing tokens only — `font-mono`, `text-cobalt`, `hairline`, `border-border`, `text-muted-foreground`. No new colors.
+- Same `framer-motion` fade/rise as the hero, staggered per section, respecting reduced-motion.
+- Verify at 1280px and 390px with screenshots; check no layout shift and 44px tap targets on the workspace links.
+- Update the page `<meta name="description">`, which also still references collaboration breakdowns.
 
-- **PDF-first hero**: keep the on-page CV lean (name, one-paragraph bio, current focus, contact) and promote a prominent "Download full CV (PDF)" button. Replace dense list sections with narrative blocks — "Research & Work" as 2–3 short prose paragraphs telling a story rather than bullet roles. Trade-off: better reading experience, but recruiters/committees skimming for dates/titles lose scanability.
-- **Hybrid "narrative + timeline"**: prose intros per section, followed by a compact right-rail timeline (year · title). Best of both, more design work.
-- **Highlights bento**: replace the CV feel with a bento grid of "signals" — latest paper, current teaching, latest talk, current affiliation — each a card. CV lives only as PDF. Very distinctive; may feel too light for academic reviewers.
-- **Publications as the centerpiece**: since publications are the currency, make them the dominant section with abstracts-on-hover, and demote Education/Teaching to a small sidebar or a `/cv` sub-route.
-
-### Google Scholar citation counts
-
-- **Feasible but fragile.** Google Scholar has no official API. Options:
-  1. `**scholarly` (Python) via a scheduled edge function** — scrape periodically, cache citation counts per work in the DB, render as `Cited by 12 ↗`. Works but Google rate-limits and occasionally blocks scrapers; needs proxy rotation for reliability.
-  2. **SerpAPI Google Scholar endpoint** — reliable, official-ish, ~$50/mo for low volume. Simplest and least likely to break.
-  3. **Semantic Scholar API** — free, official, has citation counts for most papers via DOI/arXiv ID. Coverage is not 100% of Scholar, but usually close and much more stable. Recommended default.
-- Implementation shape: scheduled edge function updates `artifacts.source_ids` → `citation_count` nightly; UI shows a small `Cited by N` chip next to each publication. Low risk with Semantic Scholar.
-
-### Admin panel vs. "just ask Lovable"
-
-An admin panel already exists at `/admin` (magic-link, allowlisted, writes to Lovable Cloud). Two paths:
-
-- **Keep and lean into it**: adds inline edit for the fields you actually touch (publication links, add cert, tweak education). ~½ day of work for a real, ergonomic editor with validation. Wins when edits are frequent (weekly), small, and content-only.
-- **Delete it, edit via chat**: every change is a Lovable turn. Wins when edits are infrequent (monthly), often bundled with design/structural tweaks, and you like a code-reviewed history via git. Costs credits per edit and has latency.
-- **Recommendation**: keep admin, but scope it strictly to *content mutations that already have a schema* (add/edit/delete artifacts, edit links, toggle featured). Anything structural (new section type, new field, layout) still comes through chat. This keeps the panel small and useful without becoming a second codebase.
-
-I'll wait for your go-ahead before implementing.
+Copy above is a draft — I'll write the final wording during implementation and you can redline it.

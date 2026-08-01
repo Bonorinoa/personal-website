@@ -70,12 +70,14 @@ const Build = () => {
                 Method note
               </div>
               <h2 className="font-serif text-xl mb-3 leading-snug">
-                AI–Human collaboration, in the open.
+                Verifiable signals, not self-reports.
               </h2>
               <p className="text-sm text-muted-foreground leading-relaxed mb-4">
-                Hover (or tap <span className="font-mono text-cobalt">AI ↓</span>) on any
-                card to peek the model-task matrix. Click for the full breakdown.
+                Each card pulls live data from GitHub — languages, stars, last commit,
+                and a commit heatmap. Hover the sparkline for weekly counts; click a
+                card for the full breakdown.
               </p>
+
               <div className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground mb-3">
                 Workspaces
               </div>

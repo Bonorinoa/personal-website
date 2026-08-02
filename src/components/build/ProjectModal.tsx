@@ -105,24 +105,60 @@ export function ProjectModal({ artifact, open, onOpenChange }: ProjectModalProps
           </div>
         )}
 
-        {/* Collaboration Breakdown — human-written prose only */}
-        {artifact.collaboration_breakdown && (
+        {/* Credit attribution — who did what */}
+        {(artifact.credit || artifact.collaboration_breakdown) && (
           <div className="space-y-4 border-t pt-4">
-            <h3 className="font-semibold">Notes</h3>
-            {artifact.collaboration_breakdown.human && (
-              <div>
-                <h4 className="text-sm font-medium text-muted-foreground mb-1">My Contribution</h4>
-                <p className="text-sm">{artifact.collaboration_breakdown.human}</p>
-              </div>
-            )}
-            {artifact.collaboration_breakdown.verification && (
-              <div>
-                <h4 className="text-sm font-medium text-muted-foreground mb-1">Verification</h4>
-                <p className="text-sm">{artifact.collaboration_breakdown.verification}</p>
-              </div>
+            <h3 className="font-semibold">Credit</h3>
+            {artifact.credit ? (
+              <>
+                <div>
+                  <h4 className="font-mono text-[10px] uppercase tracking-[0.16em] text-cobalt mb-1">Mine</h4>
+                  <p className="text-sm leading-relaxed">{artifact.credit.authored}</p>
+                </div>
+                {artifact.credit.assisted && (
+                  <div>
+                    <h4 className="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground mb-1">
+                      Model-assisted
+                    </h4>
+                    <p className="text-sm leading-relaxed text-muted-foreground">{artifact.credit.assisted}</p>
+                  </div>
+                )}
+                {artifact.credit.tools && artifact.credit.tools.length > 0 && (
+                  <div className="flex flex-wrap gap-1.5">
+                    {artifact.credit.tools.map((t) => (
+                      <span
+                        key={t}
+                        className="px-1.5 py-0.5 hairline font-mono text-[10px] uppercase tracking-[0.12em] text-muted-foreground"
+                      >
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                )}
+                {artifact.credit.verification && (
+                  <div>
+                    <h4 className="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground mb-1">
+                      Verification
+                    </h4>
+                    <p className="text-sm leading-relaxed text-muted-foreground">{artifact.credit.verification}</p>
+                  </div>
+                )}
+              </>
+            ) : (
+              <>
+                {artifact.collaboration_breakdown?.human && (
+                  <p className="text-sm leading-relaxed">{artifact.collaboration_breakdown.human}</p>
+                )}
+                {artifact.collaboration_breakdown?.verification && (
+                  <p className="text-sm leading-relaxed text-muted-foreground">
+                    {artifact.collaboration_breakdown.verification}
+                  </p>
+                )}
+              </>
             )}
           </div>
         )}
+
 
 
         {/* Links */}

@@ -17,6 +17,8 @@ function dayLabel(weekStart: number, dayIndex: number) {
 export function CommitCalendar({ owner, repo }: Props) {
   const { status, weeks, error } = useCommitActivity(owner, repo);
   const [hover, setHover] = useState<{ count: number; label: string } | null>(null);
+  const [selected, setSelected] = useState<{ key: string; count: number; label: string } | null>(null);
+  const active = hover ?? selected;
 
   const allDays = weeks.flatMap(w => w.days);
   const max = Math.max(1, ...allDays);

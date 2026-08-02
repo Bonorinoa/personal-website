@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useCommitActivity } from '@/hooks/useCommitActivity';
 
 interface Props {
@@ -5,9 +6,17 @@ interface Props {
   repo: string;
 }
 
+const DAY_MS = 86400000;
+
+function dayLabel(weekStart: number, dayIndex: number) {
+  const d = new Date(weekStart * 1000 + dayIndex * DAY_MS);
+  return d.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' });
+}
+
 // GitHub-style 52-week × 7-day contribution calendar.
 export function CommitCalendar({ owner, repo }: Props) {
   const { status, weeks, error } = useCommitActivity(owner, repo);
+  const [hover, setHover] = useState<{ count: number; label: string } | null>(null);
 
   const allDays = weeks.flatMap(w => w.days);
   const max = Math.max(1, ...allDays);
@@ -25,12 +34,16 @@ export function CommitCalendar({ owner, repo }: Props) {
 
   return (
     <div className="w-full">
-      <div className="flex items-baseline justify-between mb-3">
+      <div className="flex items-baseline justify-between mb-3 gap-4">
         <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-cobalt">
           Commit activity · last 52 weeks
         </div>
-        <div className="font-mono text-[11px] tabular-nums text-muted-foreground">
-          {status === 'ready' ? `${total} commits` : status === 'error' ? 'unavailable' : 'loading…'}
+        <div className="font-mono text-[11px] tabular-nums text-muted-foreground text-right">
+          {status === 'ready'
+            ? hover
+              ? `${hover.count} commit${hover.count === 1 ? '' : 's'} · ${hover.label}`
+              : `${total} commits`
+            : status === 'error' ? 'unavailable' : 'loading…'}
         </div>
       </div>
 
@@ -40,15 +53,28 @@ export function CommitCalendar({ owner, repo }: Props) {
 
       {status !== 'error' && (
         <div className="overflow-x-auto">
-          <div className="inline-flex gap-[2px]" aria-hidden={status !== 'ready'}>
+          <div
+            className="inline-flex gap-[2px]"
+            aria-hidden={status !== 'ready'}
+            onMouseLeave={() => setHover(null)}
+          >
             {(status === 'ready' ? weeks : Array.from({ length: 52 }, () => ({ w: 0, days: [0,0,0,0,0,0,0], total: 0 })))
               .map((wk, i) => (
                 <div key={i} className="flex flex-col gap-[2px]">
                   {wk.days.map((d, j) => (
                     <div
                       key={j}
-                      className={`w-[10px] h-[10px] rounded-[2px] ${status === 'ready' ? shade[bucket(d)] : 'bg-muted/30 animate-pulse'}`}
-                      title={status === 'ready' ? `${d} commits` : ''}
+                      onMouseEnter={
+                        status === 'ready'
+                          ? () => setHover({ count: d, label: dayLabel(wk.w, j) })
+                          : undefined
+                      }
+                      className={`w-[10px] h-[10px] rounded-[2px] transition-transform ${
+                        status === 'ready'
+                          ? `${shade[bucket(d)]} hover:scale-[1.6] hover:ring-1 hover:ring-cobalt/60`
+                          : 'bg-muted/30 animate-pulse'
+                      }`}
+                      title={status === 'ready' ? `${d} commits · ${dayLabel(wk.w, j)}` : ''}
                     />
                   ))}
                 </div>
@@ -56,6 +82,7 @@ export function CommitCalendar({ owner, repo }: Props) {
           </div>
         </div>
       )}
+
 
       <div className="flex items-center gap-2 mt-3 font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground">
         <span>less</span>

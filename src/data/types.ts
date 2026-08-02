@@ -61,6 +61,18 @@ export interface SourceIds {
   github?: string | null;
 }
 
+export interface CreditAttribution {
+  /** What the human author did. */
+  authored: string;
+  /** What models/agents contributed. */
+  assisted?: string;
+  /** Named models or tools involved. */
+  tools?: string[];
+  /** How the result was checked. */
+  verification?: string;
+}
+
+
 export interface Artifact {
   org?: OrgScope;        // GitHub org / workspace for Build mode grouping
   id: string;
@@ -78,6 +90,8 @@ export interface Artifact {
   featured?: boolean;
   mode_visibility: ModeVisibility;
   collaboration_breakdown?: CollaborationBreakdown;
+  /** Plain-language credit attribution: what I did vs. what models did. */
+  credit?: CreditAttribution;
   evidence?: Evidence;
   source_ids?: SourceIds;
   // For grouping in Academic mode

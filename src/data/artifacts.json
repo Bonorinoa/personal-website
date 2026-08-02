@@ -746,7 +746,16 @@
         "website": "https://augustogonzalezbonorino.com",
         "repo": "https://github.com/Bonorinoa/personal-website"
       },
-      "org": "Personal"
+      "org": "Personal",
+      "credit": {
+        "authored": "Information architecture, design direction, all written content, and the decision about what counts as evidence on this page.",
+        "assisted": "Agent-built front end — components, styling, and responsive work — iterated under my direction.",
+        "tools": [
+          "Claude",
+          "Lovable"
+        ],
+        "verification": "Manual testing, accessibility checks, responsive design validation"
+      }
     },
     {
       "id": "project-llm-weird",
@@ -848,6 +857,16 @@
       },
       "source_ids": {
         "github": "leanecon_v3"
+      },
+      "credit": {
+        "authored": "System architecture, Planner/Formalizer/Prover contracts, the LeanEcon preamble and theorem stubs, provider strategy, guardrails, and the Tier 1 / Tier 2 benchmark policy.",
+        "assisted": "Agents wrote and reviewed implementation code against those contracts; the Lean kernel, not a model, decides whether a proof holds.",
+        "tools": [
+          "Claude",
+          "Mistral",
+          "local models"
+        ],
+        "verification": "Lean kernel type-checking as ground truth; local_gate benchmark runs across tier0_smoke, tier1_core_preamble_definable, and tier2_frontier sets; checked-in benchmark_baselines for audit history; retrieval and prover metrics logged per run."
       }
     },
     {
@@ -866,6 +885,13 @@
       },
       "source_ids": {
         "github": "Beyond-Regime-Type-How-Institutions-Drive-Prosperity"
+      },
+      "credit": {
+        "authored": "Posed the conjectures, set the methodology, and wrote the essay end to end — the argument and the analysis are mine.",
+        "assisted": "Claude 3.x (March 2025) helped paraphrase and tighten paragraphs, and wrote supporting code.",
+        "tools": [
+          "Claude 3.x"
+        ]
       }
     },
     {
@@ -900,6 +926,14 @@
       },
       "source_ids": {
         "github": "economics-of-water-scarcity-replication"
+      },
+      "credit": {
+        "authored": "Designed the specification analysis and evaluated every result against the published paper.",
+        "assisted": "Prompted Codex desktop to (1) replicate the paper from publicly available code and data and (2) extend it with my proposed analysis — which is why the whole thing took a few days of intense work rather than months.",
+        "tools": [
+          "Codex (desktop)"
+        ],
+        "verification": "Figures and tables regenerated end-to-end from the World Bank raw package and compared against the published paper via paper_order_replication.pdf."
       }
     },
     {
@@ -941,6 +975,14 @@
       },
       "source_ids": {
         "github": "Silicus-TA-2.0"
+      },
+      "credit": {
+        "authored": "Coded the Silicus TA 1.0 foundation by hand in 2023; 2.0 is my rearchitecture — more flexible, more efficient.",
+        "assisted": "AI use in 1.0 was mostly research and parsing documentation. Largely outdated by 2026 standards, but revivable if anyone shows interest.",
+        "tools": [
+          "GPT-3.5/4 (research, docs)"
+        ],
+        "verification": "Manual QA on citation accuracy per page, duplicate-upload and size-cap checks in the admin console, and end-to-end deployment on Streamlit Cloud with live courses."
       }
     },
     {
@@ -977,6 +1019,16 @@
       },
       "source_ids": {
         "github": "Quals-Arena"
+      },
+      "credit": {
+        "authored": "Designed the whole system — drawn from my own quals experience, personal preferences, and the habit-formation literature.",
+        "assisted": "Lovable, GitHub Copilot Agent, and Gemini built the Vercel demo from that design.",
+        "tools": [
+          "Lovable",
+          "Copilot Agent",
+          "Gemini"
+        ],
+        "verification": "173 automated tests passing, end-to-end tests on the deployed app, and live use at quals-arena.vercel.app."
       }
     },
     {
@@ -1013,6 +1065,14 @@
       },
       "source_ids": {
         "github": "Health_E"
+      },
+      "credit": {
+        "authored": "Conversant persona design, the grounded QA pipeline, the Streamlit UX, and coordination of a six-person hackathon team.",
+        "assisted": "Cohere models powered the assistant itself; scaffolding and data processing were partly model-generated.",
+        "tools": [
+          "Cohere"
+        ],
+        "verification": "Live Streamlit demo, hackathon presentation, and manual QA over intake conversations."
       }
     },
     {

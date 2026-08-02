@@ -17,6 +17,8 @@ function dayLabel(weekStart: number, dayIndex: number) {
 export function CommitCalendar({ owner, repo }: Props) {
   const { status, weeks, error } = useCommitActivity(owner, repo);
   const [hover, setHover] = useState<{ count: number; label: string } | null>(null);
+  const [selected, setSelected] = useState<{ key: string; count: number; label: string } | null>(null);
+  const active = hover ?? selected;
 
   const allDays = weeks.flatMap(w => w.days);
   const max = Math.max(1, ...allDays);
@@ -40,8 +42,8 @@ export function CommitCalendar({ owner, repo }: Props) {
         </div>
         <div className="font-mono text-[11px] tabular-nums text-muted-foreground text-right">
           {status === 'ready'
-            ? hover
-              ? `${hover.count} commit${hover.count === 1 ? '' : 's'} · ${hover.label}`
+            ? active
+              ? `${active.count} commit${active.count === 1 ? '' : 's'} · ${active.label}`
               : `${total} commits`
             : status === 'error' ? 'unavailable' : 'loading…'}
         </div>
@@ -52,36 +54,50 @@ export function CommitCalendar({ owner, repo }: Props) {
       )}
 
       {status !== 'error' && (
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto -mx-1 px-1">
           <div
-            className="inline-flex gap-[2px]"
+            className="inline-flex gap-[3px] sm:gap-[2px]"
             aria-hidden={status !== 'ready'}
             onMouseLeave={() => setHover(null)}
           >
             {(status === 'ready' ? weeks : Array.from({ length: 52 }, () => ({ w: 0, days: [0,0,0,0,0,0,0], total: 0 })))
               .map((wk, i) => (
-                <div key={i} className="flex flex-col gap-[2px]">
-                  {wk.days.map((d, j) => (
-                    <div
-                      key={j}
-                      onMouseEnter={
-                        status === 'ready'
-                          ? () => setHover({ count: d, label: dayLabel(wk.w, j) })
-                          : undefined
-                      }
-                      className={`w-[10px] h-[10px] rounded-[2px] transition-transform ${
-                        status === 'ready'
-                          ? `${shade[bucket(d)]} hover:scale-[1.6] hover:ring-1 hover:ring-cobalt/60`
-                          : 'bg-muted/30 animate-pulse'
-                      }`}
-                      title={status === 'ready' ? `${d} commits · ${dayLabel(wk.w, j)}` : ''}
-                    />
-                  ))}
+                <div key={i} className="flex flex-col gap-[3px] sm:gap-[2px]">
+                  {wk.days.map((d, j) => {
+                    const key = `${i}-${j}`;
+                    const label = dayLabel(wk.w, j);
+                    const isSelected = selected?.key === key;
+                    return (
+                      <button
+                        key={j}
+                        type="button"
+                        disabled={status !== 'ready'}
+                        onMouseEnter={
+                          status === 'ready' ? () => setHover({ count: d, label }) : undefined
+                        }
+                        onClick={
+                          status === 'ready'
+                            ? () => setSelected(prev => (prev?.key === key ? null : { key, count: d, label }))
+                            : undefined
+                        }
+                        aria-label={status === 'ready' ? `${d} commits on ${label}` : 'loading'}
+                        className={`w-[13px] h-[13px] sm:w-[10px] sm:h-[10px] rounded-[2px] transition-transform touch-manipulation ${
+                          status === 'ready'
+                            ? `${shade[bucket(d)]} hover:scale-[1.6] hover:ring-1 hover:ring-cobalt/60 ${
+                                isSelected ? 'scale-[1.6] ring-1 ring-cobalt' : ''
+                              }`
+                            : 'bg-muted/30 animate-pulse'
+                        }`}
+                        title={status === 'ready' ? `${d} commits · ${label}` : ''}
+                      />
+                    );
+                  })}
                 </div>
               ))}
           </div>
         </div>
       )}
+
 
 
       <div className="flex items-center gap-2 mt-3 font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground">

@@ -61,6 +61,18 @@ export interface SourceIds {
   github?: string | null;
 }
 
+export interface CreditAttribution {
+  /** What the human author did. */
+  authored: string;
+  /** What models/agents contributed. */
+  assisted?: string;
+  /** Named models or tools involved. */
+  tools?: string[];
+  /** How the result was checked. */
+  verification?: string;
+}
+
+
 export interface Artifact {
   org?: OrgScope;        // GitHub org / workspace for Build mode grouping
   id: string;

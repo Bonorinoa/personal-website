@@ -78,6 +78,8 @@ export interface Artifact {
   featured?: boolean;
   mode_visibility: ModeVisibility;
   collaboration_breakdown?: CollaborationBreakdown;
+  /** Plain-language credit attribution: what I did vs. what models did. */
+  credit?: CreditAttribution;
   evidence?: Evidence;
   source_ids?: SourceIds;
   // For grouping in Academic mode

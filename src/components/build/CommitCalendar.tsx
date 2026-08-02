@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState, type TouchEvent as ReactTouchEvent } from 'react';
 import { useCommitActivity } from '@/hooks/useCommitActivity';
 import { useIsMobile } from '@/hooks/use-mobile';
 
@@ -81,11 +81,11 @@ export function CommitCalendar({ owner, repo }: Props) {
   };
 
   const touchStart = useRef<{ x: number; y: number } | null>(null);
-  const onTouchStart = (e: React.TouchEvent) => {
+  const onTouchStart = (e: ReactTouchEvent) => {
     const t = e.touches[0];
     touchStart.current = { x: t.clientX, y: t.clientY };
   };
-  const onTouchEnd = (e: React.TouchEvent) => {
+  const onTouchEnd = (e: ReactTouchEvent) => {
     const start = touchStart.current;
     touchStart.current = null;
     if (!start) return;

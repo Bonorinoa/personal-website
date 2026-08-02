@@ -18,7 +18,7 @@
       "id": "edu-cgu-ma",
       "type": "education",
       "title": "MA in Economics",
-      "subtitle": "GPA: 4.0/4.0 \u00b7 Applied Microeconomics - Experimental",
+      "subtitle": "GPA: 4.0/4.0 · Applied Microeconomics - Experimental",
       "organization": "Claremont Graduate University",
       "location": "Claremont, CA",
       "date": "2022-08",
@@ -35,7 +35,7 @@
       "id": "edu-marist-ba",
       "type": "education",
       "title": "BA in Economics (Honors)",
-      "subtitle": "Summa Cum Laude \u00b7 GPA: 3.93/4.0",
+      "subtitle": "Summa Cum Laude · GPA: 3.93/4.0",
       "organization": "Marist College",
       "location": "Poughkeepsie, NY",
       "date": "2019-08",
@@ -198,7 +198,7 @@
       "id": "pub-book-chapter-2025",
       "type": "paper",
       "title": "Enhancing well-being by leveraging artificial intelligence in coaching practices",
-      "organization": "In J. Passmore (Ed.), The Health and Wellbeing Coaches' Handbook \u00b7 Taylor & Francis Publishing",
+      "organization": "In J. Passmore (Ed.), The Health and Wellbeing Coaches' Handbook · Taylor & Francis Publishing",
       "date": "2024",
       "year": 2024,
       "summary": "Book chapter exploring how AI can be integrated into coaching practices to enhance well-being outcomes.",
@@ -269,7 +269,7 @@
       "date": "2023",
       "summary": "Conference paper describing an adaptive AI assistant architecture for higher education environments.",
       "details": [
-        "Authors: Gonzalez-Bonorino, A., & Laur\u00eda, E. J. M.",
+        "Authors: Gonzalez-Bonorino, A., & Lauría, E. J. M.",
         "Communications in Computer and Information Science (Vol. 1817)"
       ],
       "links": {
@@ -291,7 +291,7 @@
       "date": "2022",
       "summary": "Conference paper presenting methodology for implementing ODQA systems in educational contexts.",
       "details": [
-        "Authors: Gonz\u00e1lez Bonorino, A., Laur\u00eda, E. J. M., & Presutti, E.",
+        "Authors: González Bonorino, A., Lauría, E. J. M., & Presutti, E.",
         "Proceedings of the 14th International Conference on Computer Supported Education"
       ],
       "links": {
@@ -359,7 +359,7 @@
       "date": "2023-06",
       "summary": "Award-winning presentation on semi-autonomous AI architecture for knowledge discovery in higher education.",
       "details": [
-        "Authors: Gonzalez-Bonorino, A., & Laur\u00eda, E. J. M."
+        "Authors: Gonzalez-Bonorino, A., & Lauría, E. J. M."
       ],
       "links": {
         "paper": "https://ecc.marist.edu/documents/2978505/2980816/Augusto+Gonzalez+Bonorino/ff6cdd26-345d-4835-964b-30d5c6a19531"
@@ -851,6 +851,24 @@
       }
     },
     {
+      "id": "project-institutions-prosperity",
+      "type": "project",
+      "title": "Beyond Regime Type: How Institutions Drive Prosperity",
+      "organization": "Personal",
+      "org": "Personal",
+      "date": "2025",
+      "year": 2025,
+      "summary": "An authored analytical essay arguing that sustained development hinges on institutional adaptability — adaptive efficiency plus credible commitments — rather than regime type, read through the paired cases of Argentina and Singapore. Ships with an R Markdown appendix that reproduces every figure and statistic cited in the text from Maddison Project GDP per capita and Polity5 regime series.",
+      "mode_visibility": "build",
+      "links": {
+        "repo": "https://github.com/Bonorinoa/Beyond-Regime-Type-How-Institutions-Drive-Prosperity",
+        "paper": "https://github.com/Bonorinoa/Beyond-Regime-Type-How-Institutions-Drive-Prosperity/blob/main/Mercatus%20-%20Essay.pdf"
+      },
+      "source_ids": {
+        "github": "Beyond-Regime-Type-How-Institutions-Drive-Prosperity"
+      }
+    },
+    {
       "id": "project-water-scarcity-replication",
       "type": "project",
       "title": "Economics of Water Scarcity — Stata Replication",
@@ -863,7 +881,6 @@
         "ai-assisted"
       ],
       "mode_visibility": "build",
-      "year": 2025,
       "collaboration_breakdown": {
         "human": "Data restoration workflow, Stata do-file adaptation for macOS, output curation, gitignore policy separating raw data and scratch outputs from reviewer-facing deliverables, and cross-check against the published paper.",
         "matrix": [
@@ -1002,7 +1019,7 @@
       "id": "pub-jqc-quantum-riccati-2022",
       "type": "paper",
       "title": "Near term hybrid quantum computing solution to the matrix Riccati equations",
-      "organization": "Journal of Quantum Computing, 4(3), 135\u2013146",
+      "organization": "Journal of Quantum Computing, 4(3), 135–146",
       "date": "2022",
       "year": 2022,
       "summary": "Hybrid classical-quantum algorithm for solving matrix Riccati equations on near-term quantum hardware.",

@@ -27,6 +27,8 @@ const Build = () => {
 
   const all = sortByDate(getBuildArtifacts());
   const filtered = filterByTag(all, activeTag);
+  const software = filtered.filter((a) => a.category !== 'research');
+  const research = filtered.filter((a) => a.category === 'research');
 
   return (
     <>

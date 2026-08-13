@@ -11,11 +11,24 @@ import { TagBadge, TAG_DEFINITIONS } from './TagLegend';
 import { DemoEmbed } from './DemoEmbed';
 import { CommitCalendar } from './CommitCalendar';
 import { parseGithubRepo } from '@/lib/github';
+import { ContributorTable } from './AgentShare';
+import { useCommitActivity } from '@/hooks/useCommitActivity';
 
 interface ProjectModalProps {
   artifact: Artifact | null;
   open: boolean;
   onOpenChange: (open: boolean) => void;
+}
+
+function ModalContributors({ owner, repo }: { owner: string; repo: string }) {
+  const { contributors } = useCommitActivity(owner, repo);
+  if (!contributors || contributors.length === 0) return null;
+  return (
+    <div className="space-y-3 border-t pt-4">
+      <h3 className="font-semibold">Contributors</h3>
+      <ContributorTable contributors={contributors} />
+    </div>
+  );
 }
 
 export function ProjectModal({ artifact, open, onOpenChange }: ProjectModalProps) {
@@ -104,6 +117,9 @@ export function ProjectModal({ artifact, open, onOpenChange }: ProjectModalProps
             <CommitCalendar owner={gh.owner} repo={gh.repo} />
           </div>
         )}
+
+        {/* Contributors — verifiable commit split, agent accounts flagged */}
+        {gh && <ModalContributors owner={gh.owner} repo={gh.repo} />}
 
         {/* Credit attribution — who did what */}
         {(artifact.credit || artifact.collaboration_breakdown) && (

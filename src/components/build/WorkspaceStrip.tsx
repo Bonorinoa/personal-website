@@ -1,5 +1,5 @@
 const WORKSPACES = [
-  { key: 'Personal', desc: 'leanecon-v3 et al.', url: 'https://github.com/Bonorinoa' },
+  { key: 'Personal', desc: 'LeanEcon v4, cvprofiles et al.', url: 'https://github.com/Bonorinoa' },
   {
     key: 'EconLLM-Lab',
     desc: 'cultural alignment & open-source tooling',

@@ -1,6 +1,82 @@
 {
   "artifacts": [
     {
+      "id": "project-cvprofiles",
+      "type": "project",
+      "title": "cvprofiles",
+      "organization": "Personal",
+      "org": "Personal",
+      "date": "2026-08",
+      "year": 2026,
+      "category": "software",
+      "summary": "A Python package that treats construct validity as partial identification over a menu of measurement functions. Given a researcher-authored nomological network, the engine returns the admissible measurement set and a construct-identified range for a target functional — empty sets and wide ranges are reported as findings, not failures.",
+      "details": [
+        "Pure numpy/pandas computation over score columns you supply: no GPU, no model weights, no API keys.",
+        "Inputs are four plain-text files — scores, roles, a nomological network with thresholds, and the target functional — so a profile is fully specified and replayable.",
+        "v3.0.0 ships the WVS/GPS patience application as a verifier-gated frozen run, with version tags acting as paper anchors.",
+        "Installable from PyPI (pip install cvprofiles); CI runs on every push."
+      ],
+      "tags": [
+        "ai-assisted"
+      ],
+      "mode_visibility": "build",
+      "featured": true,
+      "links": {
+        "repo": "https://github.com/Bonorinoa/cvprofiles"
+      },
+      "source_ids": {
+        "github": "cvprofiles"
+      },
+      "credit": {
+        "authored": "The identification framing, the nomological-network protocol, the admissibility and gating rules, and the decision that empty sets and wide ranges ship as results.",
+        "assisted": "Agents implemented the engine, CLI, and reporting surface against that specification.",
+        "tools": [
+          "Codex",
+          "Claude"
+        ],
+        "verification": "Frozen, tagged release runs with machine-readable proof summaries; CI on every push; synthetic-only claims labelled provisional rather than presented as paper results."
+      }
+    },
+    {
+      "id": "project-leanecon-v4",
+      "type": "project",
+      "title": "LeanEcon v4",
+      "organization": "Personal",
+      "org": "Personal",
+      "date": "2026-08",
+      "year": 2026,
+      "category": "software",
+      "summary": "A clean-room rebuild of LeanEcon: an economics-formalization collaborator that takes an English claim through reviewed interpretation, Lean 4 formalization, and kernel-checked verification — emitting an auditable bundle and replayable trace instead of a bare \"it compiles\" claim.",
+      "details": [
+        "A claim is only labelled VERIFIED when the formal statement compiles in a pinned Lean 4 + Mathlib workspace with no sorry and passes the full bundle validator, axiom audit included.",
+        "Interpretation and formalization run on Mistral models; semantic approval stays with an accountable reviewer under an explicit reviewer policy. Models draft, they do not certify.",
+        "Ships explicit non-claims alongside the promises: no autonomous VERIFIED, no production SLA, and a formalizer that is not yet statement-faithful.",
+        "First project to run the agent-attribution experiment: the hermes agent commits under its own GitHub account, so the human/agent split is recorded in the commit history rather than self-reported.",
+        "Supersedes LeanEcon v3, now a public archive at github.com/Bonorinoa/leanecon_v3 — kept as historical evidence rather than maintained code."
+      ],
+      "tags": [
+        "vibe-engineered"
+      ],
+      "mode_visibility": "build",
+      "featured": true,
+      "links": {
+        "repo": "https://github.com/Bonorinoa/LeanEcon_v4"
+      },
+      "source_ids": {
+        "github": "LeanEcon_v4"
+      },
+      "credit": {
+        "authored": "Product thesis, the verification contract (what VERIFIED is allowed to mean), reviewer policy, Core scope, bundle validator checks, and the explicit non-claims list.",
+        "assisted": "The hermes agent harness commits implementation work under its own GitHub account; models rotate per task rather than defaulting to the most expensive frontier model.",
+        "tools": [
+          "hermes agent harness",
+          "Mistral",
+          "Lean 4 / Mathlib"
+        ],
+        "verification": "Lean kernel type-checking in a pinned workspace, a 12-check bundle validator, axiom/dependency audit, and replayable run traces."
+      }
+    },
+    {
       "id": "edu-asu-phd",
       "type": "education",
       "title": "PhD in Economics",
@@ -755,7 +831,8 @@
           "Lovable"
         ],
         "verification": "Manual testing, accessibility checks, responsive design validation"
-      }
+      },
+      "category": "software"
     },
     {
       "id": "project-llm-weird",
@@ -810,66 +887,6 @@
       "org": "EconLLM-Lab"
     },
     {
-      "id": "project-leanecon-v3",
-      "type": "project",
-      "title": "LeanEcon v3",
-      "organization": "Personal",
-      "org": "Personal",
-      "date": "2026-01",
-      "year": 2026,
-      "summary": "A Lean 4 verification harness for economic-theory claims. Natural-language statements are routed through a Planner → Formalizer → Prover pipeline, with the Lean kernel as the only authority on whether a proof holds. Ships tiered benchmarks that separate release-reliable results from frontier diagnostics.",
-      "tags": [
-        "vibe-engineered"
-      ],
-      "mode_visibility": "build",
-      "featured": true,
-      "collaboration_breakdown": {
-        "human": "System architecture, Planner/Formalizer/Prover contracts, LeanEcon preamble and theorem stubs, provider strategy, guardrails, benchmark taxonomy (Tier 1 vs Tier 2), and the release-reliability policy.",
-        "matrix": [
-          {
-            "model": "mistral",
-            "tasks": [
-              "code-generation",
-              "code-review",
-              "simulation"
-            ]
-          },
-          {
-            "model": "claude-3-sonnet",
-            "tasks": [
-              "code-generation",
-              "code-review",
-              "writing-editing"
-            ]
-          },
-          {
-            "model": "custom",
-            "tasks": [
-              "code-generation",
-              "code-review"
-            ]
-          }
-        ],
-        "verification": "Lean kernel type-checking as ground truth; local_gate benchmark runs across tier0_smoke, tier1_core_preamble_definable, and tier2_frontier sets; checked-in benchmark_baselines for audit history; retrieval and prover metrics logged per run."
-      },
-      "links": {
-        "repo": "https://github.com/Bonorinoa/leanecon_v3"
-      },
-      "source_ids": {
-        "github": "leanecon_v3"
-      },
-      "credit": {
-        "authored": "System architecture, Planner/Formalizer/Prover contracts, the LeanEcon preamble and theorem stubs, provider strategy, guardrails, and the Tier 1 / Tier 2 benchmark policy.",
-        "assisted": "Agents wrote and reviewed implementation code against those contracts; the Lean kernel, not a model, decides whether a proof holds.",
-        "tools": [
-          "Claude",
-          "Mistral",
-          "local models"
-        ],
-        "verification": "Lean kernel type-checking as ground truth; local_gate benchmark runs across tier0_smoke, tier1_core_preamble_definable, and tier2_frontier sets; checked-in benchmark_baselines for audit history; retrieval and prover metrics logged per run."
-      }
-    },
-    {
       "id": "project-institutions-prosperity",
       "type": "project",
       "title": "Beyond Regime Type: How Institutions Drive Prosperity",
@@ -892,7 +909,8 @@
         "tools": [
           "Claude 3.x"
         ]
-      }
+      },
+      "category": "research"
     },
     {
       "id": "project-water-scarcity-replication",
@@ -934,7 +952,8 @@
           "Codex (desktop)"
         ],
         "verification": "Figures and tables regenerated end-to-end from the World Bank raw package and compared against the published paper via paper_order_replication.pdf."
-      }
+      },
+      "category": "research"
     },
     {
       "id": "project-silicus-ta-2",
@@ -983,7 +1002,8 @@
           "GPT-3.5/4 (research, docs)"
         ],
         "verification": "Manual QA on citation accuracy per page, duplicate-upload and size-cap checks in the admin console, and end-to-end deployment on Streamlit Cloud with live courses."
-      }
+      },
+      "category": "software"
     },
     {
       "id": "project-quals-arena",
@@ -1029,7 +1049,8 @@
           "Gemini"
         ],
         "verification": "173 automated tests passing, end-to-end tests on the deployed app, and live use at quals-arena.vercel.app."
-      }
+      },
+      "category": "software"
     },
     {
       "id": "project-health-e",
@@ -1073,7 +1094,8 @@
           "Cohere"
         ],
         "verification": "Live Streamlit demo, hackathon presentation, and manual QA over intake conversations."
-      }
+      },
+      "category": "software"
     },
     {
       "id": "pub-jqc-quantum-riccati-2022",

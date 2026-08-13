@@ -73,12 +73,12 @@ const Build = () => {
           <WorkspaceStrip />
 
           {/* Selected projects */}
-          <section className="mt-16 sm:mt-24 mb-16 sm:mb-20" aria-labelledby="selected-projects">
+          <section className="mt-16 sm:mt-24 mb-16 sm:mb-20" aria-labelledby="software-projects">
             <div className="font-mono text-[11px] uppercase tracking-[0.22em] text-cobalt mb-5 sm:mb-6">
-              03 / Selected projects
+              03 / Software
             </div>
-            <h2 id="selected-projects" className="sr-only">
-              Selected projects
+            <h2 id="software-projects" className="sr-only">
+              Software
             </h2>
 
             {/* Filter bar */}
@@ -87,20 +87,38 @@ const Build = () => {
               <LastSynced />
             </div>
 
-            {filtered.length > 0 ? (
-              <ProjectGrid artifacts={filtered} />
+            {software.length > 0 ? (
+              <ProjectGrid artifacts={software} />
             ) : (
-              <div className="text-center py-20 hairline-b">
-                <p className="text-muted-foreground text-sm">
-                  No projects match the selected filter.
-                </p>
-                <button
-                  onClick={() => setActiveTag(null)}
-                  className="mt-3 link-cobalt font-mono text-xs uppercase tracking-[0.14em] min-h-[44px] px-3"
-                >
-                  ← clear filter
-                </button>
-              </div>
+              <p className="py-12 text-sm text-muted-foreground">
+                No software projects match the selected filter.
+              </p>
+            )}
+          </section>
+
+          <section className="mb-16 sm:mb-20" aria-labelledby="research-projects">
+            <div className="font-mono text-[11px] uppercase tracking-[0.22em] text-cobalt mb-5 sm:mb-6">
+              04 / Research
+            </div>
+            <h2 id="research-projects" className="sr-only">
+              Research
+            </h2>
+
+            {research.length > 0 ? (
+              <ProjectGrid artifacts={research} />
+            ) : (
+              <p className="py-12 text-sm text-muted-foreground">
+                No research projects match the selected filter.
+              </p>
+            )}
+
+            {filtered.length === 0 && (
+              <button
+                onClick={() => setActiveTag(null)}
+                className="mt-3 link-cobalt font-mono text-xs uppercase tracking-[0.14em] min-h-[44px] px-3"
+              >
+                ← clear filter
+              </button>
             )}
 
             {/* Legend */}
@@ -111,10 +129,12 @@ const Build = () => {
               <p className="text-sm text-muted-foreground leading-relaxed">
                 Every card pulls live from GitHub: languages, stars, the last commit,
                 and a commit heatmap. Hover the sparkline for weekly counts, or click
-                a card for the full history.
+                a card for the full history. Where an agent account is a formal
+                contributor, the human/agent commit split is shown too.
               </p>
             </div>
           </section>
+
 
 
         </main>

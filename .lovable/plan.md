@@ -10,7 +10,7 @@ menu of measurement functions, disciplined by a researcher-authored nomological 
 Returns an admissible measurement set and a construct-identified range for a target
 functional; empty sets and wide ranges are reported as findings, not failures. v3.0.0
 ships the WVS/GPS patience flagship application under a verifier-gated frozen run.
-Categorised as **Research**.
+Categorised as **Software** (it ships a pip-installable package; papers may use it).
 
 **LeanEcon v4** (`Bonorinoa/LeanEcon_v4`, Python, created Aug 2026, last push Aug 13 2026)
 Clean-room rebuild: a Mistral-backed economics-formalization collaborator that takes
@@ -31,8 +31,8 @@ GitHub push date:
 04 / Research     analyses, replications, methods work
 ```
 
-Assignment: Software = LeanEcon v4, Quals Arena, Silicus TA 2.0, Health-E, Personal Site.
-Research = cvprofiles, Water Scarcity replication, Institutions & Prosperity.
+Assignment: Software = cvprofiles, LeanEcon v4, Quals Arena, Silicus TA 2.0, Health-E, Personal Site.
+Research = Water Scarcity replication, Institutions & Prosperity.
 The existing tag filter and "Last synced" stamp stay above the first section and filter
 both. The trailing "What you're looking at" legend moves below the last section.
 

@@ -5,6 +5,7 @@ import { TagBadge } from './TagLegend';
 import { CommitSparkline } from './CommitSparkline';
 import { parseGithubRepo } from '@/lib/github';
 import { useCommitActivity } from '@/hooks/useCommitActivity';
+import { AgentShareBar } from './AgentShare';
 import { cn } from '@/lib/utils';
 
 interface ProjectCardProps {
@@ -46,7 +47,7 @@ function RepoSignals({ owner, repo, fallbackLang, stars, onData }: {
   owner: string; repo: string; fallbackLang?: string; stars?: number;
   onData?: (r: SignalsResult) => void;
 }) {
-  const { languages, lastCommit, repo: repoMeta } = useCommitActivity(owner, repo);
+  const { languages, lastCommit, repo: repoMeta, contributors } = useCommitActivity(owner, repo);
   const langs = languages && languages.length > 0
     ? languages.slice(0, 2).map(l => l.name)
     : (fallbackLang ? [fallbackLang] : []);
@@ -68,6 +69,7 @@ function RepoSignals({ owner, repo, fallbackLang, stars, onData }: {
 
   return (
     <div className="mb-3 space-y-1.5">
+      <AgentShareBar contributors={contributors} />
       {(langs.length > 0 || starsShown !== undefined) && (
         <div className="flex items-center gap-1.5 flex-wrap font-mono text-[10px]">
           {langs.map((name) => (

@@ -1,26 +1,88 @@
-## What I read
+# Add cvprofiles + LeanEcon v4, and split Build into Software / Research
 
-I pulled the repo and the PDF. The repo (`Bonorinoa/Beyond-Regime-Type-How-Institutions-Drive-Prosperity`, created Jan 2025, last pushed Aug 2, 2026, no stars, no homepage) holds `Growth_&_Institutions.Rmd` plus the two raw datasets (Maddison Project `mpd2023_web.xlsx`, Polity `p5v2018.xls`) and the essay PDF.
+## What changes
 
-The essay (~1,270 words) argues that sustained development hinges on *institutional adaptability* — adaptive efficiency plus credible commitments — rather than regime type, using Argentina (democratic but extractive/stagnating) against Singapore (autocratic but market-preserving) as paired counterexamples, grounded in North, Weingast, and Acemoglu/Robinson, with GDP-per-capita and Polity2 series as the empirical backing.
+### 1. Two new project cards
 
-My honest read: it's tight and well-argued for its length, the case selection is the right kind of "most-different" design, and the claim is defensible rather than overreaching. The weak spots are two ThoughtCo citations among otherwise serious sources, and that two cases illustrate rather than test the mechanism. Card copy will describe it as an analytical essay with a reproducible data appendix — no inflated "study" framing.
+**cvprofiles** (`Bonorinoa/cvprofiles`, Python, created Aug 2026, last push Aug 10 2026)
+Construct-validity profiles: treats construct validity as partial identification over a
+menu of measurement functions, disciplined by a researcher-authored nomological network.
+Returns an admissible measurement set and a construct-identified range for a target
+functional; empty sets and wide ranges are reported as findings, not failures. v3.0.0
+ships the WVS/GPS patience flagship application under a verifier-gated frozen run.
+Categorised as **Research**.
 
-## Changes
+**LeanEcon v4** (`Bonorinoa/LeanEcon_v4`, Python, created Aug 2026, last push Aug 13 2026)
+Clean-room rebuild: a Mistral-backed economics-formalization collaborator that takes
+English claims through reviewed interpretation, Lean 4 formalization, and kernel-checked
+verification, emitting auditable bundles rather than bare "it compiles" claims. Semantic
+approval stays with an accountable reviewer; models draft. Categorised as **Software**.
 
-**1. `src/data/artifacts.json`** — add one artifact, modeled on `project-water-scarcity-replication`:
+The **LeanEcon v3** card is removed; v4's card carries a secondary "v3 (archived)" link so
+the historical evidence stays reachable.
 
-- `id`: `project-institutions-prosperity`
-- `title`: "Beyond Regime Type: How Institutions Drive Prosperity"
-- `type`: `project`, `org`/`organization`: `Personal`, `date`: `2025`, `year`: 2025 (the live card header will show the verified GitHub `pushed_at` month anyway)
-- `mode_visibility`: `build`
-- `summary`: authored analytical essay on institutional adaptability versus regime type, testing the argument against Argentina and Singapore using Maddison Project GDP-per-capita and Polity5 regime series, with an R Markdown appendix that reproduces every figure and statistic cited in the text. No mention of the fellowship.
-- `tags`: `["human-only"]` if that tag exists in the current taxonomy; otherwise no tags rather than inventing one (I'll match whatever `src/data/types.ts` allows). This was a written piece, so I won't imply agent involvement.
-- `links.repo`: the GitHub URL; `links.paper`: the PDF blob URL on GitHub so the essay is one click away
-- `source_ids.github`: repo name
+### 2. Software vs Research sections
 
-**2. No component changes.** `ProjectGrid` sorts by GitHub `pushed_at`, so this lands near the top automatically, and `ProjectCard` will pull languages, last commit, and the commit sparkline from the existing `github-commits` function.
+The single project grid becomes two labelled sections, each sorted newest-first by verified
+GitHub push date:
 
-### Technical notes
-- Only the JSON data file changes; the entry is added to the same `artifacts` array with the same field shape the Build page already consumes.
-- After the edit I'll load `/build` in a headless browser and screenshot the new card to confirm the GitHub signals (date, last commit, sparkline) resolve for this repo, since it has no detected language and may render a sparser signals row.
+```text
+03 / Software     tools, agents, applications that run
+04 / Research     analyses, replications, methods work
+```
+
+Assignment: Software = LeanEcon v4, Quals Arena, Silicus TA 2.0, Health-E, Personal Site.
+Research = cvprofiles, Water Scarcity replication, Institutions & Prosperity.
+The existing tag filter and "Last synced" stamp stay above the first section and filter
+both. The trailing "What you're looking at" legend moves below the last section.
+
+### 3. Agent contributor data (the hermes experiment)
+
+The `github-commits` function starts returning a per-author contribution breakdown from
+GitHub's `stats/contributors` endpoint (commits, additions, deletions per login), plus a
+flag marking which logins are declared agent accounts.
+
+- **Card**: a thin two-segment share bar (human / agent) with a `NN% agent-authored` label,
+  rendered only for repos where an agent contributor exists — so today only LeanEcon v4.
+- **Modal**: a "Contributors" block listing each login with commit count, lines changed,
+  and an `agent` badge, above the existing Credit block.
+- No classifier yet. We surface raw shares and revisit thresholds once v4 has enough
+  history (currently 42 commits, 1 from `hermessinho`).
+
+## On the attribution strategy
+
+Naming the account after the **agent/harness** rather than the model is the right call:
+the harness is the stable unit, models rotate per task, and Git already records author vs
+committer so co-authorship is expressible without inventing a schema. Two caveats worth
+knowing before leaning on it:
+
+- GitHub attributes a commit to the account matching the author email. Anything you commit
+  from your own machine after an agent wrote it lands under your name, so the share
+  measures *who pushed the diff*, not who produced it. Keeping the agent as the git author
+  and yourself as committer (or a `Co-authored-by:` trailer) is the honest encoding.
+- Commit and line counts are a proxy for volume, not for judgment. The share bar should sit
+  next to the written Credit block, never replace it.
+
+A deterministic classifier is feasible later: `stats/contributors` gives weekly commits and
+additions/deletions per author, so modes like human-led / co-authored / agent-led can be cut
+from the agent share plus review evidence (PRs, reverts). Worth defining once there is a
+real distribution rather than fitting thresholds to one commit.
+
+## Technical notes
+
+- `src/data/types.ts`: add `category?: 'software' | 'research'` to `Artifact`; add
+  `Contributor` and `ContributorStats` types to `useCommitActivity`.
+- `src/data/artifacts.json`: add `project-cvprofiles` and `project-leanecon-v4` with
+  summary, details, credit attribution, links and category; delete `project-leanecon-v3`;
+  backfill `category` on the six existing Build artifacts.
+- `supabase/functions/github-commits/index.ts`: add `fetchContributors()` hitting
+  `stats/contributors` (handle the 202 warm-up the same way commit activity already does),
+  return `contributors` in the cached payload, mark known agent logins (`hermessinho`).
+- `src/hooks/useCommitActivity.ts`: pass `contributors` through state.
+- `src/components/build/ProjectGrid.tsx`: accept a category and render one section; new
+  `AgentShareBar` component for the card.
+- `src/components/build/ProjectCard.tsx` / `ProjectModal.tsx`: render the share bar and the
+  contributors block using existing design tokens.
+- `src/pages/Build.tsx`: renumber sections and render the two grids.
+- Verify both new cards pull live GitHub data (languages, stars, last commit, heatmap) at
+  1280px and 390px before finishing.

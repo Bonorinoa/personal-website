@@ -51,7 +51,7 @@ const Index = () => {
 
 
           {/* Hero */}
-          <section className="px-5 sm:px-10 lg:px-16 pt-16 sm:pt-24 lg:pt-28 pb-12 sm:pb-16">
+          <section className="pl-8 sm:pl-16 lg:pl-28 pr-5 sm:pr-10 lg:pr-16 pt-16 sm:pt-24 lg:pt-28 pb-12 sm:pb-16">
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
@@ -76,7 +76,7 @@ const Index = () => {
 
 
           {/* Two folios */}
-          <section className="flex-1 px-5 sm:px-10 lg:px-16 pb-10">
+          <section className="flex-1 pl-8 sm:pl-16 lg:pl-28 pr-5 sm:pr-10 lg:pr-16 pb-10">
             <motion.div
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}

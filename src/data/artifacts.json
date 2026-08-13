@@ -51,7 +51,8 @@
         "A claim is only labelled VERIFIED when the formal statement compiles in a pinned Lean 4 + Mathlib workspace with no sorry and passes the full bundle validator, axiom audit included.",
         "Interpretation and formalization run on Mistral models; semantic approval stays with an accountable reviewer under an explicit reviewer policy. Models draft, they do not certify.",
         "Ships explicit non-claims alongside the promises: no autonomous VERIFIED, no production SLA, and a formalizer that is not yet statement-faithful.",
-        "First project to run the agent-attribution experiment: the hermes agent commits under its own GitHub account, so the human/agent split is recorded in the commit history rather than self-reported."
+        "First project to run the agent-attribution experiment: the hermes agent commits under its own GitHub account, so the human/agent split is recorded in the commit history rather than self-reported.",
+        "Supersedes LeanEcon v3, now a public archive at github.com/Bonorinoa/leanecon_v3 — kept as historical evidence rather than maintained code."
       ],
       "tags": [
         "vibe-engineered"
@@ -59,8 +60,7 @@
       "mode_visibility": "build",
       "featured": true,
       "links": {
-        "repo": "https://github.com/Bonorinoa/LeanEcon_v4",
-        "website": "https://github.com/Bonorinoa/leanecon_v3"
+        "repo": "https://github.com/Bonorinoa/LeanEcon_v4"
       },
       "source_ids": {
         "github": "LeanEcon_v4"

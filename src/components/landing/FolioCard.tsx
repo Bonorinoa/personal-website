@@ -115,7 +115,7 @@ export function FolioCard({
                 <span className="whitespace-pre-line">{title}</span>
                 <span
                   aria-hidden
-                  className="absolute left-full -ml-3 top-[0.05em] inline-block w-[0.5em] h-[0.85em] bg-oxblood opacity-0 group-hover:opacity-100 group-hover:cursor-blink"
+                  className="absolute left-full ml-1.5 top-[0.05em] inline-block w-[0.5em] h-[0.85em] bg-oxblood opacity-0 group-hover:opacity-100 group-hover:cursor-blink"
                 />
               </h3>
             )}

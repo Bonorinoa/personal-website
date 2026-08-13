@@ -63,6 +63,49 @@ async function fetchLastCommit(owner: string, repo: string) {
     };
   } catch { return undefined; }
 }
+// GitHub logins that are declared agent/harness accounts, not humans.
+const AGENT_LOGINS = new Set(['hermessinho']);
+
+interface Contributor {
+  login: string;
+  commits: number;
+  additions: number;
+  deletions: number;
+  isAgent: boolean;
+  avatarUrl?: string;
+}
+
+/** Per-author contribution totals. Returns undefined while GitHub warms the stats cache. */
+async function fetchContributors(owner: string, repo: string): Promise<Contributor[] | undefined> {
+  try {
+    const r = await fetch(`https://api.github.com/repos/${owner}/${repo}/stats/contributors`, {
+      headers: ghHeaders(),
+    });
+    if (r.status === 202 || !r.ok) return undefined;
+    const arr = await r.json() as Array<{
+      total: number;
+      author?: { login?: string; avatar_url?: string } | null;
+      weeks?: Array<{ a: number; d: number }>;
+    }>;
+    if (!Array.isArray(arr)) return undefined;
+    return arr
+      .map((c) => {
+        const login = c.author?.login ?? 'unknown';
+        const additions = (c.weeks ?? []).reduce((s, w) => s + (w.a ?? 0), 0);
+        const deletions = (c.weeks ?? []).reduce((s, w) => s + (w.d ?? 0), 0);
+        return {
+          login,
+          commits: c.total ?? 0,
+          additions,
+          deletions,
+          isAgent: AGENT_LOGINS.has(login.toLowerCase()),
+          avatarUrl: c.author?.avatar_url,
+        };
+      })
+      .sort((a, b) => b.commits - a.commits);
+  } catch { return undefined; }
+}
+
 
 async function fetchRepoMeta(owner: string, repo: string) {
   try {

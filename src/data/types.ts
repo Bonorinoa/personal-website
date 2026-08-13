@@ -75,6 +75,8 @@ export interface CreditAttribution {
 
 export interface Artifact {
   org?: OrgScope;        // GitHub org / workspace for Build mode grouping
+  /** Build mode grouping: things that run vs. things that argue. */
+  category?: 'software' | 'research';
   id: string;
   type: ArtifactType;
   title: string;

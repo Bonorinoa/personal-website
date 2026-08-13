@@ -31,8 +31,8 @@ GitHub push date:
 04 / Research     analyses, replications, methods work
 ```
 
-Assignment: Software = LeanEcon v4, Quals Arena, Silicus TA 2.0, Health-E, Personal Site.
-Research = cvprofiles, Water Scarcity replication, Institutions & Prosperity.
+Assignment: Software = cvprofiles, LeanEcon v4, Quals Arena, Silicus TA 2.0, Health-E, Personal Site.
+Research = Water Scarcity replication, Institutions & Prosperity.
 The existing tag filter and "Last synced" stamp stay above the first section and filter
 both. The trailing "What you're looking at" legend moves below the last section.
 

@@ -79,18 +79,19 @@ export function FolioCard({
           </motion.span>
         </div>
 
-        {/* Middle: title */}
-        <div className="py-8 sm:py-10">
-          {isAcademic ? (
-            <>
-              <h3 className="relative inline-block font-serif italic text-5xl sm:text-6xl lg:text-7xl leading-[0.92] tracking-tight text-ink">
+        {/* Bottom-anchored stack — identical rows in both cards so baselines align */}
+        <div className="mt-auto">
+          {/* Row 1: title — fixed height, content sits on a shared baseline */}
+          <div className="flex items-end min-h-[4.5rem] sm:min-h-[5.5rem] lg:min-h-[6.5rem]">
+            {isAcademic ? (
+              <h3 className="relative inline-block font-serif italic text-5xl sm:text-6xl lg:text-7xl leading-[0.82] tracking-tight text-ink">
                 {title}
                 {/* Calligraphic signature flourish — draws itself on hover */}
                 <svg
                   aria-hidden
                   viewBox="0 0 220 40"
                   preserveAspectRatio="none"
-                  className="pointer-events-none absolute left-0 right-0 -bottom-4 w-full h-6 overflow-visible"
+                  className="pointer-events-none absolute left-0 right-0 -bottom-3 w-full h-5 overflow-visible"
                 >
                   <path
                     d="M4 22 C 40 6, 80 34, 120 18 S 200 10, 216 26"
@@ -102,19 +103,8 @@ export function FolioCard({
                   />
                 </svg>
               </h3>
-              {/* Engraved rule beneath title — asserts order */}
-              <div className="mt-8 flex items-center gap-3">
-                <span className="h-px w-10 bg-ink/40" />
-                <span className="font-serif italic text-xs text-ink/45">§</span>
-                <span className="h-px w-6 bg-ink/25" />
-              </div>
-              <p className="mt-4 font-serif italic text-sm sm:text-base text-ink/55">
-                {preview}
-              </p>
-            </>
-          ) : (
-            <>
-              <h3 className="relative font-mono text-5xl sm:text-6xl lg:text-7xl leading-[0.92] tracking-tight text-ink">
+            ) : (
+              <h3 className="relative font-mono text-[2.9rem] sm:text-[3.5rem] lg:text-[4.2rem] leading-[0.82] tracking-tight text-ink">
                 {/* Decorations positioned absolutely so they never affect resting layout */}
                 <span
                   aria-hidden
@@ -128,29 +118,56 @@ export function FolioCard({
                   className="absolute left-full -ml-3 top-[0.05em] inline-block w-[0.5em] h-[0.85em] bg-oxblood opacity-0 group-hover:opacity-100 group-hover:cursor-blink"
                 />
               </h3>
+            )}
+          </div>
 
-              <p className="mt-4 font-mono text-xs sm:text-sm text-ink/55 uppercase tracking-[0.18em]">
-                {preview}
-              </p>
-            </>
-          )}
+          {/* Row 2: divider — same height in both, different mark */}
+          <div className="mt-7 h-4 flex items-center gap-3">
+            {isAcademic ? (
+              <>
+                <span className="h-px w-10 bg-ink/40" />
+                <span className="font-serif italic text-xs text-ink/45 leading-none">§</span>
+                <span className="h-px w-6 bg-ink/25" />
+              </>
+            ) : (
+              <>
+                <span className="h-px w-10 bg-ink/40" />
+                <span className="flex items-center gap-[3px]" aria-hidden>
+                  {[0, 1, 2].map((i) => (
+                    <span key={i} className="w-px h-2 bg-ink/40 group-hover:bg-oxblood/70 transition-colors" />
+                  ))}
+                </span>
+                <span className="h-px w-6 bg-ink/25" />
+              </>
+            )}
+          </div>
 
-        </div>
+          {/* Row 3: caption — fixed height so the footer rule aligns */}
+          <p
+            className={
+              'mt-4 min-h-[3.25rem] ' +
+              (isAcademic
+                ? 'font-serif italic text-sm sm:text-base text-ink/55 leading-relaxed'
+                : 'font-mono text-xs sm:text-sm text-ink/55 uppercase tracking-[0.18em] leading-relaxed')
+            }
+          >
+            {preview}
+          </p>
 
-        {/* Bottom: meta + animated rule */}
-        <div>
+          {/* Row 4: animated rule */}
           <motion.div
             initial={false}
             animate={{ width: dimmed ? '1.5rem' : '4rem' }}
             transition={{ duration: 0.32, ease: EASE }}
             className={
-              'h-px mb-3 transition-[width] ' +
+              'h-px mt-2 transition-[width] ' +
               (isAcademic
                 ? 'bg-oxblood group-hover:!w-24'
                 : 'bg-oxblood group-hover:!w-32')
             }
           />
         </div>
+
       </div>
     </motion.button>
   );

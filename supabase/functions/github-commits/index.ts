@@ -4,6 +4,7 @@
 //   weeks?: Week[],
 //   languages?: { name: string; bytes: number }[],
 //   lastCommit?: { sha: string; message: string; date: string; url: string; author?: string },
+//   contributors?: { login, commits, additions, deletions, isAgent, avatarUrl }[],
 //   message?: string
 // }
 
@@ -158,16 +159,17 @@ serve(async (req) => {
       });
     }
 
-    const [statsRes, languages, lastCommit, repoMeta] = await Promise.all([
+    const [statsRes, languages, lastCommit, repoMeta, contributors] = await Promise.all([
       fetch(`https://api.github.com/repos/${owner}/${repo}/stats/commit_activity`, { headers: ghHeaders() }),
       fetchLanguages(owner, repo),
       fetchLastCommit(owner, repo),
       fetchRepoMeta(owner, repo),
+      fetchContributors(owner, repo),
     ]);
 
     if (statsRes.status === 202) {
       // Stats still computing — return other signals now, don't cache.
-      return new Response(JSON.stringify({ status: 'pending', languages, lastCommit, repo: repoMeta }), {
+      return new Response(JSON.stringify({ status: 'pending', languages, lastCommit, repo: repoMeta, contributors }), {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     }
@@ -187,6 +189,7 @@ serve(async (req) => {
       languages,
       lastCommit,
       repo: repoMeta,
+      contributors,
     };
     CACHE.set(key, { at: Date.now(), body });
 

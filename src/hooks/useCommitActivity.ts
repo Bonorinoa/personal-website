@@ -20,6 +20,14 @@ export interface RepoMeta {
   url: string;
   defaultBranch?: string;
 }
+export interface Contributor {
+  login: string;
+  commits: number;
+  additions: number;
+  deletions: number;
+  isAgent: boolean;
+  avatarUrl?: string;
+}
 export type CommitStatus = 'idle' | 'loading' | 'pending' | 'ready' | 'error';
 
 interface State {
@@ -28,6 +36,7 @@ interface State {
   languages?: RepoLanguage[];
   lastCommit?: LastCommit;
   repo?: RepoMeta;
+  contributors?: Contributor[];
   error?: string;
   attempts?: number;
 }
@@ -71,8 +80,9 @@ async function fetchOnce(owner: string, repo: string): Promise<State> {
     const languages = data?.languages;
     const lastCommit = data?.lastCommit;
     const repoMeta = data?.repo;
-    if (data?.status === 'ready') return { status: 'ready', weeks: data.weeks ?? [], languages, lastCommit, repo: repoMeta };
-    if (data?.status === 'pending') return { status: 'pending', weeks: [], languages, lastCommit, repo: repoMeta };
+    const contributors = data?.contributors as Contributor[] | undefined;
+    if (data?.status === 'ready') return { status: 'ready', weeks: data.weeks ?? [], languages, lastCommit, repo: repoMeta, contributors };
+    if (data?.status === 'pending') return { status: 'pending', weeks: [], languages, lastCommit, repo: repoMeta, contributors };
     return { status: 'error', weeks: [], error: data?.message ?? 'Unknown response from github-commits' };
   } catch (e) {
     return { status: 'error', weeks: [], error: e instanceof Error ? e.message : String(e) };

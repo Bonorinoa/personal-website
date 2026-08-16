@@ -23,6 +23,16 @@ export type CollaborationTag =
 
 export type ModeVisibility = 'academic' | 'build' | 'both';
 
+/** Kind of scholarly output, used to group the CV publication list. */
+export type PubType =
+  | 'journal'
+  | 'chapter'
+  | 'conference'
+  | 'proceedings'
+  | 'essay'
+  | 'replication'
+  | 'working-paper';
+
 // Demo types for embedding
 export type DemoType = 'colab' | 'vercel' | 'streamlit' | 'github' | 'iframe' | 'video';
 
@@ -98,6 +108,8 @@ export interface Artifact {
   source_ids?: SourceIds;
   // For grouping in Academic mode
   section?: 'education' | 'experience' | 'teaching' | 'publications' | 'certifications' | 'skills' | 'honors' | 'grants';
+  /** Kind of scholarly output, used to group the CV publication list. */
+  pubType?: PubType;
   // For media in Build mode
   previewImage?: string;
   previewVideo?: string;

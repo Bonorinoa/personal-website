@@ -38,15 +38,6 @@ const GROUPS: { key: PubType; label: string }[] = [
   { key: 'replication', label: 'Working papers & essays' },
 ];
 
-const TYPE_TAG: Record<PubType, string> = {
-  journal: 'Journal',
-  chapter: 'Chapter',
-  proceedings: 'Proceedings',
-  conference: 'Presentation',
-  'working-paper': 'Working paper',
-  essay: 'Essay',
-  replication: 'Replication',
-};
 
 function yearOf(p: Artifact) {
   return p.year ?? (p.date ? new Date(p.date).getFullYear() : 0);

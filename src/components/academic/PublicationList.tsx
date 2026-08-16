@@ -99,10 +99,6 @@ export function PublicationList({ publications }: PublicationListProps) {
                   </h4>
                   <p className="text-xs text-muted-foreground mt-1 flex flex-wrap items-center gap-x-2">
                     <span className="font-mono tabular-nums">{yearOf(pub) || '—'}</span>
-                    <span aria-hidden>·</span>
-                    <span className="font-mono uppercase tracking-[0.12em] text-cobalt/80">
-                      {TYPE_TAG[pub.pubType ?? 'journal']}
-                    </span>
                     {pub.organization && (
                       <>
                         <span aria-hidden>·</span>
@@ -110,6 +106,7 @@ export function PublicationList({ publications }: PublicationListProps) {
                       </>
                     )}
                   </p>
+
                   <div className="flex items-center gap-4 flex-wrap">
                     {(pub.links?.paper || pub.links?.repo) && (
                       <a

@@ -43,10 +43,10 @@ const Academic = () => {
   return (
     <>
       <Helmet>
-        <title>Research — Augusto González-Bonorino</title>
+        <title>Resume — Augusto González-Bonorino</title>
         <meta
           name="description"
-          content="Research and academic profile of Augusto González-Bonorino: experimental economics, microeconomic theory, and large language models as engines of human behavior."
+          content="Curriculum vitae of Augusto González-Bonorino: economics training, research and consulting roles, teaching, publications, grants, and awards."
         />
         <link rel="canonical" href="/academic" />
       </Helmet>
@@ -57,8 +57,9 @@ const Academic = () => {
         <main className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 sm:pt-28 pb-8">
           {/* Top label */}
           <div className="font-mono text-[11px] uppercase tracking-[0.22em] text-cobalt mb-6">
-            Research / curriculum vitae
+            Curriculum vitae
           </div>
+
 
           {/* Hero */}
           <motion.header

@@ -33,10 +33,10 @@ const Build = () => {
   return (
     <>
       <Helmet>
-        <title>Build — Augusto González-Bonorino</title>
+        <title>Portfolio — Augusto González-Bonorino</title>
         <meta
           name="description"
-          content="Research tools, teaching software, and experiments by Augusto González-Bonorino, with live commit history pulled from GitHub."
+          content="Software and research systems built by Augusto González-Bonorino, with live commit history and provenance pulled from GitHub."
         />
         <link rel="canonical" href="/build" />
       </Helmet>
@@ -47,8 +47,9 @@ const Build = () => {
         <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 sm:pt-28 pb-8">
           {/* Top label */}
           <div className="font-mono text-[11px] uppercase tracking-[0.22em] text-cobalt mb-6">
-            01 / Build
+            01 / Portfolio
           </div>
+
 
           {/* Hero */}
           <motion.header

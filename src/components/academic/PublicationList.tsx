@@ -97,23 +97,32 @@ export function PublicationList({ publications }: PublicationListProps) {
                   <h4 className="text-[15px] font-serif italic mt-0.5 leading-snug">
                     {pub.title}
                   </h4>
-                  {pub.organization && (
-                    <p className="text-xs text-muted-foreground mt-1">
-                      {pub.organization}
-                    </p>
-                  )}
+                  <p className="text-xs text-muted-foreground mt-1 flex flex-wrap items-center gap-x-2">
+                    <span className="font-mono tabular-nums">{yearOf(pub) || '—'}</span>
+                    <span aria-hidden>·</span>
+                    <span className="font-mono uppercase tracking-[0.12em] text-cobalt/80">
+                      {TYPE_TAG[pub.pubType ?? 'journal']}
+                    </span>
+                    {pub.organization && (
+                      <>
+                        <span aria-hidden>·</span>
+                        <span>{pub.organization}</span>
+                      </>
+                    )}
+                  </p>
                   <div className="flex items-center gap-4 flex-wrap">
-                    {pub.links?.paper && (
+                    {(pub.links?.paper || pub.links?.repo) && (
                       <a
-                        href={pub.links.paper}
+                        href={(pub.links?.paper || pub.links?.repo) as string}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="link-cobalt inline-flex items-center gap-1 mt-2 text-xs font-mono uppercase tracking-[0.12em] min-h-[44px] py-2"
                       >
-                        {pub.source_ids?.doi ? 'DOI' : pub.source_ids?.arxiv ? 'arXiv' : pub.source_ids?.ssrn ? 'SSRN' : 'Read'}
+                        {pub.source_ids?.doi ? 'DOI' : pub.source_ids?.arxiv ? 'arXiv' : pub.source_ids?.ssrn ? 'SSRN' : pub.links?.paper ? 'Read' : 'Repository'}
                         <ExternalLink className="w-3 h-3" />
                       </a>
                     )}
+
                     {typeof pub.citations === 'number' && pub.citations > 0 && (
                       <a
                         href="https://scholar.google.com/citations?user=xdO0FqwAAAAJ&hl=en"

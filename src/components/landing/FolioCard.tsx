@@ -58,7 +58,7 @@ export function FolioCard({
               (isAcademic ? '' : 'group-hover:text-oxblood transition-colors')
             }
           >
-            {roman} · {label}
+            {label}
           </span>
           <motion.span
             initial={false}

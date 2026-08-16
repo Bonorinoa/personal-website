@@ -920,7 +920,7 @@
       "organization": "Unpublished essay · code and data on GitHub",
       "org": "Personal",
       "date": "2025",
-      "year": 2025,
+      "year": 2026,
       "summary": "An authored analytical essay arguing that sustained development hinges on institutional adaptability — adaptive efficiency plus credible commitments — rather than regime type, read through the paired cases of Argentina and Singapore. Ships with an R Markdown appendix that reproduces every figure and statistic cited in the text from Maddison Project GDP per capita and Polity5 regime series.",
       "mode_visibility": "both",
       "links": {
@@ -948,7 +948,7 @@
       "organization": "Replication study · code and data on GitHub",
       "org": "Personal",
       "date": "2025",
-      "year": 2025,
+      "year": 2026,
       "summary": "A reproducible Stata replication of Frost, Martinez Jaramillo & Madeira's BIS working paper on the economics of water scarcity. Wraps the official World Bank package in a portable runner that pulls the raw data, re-executes the canonical workflow, and regenerates the paper's figures and tables as reviewer-facing outputs.",
       "tags": [
         "ai-assisted"

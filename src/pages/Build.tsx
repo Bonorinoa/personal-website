@@ -98,12 +98,18 @@ const Build = () => {
           </section>
 
           <section className="mb-16 sm:mb-20" aria-labelledby="research-projects">
-            <div className="font-mono text-[11px] uppercase tracking-[0.22em] text-cobalt mb-5 sm:mb-6">
+            <div className="font-mono text-[11px] uppercase tracking-[0.22em] text-cobalt mb-2 sm:mb-3">
               04 / Research
             </div>
+            <p className="text-sm text-muted-foreground mb-5 sm:mb-6 max-w-xl">
+              Papers and essays that ship as repositories. They are cited on the{' '}
+              <a href="/academic" className="link-cobalt">resume</a>; here you get the
+              code, data, and commit history behind them.
+            </p>
             <h2 id="research-projects" className="sr-only">
               Research
             </h2>
+
 
             {research.length > 0 ? (
               <ProjectGrid artifacts={research} />

@@ -314,13 +314,14 @@
     {
       "id": "pub-ssrn-llm-weird-2024",
       "type": "paper",
-      "title": "LLMs Can Model Non-WEIRD Populations: Experiments with Synthetic Cultural Agents",
-      "organization": "Forthcoming in Review of Experimental Economics",
+      "title": "LLMs can model non-WEIRD societies: Experiments with Synthetic Cultural Agents",
+      "organization": "Accepted for publication in Research in Experimental Economics, Vol. 23: Artificial Intelligence and Experimental Methods",
       "date": "2025",
       "year": 2025,
       "summary": "Empirical study evaluating how large language models can simulate non-WEIRD populations for experimental economics research.",
       "details": [
         "Authors: Gonzalez-Bonorino, A., Capra, M. C., & Pantoja, E.",
+        "Accepted for publication in Research in Experimental Economics, Vol. 23: Artificial Intelligence and Experimental Methods",
         "arXiv: 2501.06834"
       ],
       "links": {

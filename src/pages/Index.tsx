@@ -86,26 +86,23 @@ const Index = () => {
             >
               <FolioCard
                 kind="academic"
-                roman="Vol. I"
-                label="Research"
+                label="Curriculum vitae"
                 title="Resume"
-                preview={`Microeconomic theory, experimental economics, LLM-driven agents. ${academicCount}+ entries.`}
-                meta="→ enter the reading room"
+                preview={`Training, research, teaching, and publications. ${academicCount}+ entries.`}
                 dimmed={hovered !== null && hovered !== 'academic'}
                 onHover={(k) => setHovered(k)}
                 onSelect={() => handleSelect('academic')}
               />
               <FolioCard
                 kind="build"
-                roman="Vol. II"
-                label="Build"
+                label="Software & systems"
                 title="Portfolio"
-                preview={`SHIPPED · ${buildCount} PROJECTS · HUMAN ⋈ AI`}
-                meta="→ enter the workshop"
+                preview={`${buildCount} PROJECTS · COMMIT-LEVEL PROVENANCE`}
                 dimmed={hovered !== null && hovered !== 'build'}
                 onHover={(k) => setHovered(k)}
                 onSelect={() => handleSelect('build')}
               />
+
             </motion.div>
           </section>
 

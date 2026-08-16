@@ -28,15 +28,47 @@ function highlightSelf(text: string) {
   return parts;
 }
 
+const GROUPS: { key: PubType; label: string }[] = [
+  { key: 'journal', label: 'Journal publications' },
+  { key: 'chapter', label: 'Book chapters' },
+  { key: 'proceedings', label: 'Conference proceedings' },
+  { key: 'conference', label: 'Conference presentations' },
+  { key: 'working-paper', label: 'Working papers & essays' },
+  { key: 'essay', label: 'Working papers & essays' },
+  { key: 'replication', label: 'Working papers & essays' },
+];
+
+const TYPE_TAG: Record<PubType, string> = {
+  journal: 'Journal',
+  chapter: 'Chapter',
+  proceedings: 'Proceedings',
+  conference: 'Presentation',
+  'working-paper': 'Working paper',
+  essay: 'Essay',
+  replication: 'Replication',
+};
+
+function yearOf(p: Artifact) {
+  return p.year ?? (p.date ? new Date(p.date).getFullYear() : 0);
+}
+
 export function PublicationList({ publications }: PublicationListProps) {
-  const byYear = useMemo(() => {
-    const map = new Map<number, Artifact[]>();
-    publications.forEach((p) => {
-      const y = p.year ?? (p.date ? new Date(p.date).getFullYear() : 0);
-      if (!map.has(y)) map.set(y, []);
-      map.get(y)!.push(p);
-    });
-    return Array.from(map.entries()).sort((a, b) => b[0] - a[0]);
+  const grouped = useMemo(() => {
+    const seen = new Set<string>();
+    const out: { label: string; items: Artifact[] }[] = [];
+    for (const { key, label } of GROUPS) {
+      const items = publications.filter((p) => (p.pubType ?? 'journal') === key);
+      if (items.length === 0) continue;
+      items.sort((a, b) => yearOf(b) - yearOf(a));
+      const existing = seen.has(label) ? out.find((g) => g.label === label) : undefined;
+      if (existing) existing.items.push(...items);
+      else {
+        out.push({ label, items });
+        seen.add(label);
+      }
+    }
+    out.forEach((g) => g.items.sort((a, b) => yearOf(b) - yearOf(a)));
+    return out;
   }, [publications]);
 
   if (publications.length === 0) {
@@ -44,17 +76,14 @@ export function PublicationList({ publications }: PublicationListProps) {
   }
 
   return (
-    <div className="space-y-8">
-      {byYear.map(([year, items]) => (
-        <div
-          key={year}
-          className="sm:grid sm:grid-cols-[3.5rem_1fr] sm:gap-x-6"
-        >
-          {/* Year — sticky column on sm+, inline label on mobile */}
-          <div className="font-mono text-xs uppercase tracking-[0.18em] text-cobalt mb-3 sm:mb-0 sm:pt-1 tabular-nums">
-            {year || '—'}
+    <div className="space-y-9">
+      {grouped.map(({ label, items }) => (
+        <div key={label} className="sm:grid sm:grid-cols-[9rem_1fr] sm:gap-x-6">
+          <div className="font-mono text-[11px] uppercase tracking-[0.18em] text-cobalt mb-3 sm:mb-0 sm:pt-1">
+            {label}
           </div>
           <ol className="space-y-5 min-w-0">
+
             {items.map((pub) => {
               const authors = pub.details?.find((d) => d.toLowerCase().startsWith('author'));
               const authorText = authors?.replace(/^authors?:\s*/i, '');

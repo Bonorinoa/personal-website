@@ -1,4 +1,4 @@
-import type { Artifact } from '@/data/types';
+import type { Artifact, PubType } from '@/data/types';
 import { ExternalLink } from 'lucide-react';
 import { useMemo } from 'react';
 

@@ -6,10 +6,8 @@ const EASE = [0.16, 1, 0.3, 1] as const;
 interface FolioCardProps {
   kind: 'academic' | 'build';
   label: string;
-  roman: string;
   title: string;
   preview: string;
-  meta: string;
   onSelect: () => void;
   onHover: (k: 'academic' | 'build' | null) => void;
   dimmed: boolean;
@@ -18,10 +16,8 @@ interface FolioCardProps {
 export function FolioCard({
   kind,
   label,
-  roman,
   title,
   preview,
-  meta,
   onSelect,
   onHover,
   dimmed,

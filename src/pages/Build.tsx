@@ -33,10 +33,10 @@ const Build = () => {
   return (
     <>
       <Helmet>
-        <title>Build — Augusto González-Bonorino</title>
+        <title>Portfolio — Augusto González-Bonorino</title>
         <meta
           name="description"
-          content="Research tools, teaching software, and experiments by Augusto González-Bonorino, with live commit history pulled from GitHub."
+          content="Software and research systems built by Augusto González-Bonorino, with live commit history and provenance pulled from GitHub."
         />
         <link rel="canonical" href="/build" />
       </Helmet>
@@ -47,8 +47,9 @@ const Build = () => {
         <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 sm:pt-28 pb-8">
           {/* Top label */}
           <div className="font-mono text-[11px] uppercase tracking-[0.22em] text-cobalt mb-6">
-            01 / Build
+            01 / Portfolio
           </div>
+
 
           {/* Hero */}
           <motion.header
@@ -97,12 +98,18 @@ const Build = () => {
           </section>
 
           <section className="mb-16 sm:mb-20" aria-labelledby="research-projects">
-            <div className="font-mono text-[11px] uppercase tracking-[0.22em] text-cobalt mb-5 sm:mb-6">
+            <div className="font-mono text-[11px] uppercase tracking-[0.22em] text-cobalt mb-2 sm:mb-3">
               04 / Research
             </div>
+            <p className="text-sm text-muted-foreground mb-5 sm:mb-6 max-w-xl">
+              Papers and essays that ship as repositories. They are cited on the{' '}
+              <a href="/academic" className="link-cobalt">resume</a>; here you get the
+              code, data, and commit history behind them.
+            </p>
             <h2 id="research-projects" className="sr-only">
               Research
             </h2>
+
 
             {research.length > 0 ? (
               <ProjectGrid artifacts={research} />

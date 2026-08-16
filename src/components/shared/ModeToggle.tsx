@@ -11,8 +11,8 @@ export function ModeToggle() {
     pathname.startsWith('/build') ? 'build' : 'academic';
 
   const options: Array<{ key: 'academic' | 'build'; to: string; label: string; font: string }> = [
-    { key: 'academic', to: '/academic', label: 'Research', font: 'font-serif italic' },
-    { key: 'build', to: '/build', label: 'Build', font: 'font-mono tracking-[0.14em] uppercase text-[11px]' },
+    { key: 'academic', to: '/academic', label: 'Resume', font: 'font-serif italic' },
+    { key: 'build', to: '/build', label: 'Portfolio', font: 'font-mono tracking-[0.14em] uppercase text-[11px]' },
   ];
 
   return (

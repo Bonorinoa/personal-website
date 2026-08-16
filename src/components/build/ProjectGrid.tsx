@@ -43,7 +43,15 @@ export function ProjectGrid({ artifacts }: ProjectGridProps) {
             <ProjectCard artifact={a} onOpen={() => setSelected(a)} onPushedAt={handlePushedAt} />
           </div>
         ))}
+        {/* Filler cells so the hairline grid never shows empty tinted blocks */}
+        {Array.from({ length: (3 - (ordered.length % 3)) % 3 }).map((_, i) => (
+          <div key={`filler-${i}`} aria-hidden className="hidden lg:block bg-background" />
+        ))}
+        {ordered.length % 2 === 1 && (
+          <div aria-hidden className="hidden sm:block lg:hidden bg-background" />
+        )}
       </div>
+
       <ProjectModal
         artifact={selected}
         open={!!selected}

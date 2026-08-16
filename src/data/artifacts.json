@@ -79,16 +79,20 @@
     {
       "id": "edu-asu-phd",
       "type": "education",
-      "title": "PhD in Economics",
-      "subtitle": "Specialization: Microeconomic Theory and AI",
+      "title": "MSc in Economics (PhD track)",
+      "subtitle": "Terminal degree · GPA: 3.4/4.0 · Specialization: Microeconomic Theory and AI",
       "organization": "Arizona State University",
       "location": "Tempe, AZ",
       "date": "2025-08",
-      "endDate": "current",
-      "summary": "Doctoral studies in Economics with focus on microeconomic theory and artificial intelligence applications in economic research.",
+      "endDate": "2026-12",
+      "summary": "Graduate training in economics with a focus on microeconomic theory and AI. Passed the microeconomics qualifying exam; continuing to the terminal MSc.",
       "mode_visibility": "academic",
       "section": "education",
-      "featured": true
+      "featured": true,
+      "details": [
+        "Passed the microeconomics qualifying examination",
+        "Coursework and research in microeconomic theory, econometrics, and AI methods"
+      ]
     },
     {
       "id": "edu-cgu-ma",
@@ -185,6 +189,23 @@
       },
       "year": 2023,
       "org": "EconLLM-Lab"
+    },
+    {
+      "id": "role-jdpower",
+      "type": "role",
+      "title": "Data Science and Causal Inference Consultant",
+      "organization": "JD Power",
+      "location": "Remote · Michigan",
+      "date": "2025-05",
+      "endDate": "2025-07",
+      "summary": "Built interpretable inference models to predict client churn probability, classify high-risk accounts from outlier analysis, and identify key drivers through feature-importance analysis.",
+      "details": [
+        "Models included XGBoost, LightGBM, zero-inflated Poisson, and fixed-effects regressions",
+        "Supervised by Michael Vermillon and Stephen Crewdson; findings reported weekly to the data science team"
+      ],
+      "mode_visibility": "academic",
+      "section": "experience",
+      "featured": true
     },
     {
       "id": "role-cjl",
@@ -287,7 +308,8 @@
       "mode_visibility": "academic",
       "section": "publications",
       "featured": true,
-      "citations": 2
+      "citations": 2,
+      "pubType": "chapter"
     },
     {
       "id": "pub-ssrn-llm-weird-2024",
@@ -335,7 +357,8 @@
         "verification": "Comparison with human experimental data, statistical validation, peer review"
       },
       "org": "EconLLM-Lab",
-      "citations": 6
+      "citations": 6,
+      "pubType": "journal"
     },
     {
       "id": "pub-csedu-adaptive-kevin-2023",
@@ -356,7 +379,8 @@
       },
       "mode_visibility": "academic",
       "section": "publications",
-      "citations": 2
+      "citations": 2,
+      "pubType": "proceedings"
     },
     {
       "id": "pub-csedu-odqa-2022",
@@ -378,7 +402,8 @@
       },
       "mode_visibility": "academic",
       "section": "publications",
-      "citations": 3
+      "citations": 3,
+      "pubType": "proceedings"
     },
     {
       "id": "pub-csedu-smart-surveys-2023",
@@ -423,7 +448,8 @@
       },
       "year": 2023,
       "org": "Academic",
-      "citations": 5
+      "citations": 5,
+      "pubType": "proceedings"
     },
     {
       "id": "talk-ecc-2023",
@@ -441,7 +467,8 @@
         "paper": "https://ecc.marist.edu/documents/2978505/2980816/Augusto+Gonzalez+Bonorino/ff6cdd26-345d-4835-964b-30d5c6a19531"
       },
       "mode_visibility": "academic",
-      "section": "publications"
+      "section": "publications",
+      "pubType": "conference"
     },
     {
       "id": "cert-beslab",
@@ -890,12 +917,12 @@
       "id": "project-institutions-prosperity",
       "type": "project",
       "title": "Beyond Regime Type: How Institutions Drive Prosperity",
-      "organization": "Personal",
+      "organization": "Unpublished essay · code and data on GitHub",
       "org": "Personal",
       "date": "2025",
-      "year": 2025,
+      "year": 2026,
       "summary": "An authored analytical essay arguing that sustained development hinges on institutional adaptability — adaptive efficiency plus credible commitments — rather than regime type, read through the paired cases of Argentina and Singapore. Ships with an R Markdown appendix that reproduces every figure and statistic cited in the text from Maddison Project GDP per capita and Polity5 regime series.",
-      "mode_visibility": "build",
+      "mode_visibility": "both",
       "links": {
         "repo": "https://github.com/Bonorinoa/Beyond-Regime-Type-How-Institutions-Drive-Prosperity",
         "paper": "https://github.com/Bonorinoa/Beyond-Regime-Type-How-Institutions-Drive-Prosperity/blob/main/Mercatus%20-%20Essay.pdf"
@@ -910,21 +937,23 @@
           "Claude 3.x"
         ]
       },
-      "category": "research"
+      "category": "research",
+      "section": "publications",
+      "pubType": "essay"
     },
     {
       "id": "project-water-scarcity-replication",
       "type": "project",
       "title": "Economics of Water Scarcity — Stata Replication",
-      "organization": "Personal",
+      "organization": "Replication study · code and data on GitHub",
       "org": "Personal",
       "date": "2025",
-      "year": 2025,
+      "year": 2026,
       "summary": "A reproducible Stata replication of Frost, Martinez Jaramillo & Madeira's BIS working paper on the economics of water scarcity. Wraps the official World Bank package in a portable runner that pulls the raw data, re-executes the canonical workflow, and regenerates the paper's figures and tables as reviewer-facing outputs.",
       "tags": [
         "ai-assisted"
       ],
-      "mode_visibility": "build",
+      "mode_visibility": "both",
       "collaboration_breakdown": {
         "human": "Data restoration workflow, Stata do-file adaptation for macOS, output curation, gitignore policy separating raw data and scratch outputs from reviewer-facing deliverables, and cross-check against the published paper.",
         "matrix": [
@@ -953,7 +982,9 @@
         ],
         "verification": "Figures and tables regenerated end-to-end from the World Bank raw package and compared against the published paper via paper_order_replication.pdf."
       },
-      "category": "research"
+      "category": "research",
+      "section": "publications",
+      "pubType": "replication"
     },
     {
       "id": "project-silicus-ta-2",
@@ -1115,7 +1146,8 @@
         "doi": "10.32604/jqc.2022.036706"
       },
       "mode_visibility": "academic",
-      "section": "publications"
+      "section": "publications",
+      "pubType": "journal"
     }
   ]
 }

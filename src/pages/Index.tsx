@@ -59,7 +59,7 @@ const Index = () => {
               className="max-w-5xl"
             >
               <div className="font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.32em] text-oxblood mb-6 sm:mb-8">
-                A personal almanac &mdash; in two volumes
+                Economist &amp; builder
               </div>
               <h1 className="font-serif text-[clamp(2.25rem,8.5vw,7.5rem)] leading-[0.9] tracking-[-0.02em] text-ink break-words whitespace-pre-line">
                 <span className="italic font-medium">Augusto</span>{' '}
@@ -68,9 +68,10 @@ const Index = () => {
                 <span className="font-medium">Bonorino</span>
               </h1>
               <p className="mt-6 sm:mt-8 font-serif italic text-lg sm:text-xl lg:text-2xl text-ink/65 max-w-3xl leading-snug">
-                economist, builder, and writer on language models as engines of
-                human behavior.
+                I study how people decide, and I build the instruments I use to
+                study them.
               </p>
+
             </motion.div>
           </section>
 
@@ -85,26 +86,23 @@ const Index = () => {
             >
               <FolioCard
                 kind="academic"
-                roman="Vol. I"
-                label="Research"
+                label="Curriculum vitae"
                 title="Resume"
-                preview={`Microeconomic theory, experimental economics, LLM-driven agents. ${academicCount}+ entries.`}
-                meta="→ enter the reading room"
+                preview={`Training, research, teaching, and publications. ${academicCount}+ entries.`}
                 dimmed={hovered !== null && hovered !== 'academic'}
                 onHover={(k) => setHovered(k)}
                 onSelect={() => handleSelect('academic')}
               />
               <FolioCard
                 kind="build"
-                roman="Vol. II"
-                label="Build"
+                label="Software & systems"
                 title="Portfolio"
-                preview={`SHIPPED · ${buildCount} PROJECTS · HUMAN ⋈ AI`}
-                meta="→ enter the workshop"
+                preview={`${buildCount} PROJECTS · COMMIT-LEVEL PROVENANCE`}
                 dimmed={hovered !== null && hovered !== 'build'}
                 onHover={(k) => setHovered(k)}
                 onSelect={() => handleSelect('build')}
               />
+
             </motion.div>
           </section>
 

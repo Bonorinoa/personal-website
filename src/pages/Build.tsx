@@ -38,7 +38,14 @@ const Build = () => {
           name="description"
           content="Software and research systems built by Augusto González-Bonorino, with live commit history and provenance pulled from GitHub."
         />
-        <link rel="canonical" href="/build" />
+        <link rel="canonical" href="https://augusto-gonzalezbonorino.com/build" />
+        <meta property="og:title" content="Portfolio — Augusto González-Bonorino" />
+        <meta
+          property="og:description"
+          content="Software and research systems built by Augusto González-Bonorino, with live commit history and provenance pulled from GitHub."
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://augusto-gonzalezbonorino.com/build" />
       </Helmet>
 
       <div className="min-h-screen bg-background text-foreground">

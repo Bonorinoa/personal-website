@@ -36,7 +36,14 @@ const Index = () => {
           name="description"
           content="Personal site of Augusto González-Bonorino — economist, builder, writer on language models. An editorial atelier in two volumes: Research and Build."
         />
-        <link rel="canonical" href="/" />
+        <link rel="canonical" href="https://augusto-gonzalezbonorino.com/" />
+        <meta property="og:title" content="Augusto González-Bonorino — Economist &amp; Builder" />
+        <meta
+          property="og:description"
+          content="Economist, builder, and writer on language models. An editorial atelier in two volumes: Resume and Portfolio."
+        />
+        <meta property="og:type" content="profile" />
+        <meta property="og:url" content="https://augusto-gonzalezbonorino.com/" />
       </Helmet>
 
       <div className="relative min-h-[100svh] md:h-[100svh] md:overflow-hidden paper-grain text-ink">

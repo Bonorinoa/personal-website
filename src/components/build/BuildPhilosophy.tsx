@@ -39,7 +39,7 @@ export const BuildPhilosophy = () => {
             id="how-i-work"
             className="font-mono text-2xl sm:text-3xl leading-[1.15] tracking-tight font-medium mb-5"
           >
-            I design the system, not just the result.
+            A systems mindset
           </h2>
           <div className="space-y-4 max-w-xl text-base leading-relaxed text-foreground/85">
             <p>
@@ -51,11 +51,14 @@ export const BuildPhilosophy = () => {
               now, not just study it.
             </p>
             <p>
-              Agents write most of the code I ship. That moves my job upstream:
-              less implementation, more deciding what the system is allowed to
-              conclude. I set the interfaces, the failure modes, and the gates;
-              the agent implements against that specification. The split is in
-              the record rather than in a claim I make about myself.
+              Agents write most of the code I ship. It sounds like I am
+              automating myself out of a job, but in reality my job moves
+              upstream: less implementation, more deciding what the system is
+              allowed to conclude. I set the constraints, the observability
+              standards, and design the evaluation experiments; the agents
+              implements against that specification. This workflow allows me
+              place my focus on the objects that matter, a user behind a product
+              or a question behind a research project.&nbsp;
             </p>
             <p>
               So I ship the method, not just the result. A formalizer that only

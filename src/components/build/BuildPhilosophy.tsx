@@ -43,27 +43,26 @@ export const BuildPhilosophy = () => {
           </h2>
           <div className="space-y-4 max-w-xl text-base leading-relaxed text-foreground/85">
             <p>
+              I&apos;ve always been pulled toward the whole — the economy behind
+              the model, the assumptions behind the measure, the design behind the
+              number. The behavior that matters usually emerges from how the
+              pieces relate, not from any piece in isolation. That systems
+              instinct is what agents let me act on: I can build the whole thing
+              now, not just study it.
+            </p>
+            <p>
               Agents write most of the code I ship. That moves my job upstream:
-              less typing, more deciding what the system is allowed to conclude.
-              I set the interfaces, the failure modes, and the gates; my agent
-              implements against that specification and commits under its own
-              GitHub account, so the split is in the record rather than in a
-              claim I make about myself.
+              less implementation, more deciding what the system is allowed to
+              conclude. I set the interfaces, the failure modes, and the gates;
+              the agent implements against that specification. The split is in
+              the record rather than in a claim I make about myself.
             </p>
             <p>
-              It also makes the systems view affordable. I&apos;ve always been
-              pulled toward the whole — the economy behind the model, the
-              pipeline behind the number — because the interesting behaviour
-              lives in how the pieces interact. Component-level speed is worth
-              little if nobody is checking the joins.
-            </p>
-            <p>
-              So the apparatus is the deliverable, not a by-product of it: a
-              formalizer that only says VERIFIED when a kernel agrees, an
-              estimator that returns an empty set when theory rejects every
-              candidate measure, a protocol that names the results that would
-              sink it before the experiment runs. The repositories below are
-              those systems, built to be inspected.
+              So I ship the method, not just the result. A formalizer that only
+              says VERIFIED when a kernel agrees. An estimator that returns an
+              empty set when theory rejects every candidate. A protocol that
+              names the findings that would sink it before the experiment runs.
+              The repositories below are those systems, built to be inspected.
             </p>
           </div>
         </div>

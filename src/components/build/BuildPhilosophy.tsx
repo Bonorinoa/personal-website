@@ -43,15 +43,14 @@ export const BuildPhilosophy = () => {
           </h2>
           <div className="space-y-4 max-w-xl text-base leading-relaxed text-foreground/85">
             <p>
-              A systems mindset lets me abstract my workflows into clear
-              interfaces, feedback loops, and decision rules, which is exactly
-              what makes collaboration with AI agents productive rather than
-              chaotic. Agents write most of the code I ship, but my job moves
-              upstream: less implementation, more deciding what the system is
-              allowed to conclude. I set the constraints, define the
-              observability standards, and design the evaluation experiments;
-              the agents implement against that specification. This workflow
-              let&apos;s me focus on the objects that matter, a user behind a
+              I abstract every workflow into interfaces, feedback loops, and
+              decision rules, then let agents handle implementation. That
+              division of labor lets me stay upstream — deciding what the system
+              is allowed to conclude, how it should explain itself, and what
+              would falsify it. A systems mindset is not about drawing boxes; it
+              is about making the work inspectable, repeatable, and
+              accountable. It makes agentic work productive rather than messy,
+              and lets me focus on the object that matters — a user behind a
               product or a question behind a research project.&nbsp;
             </p>
           </div>

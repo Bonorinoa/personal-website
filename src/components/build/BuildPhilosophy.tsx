@@ -46,9 +46,10 @@ export const BuildPhilosophy = () => {
               I&apos;ve always been pulled toward the whole — the economy behind
               the model, the assumptions behind the measure, the design behind the
               number. The behavior that matters usually emerges from how the
-              pieces relate, not from any piece in isolation. That systems
-              instinct is what agents let me act on: I can build the whole thing
-              now, not just study it.
+              pieces relate, not from any piece in isolation. A systems mindset
+              lets me abstract my workflows into clear interfaces, feedback
+              loops, and decision rules, which is exactly what makes collaboration
+              with AI agents productive rather than chaotic.
             </p>
             <p>
               Agents write most of the code I ship. It sounds like I am
@@ -59,13 +60,6 @@ export const BuildPhilosophy = () => {
               implements against that specification. This workflow allows me
               place my focus on the objects that matter, a user behind a product
               or a question behind a research project.&nbsp;
-            </p>
-            <p>
-              So I ship the method, not just the result. A formalizer that only
-              says VERIFIED when a kernel agrees. An estimator that returns an
-              empty set when theory rejects every candidate. A protocol that
-              names the findings that would sink it before the experiment runs.
-              The repositories below are those systems, built to be inspected.
             </p>
           </div>
         </div>

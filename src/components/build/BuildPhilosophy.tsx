@@ -5,15 +5,15 @@ const EASE = [0.16, 1, 0.3, 1] as const;
 const PRINCIPLES = [
   {
     label: 'Design the system first',
-    body: 'Interfaces, failure modes, and what "done" means are settled before code is written. The design doc is a v0 deliverable.',
+    body: 'The design doc with failure modes and metrics of success are a v0 deliverable shipped in the first commit.',
   },
   {
     label: 'Observability is a first-class citizen',
-    body: "Treat every system as a state machine with named states and logged transitions. If you can't say what state it's in, you can't trust what it's doing.",
+    body: 'Agentic systems are easier to inspect when modeled as a Markov Chain.\u00a0States, transitions, and frozen runs make a system observable.',
   },
   {
     label: 'Open-source by default',
-    body: 'Every person should own their intelligence; I strive to build workflows optimized for local AI, design systems that are auditable, and ship public tools for educators and researchers. .  ',
+    body: 'Every person should own their intelligence; I strive to build workflows optimized for local AI, design systems that are auditable, and ship public tools for educators and researchers.\u00a0',
   },
 ];
 

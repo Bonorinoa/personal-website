@@ -39,35 +39,31 @@ const Index = () => {
         <link rel="canonical" href="/" />
       </Helmet>
 
-      <div className="relative min-h-screen overflow-hidden paper-grain text-ink">
+      <div className="relative min-h-[100svh] md:h-[100svh] md:overflow-hidden paper-grain text-ink">
         {/* Background layers */}
         <div className="absolute inset-0 baseline-grid opacity-60 pointer-events-none" aria-hidden />
         <InkTrail />
 
         {/* Content */}
-        <div className="relative z-10 min-h-screen flex flex-col">
-
-
-
-
+        <div className="relative z-10 min-h-[100svh] md:h-full flex flex-col">
           {/* Hero */}
-          <section className="pl-8 sm:pl-16 lg:pl-28 pr-5 sm:pr-10 lg:pr-16 pt-16 sm:pt-24 lg:pt-28 pb-12 sm:pb-16">
+          <section className="pl-8 sm:pl-16 lg:pl-28 pr-5 sm:pr-10 lg:pr-16 pt-10 sm:pt-14 lg:pt-16 pb-8 sm:pb-10">
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, ease: EASE }}
               className="max-w-5xl"
             >
-              <div className="font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.32em] text-oxblood mb-6 sm:mb-8">
+              <div className="font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.32em] text-oxblood mb-4">
                 Economist &amp; builder
               </div>
-              <h1 className="font-serif text-[clamp(2.25rem,8.5vw,7.5rem)] leading-[0.9] tracking-[-0.02em] text-ink break-words whitespace-pre-line">
+              <h1 className="font-serif text-[clamp(2rem,6.2vw,5.25rem)] leading-[0.95] tracking-[-0.02em] text-ink">
                 <span className="italic font-medium">Augusto</span>{' '}
-                <span className="font-medium">{"\n"}González</span>
-                <span className="text-oxblood">-</span>
-                <span className="font-medium">Bonorino</span>
+                <span className="inline-block whitespace-nowrap font-medium">
+                  González<span className="text-oxblood">-</span>Bonorino
+                </span>
               </h1>
-              <p className="mt-6 sm:mt-8 font-serif italic text-lg sm:text-xl lg:text-2xl text-ink/65 max-w-3xl leading-snug">
+              <p className="mt-4 sm:mt-5 font-serif italic text-base sm:text-lg lg:text-xl text-ink/65 max-w-3xl leading-snug">
                 I study how people decide, and I build the instruments I use to
                 study them.
               </p>
@@ -77,12 +73,12 @@ const Index = () => {
 
 
           {/* Two folios */}
-          <section className="flex-1 pl-8 sm:pl-16 lg:pl-28 pr-5 sm:pr-10 lg:pr-16 pb-10">
+          <section className="flex-1 min-h-0 pl-8 sm:pl-16 lg:pl-28 pr-5 sm:pr-10 lg:pr-16 pb-8">
             <motion.div
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: EASE, delay: 0.15 }}
-              className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 lg:gap-16 max-w-6xl"
+              className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-10 lg:gap-16 max-w-6xl md:h-full"
             >
               <FolioCard
                 kind="academic"

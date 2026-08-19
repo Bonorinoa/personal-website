@@ -29,11 +29,7 @@
       },
       "credit": {
         "authored": "The identification framing, the nomological-network protocol, the admissibility and gating rules, and the decision that empty sets and wide ranges ship as results.",
-        "assisted": "Agents implemented the engine, CLI, and reporting surface against that specification.",
-        "tools": [
-          "Codex",
-          "Claude"
-        ],
+        "assisted": "My hermes agent drove implementation of the engine, CLI, and reporting surface against that specification, under my review.",
         "verification": "Frozen, tagged release runs with machine-readable proof summaries; CI on every push; synthetic-only claims labelled provisional rather than presented as paper results."
       }
     },
@@ -67,12 +63,7 @@
       },
       "credit": {
         "authored": "Product thesis, the verification contract (what VERIFIED is allowed to mean), reviewer policy, Core scope, bundle validator checks, and the explicit non-claims list.",
-        "assisted": "The hermes agent harness commits implementation work under its own GitHub account; models rotate per task rather than defaulting to the most expensive frontier model.",
-        "tools": [
-          "hermes agent harness",
-          "Mistral",
-          "Lean 4 / Mathlib"
-        ],
+        "assisted": "My hermes agent commits implementation work under its own GitHub account, so the human/agent split is visible in the commit history rather than asserted here.",
         "verification": "Lean kernel type-checking in a pinned workspace, a 12-check bundle validator, axiom/dependency audit, and replayable run traces."
       }
     },
@@ -91,7 +82,7 @@
       "featured": true,
       "details": [
         "Passed the microeconomics qualifying examination",
-        "Coursework and research in microeconomic theory, mechanism design, discrete choice econometric models, and dynamic programming methods.\u00a0"
+        "Coursework and research in microeconomic theory, mechanism design, discrete choice econometric models, and dynamic programming methods. "
       ]
     },
     {
@@ -154,8 +145,8 @@
       "details": [
         "Our flagship project, Synthetic Cultural Agents, focuses on producing new methodologies to generate valid measures of Culture understood as a composite latent variable.",
         "Assisted in drafting grants to fund research projects and research assistants,.",
-        "Led the development of the lab, curated educational resources to onboard students, and helped establish formal partnerships with external groups such as\u00a0Oxford’s Talking To Machines and Busara’s Behavioral Research and Academic Engagements (BRACE).",
-        "Hosted workshops on LLM applications in experimental economics, best practices for human-agent collaboration in education, and open-source AI tools to augment research workflows.\u00a0"
+        "Led the development of the lab, curated educational resources to onboard students, and helped establish formal partnerships with external groups such as Oxford’s Talking To Machines and Busara’s Behavioral Research and Academic Engagements (BRACE).",
+        "Hosted workshops on LLM applications in experimental economics, best practices for human-agent collaboration in education, and open-source AI tools to augment research workflows. "
       ],
       "links": {
         "website": "https://www.econllm-lab.com/"
@@ -220,7 +211,7 @@
       "details": [
         "Assisted the quantitative team in feature engineering and EDA",
         "Developed panel data causal inference models",
-        "Supervised by Gregory DeAngelo and Jeffrey Borowitz; findings reported weekly to lead data scientist, and bi-weekly to principal investigator.\u00a0"
+        "Supervised by Gregory DeAngelo and Jeffrey Borowitz; findings reported weekly to lead data scientist, and bi-weekly to principal investigator. "
       ],
       "mode_visibility": "academic",
       "section": "experience"
@@ -235,7 +226,7 @@
       "endDate": "2022-05",
       "summary": "Led a team of 5 students and 2 faculty in developing 'Kevin,' an Open Domain Question-Answering (ODQA) system for college information retrieval, achieving ~80% cost savings relative to prior implementation by switching the technology stack to open-source alternatives.",
       "details": [
-        "Designed and coordinated the annotation of a custom question-answer pair dataset for fine-tuning BERT, ELECTRA, and RoBERTa on university information.\u00a0",
+        "Designed and coordinated the annotation of a custom question-answer pair dataset for fine-tuning BERT, ELECTRA, and RoBERTa on university information. ",
         "Applied NLP methods for entity extraction, sparse and dense retrieval, web crawling, and text cleaning"
       ],
       "tags": [
@@ -855,10 +846,6 @@
       "credit": {
         "authored": "Information architecture, design direction, all written content, and the decision about what counts as evidence on this page.",
         "assisted": "Agent-built front end — components, styling, and responsive work — iterated under my direction.",
-        "tools": [
-          "Claude",
-          "Lovable"
-        ],
         "verification": "Manual testing, accessibility checks, responsive design validation"
       },
       "category": "software"
@@ -934,10 +921,7 @@
       },
       "credit": {
         "authored": "Posed the conjectures, set the methodology, and wrote the essay end to end — the argument and the analysis are mine.",
-        "assisted": "Claude 3.x (March 2025) helped paraphrase and tighten paragraphs, and wrote supporting code.",
-        "tools": [
-          "Claude 3.x"
-        ]
+        "assisted": "Agent assistance was limited to tightening prose and writing supporting analysis code; the argument and the analysis are mine."
       },
       "category": "research",
       "section": "publications",
@@ -978,10 +962,7 @@
       },
       "credit": {
         "authored": "Designed the specification analysis and evaluated every result against the published paper.",
-        "assisted": "Prompted Codex desktop to (1) replicate the paper from publicly available code and data and (2) extend it with my proposed analysis — which is why the whole thing took a few days of intense work rather than months.",
-        "tools": [
-          "Codex (desktop)"
-        ],
+        "assisted": "I directed an agent to (1) replicate the paper from publicly available code and data and (2) extend it with my proposed analysis — which is why the whole thing took a few days of intense work rather than months.",
         "verification": "Figures and tables regenerated end-to-end from the World Bank raw package and compared against the published paper via paper_order_replication.pdf."
       },
       "category": "research",
@@ -1023,17 +1004,14 @@
         "verification": "Manual QA on citation accuracy per page, duplicate-upload and size-cap checks in the admin console, and end-to-end deployment on Streamlit Cloud with live courses."
       },
       "links": {
-        "repo": "https://github.com/Bonorinoa/Silicus-TA-2.0"
+        "repo": "https://github.com/Cognitio-EDU/Silicus-TA-2.0"
       },
       "source_ids": {
         "github": "Silicus-TA-2.0"
       },
       "credit": {
         "authored": "Coded the Silicus TA 1.0 foundation by hand in 2023; 2.0 is my rearchitecture — more flexible, more efficient.",
-        "assisted": "AI use in 1.0 was mostly research and parsing documentation. Largely outdated by 2026 standards, but revivable if anyone shows interest.",
-        "tools": [
-          "GPT-3.5/4 (research, docs)"
-        ],
+        "assisted": "Agent use in 1.0 was mostly research and parsing documentation. Largely outdated by 2026 standards, but revivable if anyone shows interest.",
         "verification": "Manual QA on citation accuracy per page, duplicate-upload and size-cap checks in the admin console, and end-to-end deployment on Streamlit Cloud with live courses."
       },
       "category": "software"
@@ -1075,12 +1053,7 @@
       },
       "credit": {
         "authored": "Designed the whole system — drawn from my own quals experience, personal preferences, and the habit-formation literature.",
-        "assisted": "Lovable, GitHub Copilot Agent, and Gemini built the Vercel demo from that design.",
-        "tools": [
-          "Lovable",
-          "Copilot Agent",
-          "Gemini"
-        ],
+        "assisted": "Agents built the deployed demo from that design; the commit history shows the split.",
         "verification": "173 automated tests passing, end-to-end tests on the deployed app, and live use at quals-arena.vercel.app."
       },
       "category": "software"
@@ -1122,10 +1095,7 @@
       },
       "credit": {
         "authored": "Conversant persona design, the grounded QA pipeline, the Streamlit UX, and coordination of a six-person hackathon team.",
-        "assisted": "Cohere models powered the assistant itself; scaffolding and data processing were partly model-generated.",
-        "tools": [
-          "Cohere"
-        ],
+        "assisted": "A pre-agent-era project: model assistance was limited to scaffolding and data processing. The assistant itself is the product, not the author.",
         "verification": "Live Streamlit demo, hackathon presentation, and manual QA over intake conversations."
       },
       "category": "software"

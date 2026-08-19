@@ -48,7 +48,14 @@ const Academic = () => {
           name="description"
           content="Curriculum vitae of Augusto González-Bonorino: economics training, research and consulting roles, teaching, publications, grants, and awards."
         />
-        <link rel="canonical" href="/academic" />
+        <link rel="canonical" href="https://augusto-gonzalezbonorino.com/academic" />
+        <meta property="og:title" content="Resume — Augusto González-Bonorino" />
+        <meta
+          property="og:description"
+          content="Economics training, research and consulting roles, teaching, publications, grants, and awards."
+        />
+        <meta property="og:type" content="profile" />
+        <meta property="og:url" content="https://augusto-gonzalezbonorino.com/academic" />
       </Helmet>
 
       <div className="min-h-screen bg-background text-foreground">

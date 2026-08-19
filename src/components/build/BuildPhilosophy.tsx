@@ -5,7 +5,7 @@ const EASE = [0.16, 1, 0.3, 1] as const;
 const PRINCIPLES = [
   {
     label: 'Design the system first',
-    body: 'The design doc with failure modes and metrics of success are a v0 deliverable shipped in the first commit.',
+    body: 'The design doc with failure modes and metrics of success is a v0 deliverable shipped in the first commit.',
   },
   {
     label: 'Observability is a first-class citizen',

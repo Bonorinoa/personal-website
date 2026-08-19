@@ -39,28 +39,31 @@ export const BuildPhilosophy = () => {
             id="how-i-work"
             className="font-mono text-2xl sm:text-3xl leading-[1.15] tracking-tight font-medium mb-5"
           >
-            I keep looking at the whole system.
+            I design the system, not just the result.
           </h2>
           <div className="space-y-4 max-w-xl text-base leading-relaxed text-foreground/85">
             <p>
-              Modern science leans reductionist, and for good reason: breaking a
-              hard problem into tractable pieces is how most of the last century&apos;s
-              progress happened. The cost is that the interesting behaviour usually
-              lives in how the pieces interact, and that part gets assumed away.
+              Agents write most of the code I ship. That moves my job upstream:
+              less typing, more deciding what the system is allowed to conclude.
+              I set the interfaces, the failure modes, and the gates; my agent
+              implements against that specification and commits under its own
+              GitHub account, so the split is in the record rather than in a
+              claim I make about myself.
             </p>
             <p>
-              I&apos;ve always been pulled toward the bigger picture — the economy
-              behind the model, the system behind the software. That means favouring
-              general knowledge over deep specialisation, which used to be a bad
-              trade. Specialists had the tools.
+              It also makes the systems view affordable. I&apos;ve always been
+              pulled toward the whole — the economy behind the model, the
+              pipeline behind the number — because the interesting behaviour
+              lives in how the pieces interact. Component-level speed is worth
+              little if nobody is checking the joins.
             </p>
             <p>
-              I think AI changes that trade. A lot of reductionism was a budget
-              constraint: proxies because the real variable was unmeasurable,
-              pre-specified questions because exploration was expensive. Less of that
-              binds now. So the work is to actually go after the messy questions —
-              and to build things I can see into, because complex systems punish you
-              for guessing.
+              So the apparatus is the deliverable, not a by-product of it: a
+              formalizer that only says VERIFIED when a kernel agrees, an
+              estimator that returns an empty set when theory rejects every
+              candidate measure, a protocol that names the results that would
+              sink it before the experiment runs. The repositories below are
+              those systems, built to be inspected.
             </p>
           </div>
         </div>

@@ -139,18 +139,6 @@ export function ProjectModal({ artifact, open, onOpenChange }: ProjectModalProps
                     <p className="text-sm leading-relaxed text-muted-foreground">{artifact.credit.assisted}</p>
                   </div>
                 )}
-                {artifact.credit.tools && artifact.credit.tools.length > 0 && (
-                  <div className="flex flex-wrap gap-1.5">
-                    {artifact.credit.tools.map((t) => (
-                      <span
-                        key={t}
-                        className="px-1.5 py-0.5 hairline font-mono text-[10px] uppercase tracking-[0.12em] text-muted-foreground"
-                      >
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-                )}
                 {artifact.credit.verification && (
                   <div>
                     <h4 className="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground mb-1">

@@ -55,11 +55,11 @@ export const BuildPhilosophy = () => {
               Agents write most of the code I ship. It sounds like I am
               automating myself out of a job, but in reality my job moves
               upstream: less implementation, more deciding what the system is
-              allowed to conclude. I set the constraints, the observability
-              standards, and design the evaluation experiments; the agents
-              implements against that specification. This workflow allows me
-              place my focus on the objects that matter, a user behind a product
-              or a question behind a research project.&nbsp;
+              allowed to conclude. I set the constraints, define the
+              observability standards, and design the evaluation experiments;
+              the agents implement against that specification. This workflow
+              let&apos;s me focus on the objects that matter, a user behind a
+              product or a question behind a research project.&nbsp;
             </p>
           </div>
         </div>

@@ -1,14 +1,14 @@
 const WORKSPACES = [
-  { key: 'Personal', desc: 'LeanEcon v4, cvprofiles et al.', url: 'https://github.com/Bonorinoa' },
+  { key: 'Personal', desc: 'LeanEcon v4, cvprofiles, & other passion projects', url: 'https://github.com/Bonorinoa' },
   {
     key: 'EconLLM-Lab',
-    desc: 'cultural alignment & open-source tooling',
+    desc: 'cultural alignment, construct-valid inference & open-source research tools',
     url: 'https://github.com/orgs/EconLLM-Lab/repositories',
   },
-  { key: 'Perwell', desc: 'wellbeing × AI', url: 'https://github.com/orgs/Perwell/repositories' },
+  { key: 'Perwell', desc: 'wellbeing × AI research & development', url: 'https://github.com/orgs/Perwell/repositories' },
   {
     key: 'Cognitio-EDU',
-    desc: 'teaching & learning technology',
+    desc: 'teaching & learning AI tools for ed-tech',
     url: 'https://github.com/orgs/Cognitio-EDU/repositories',
   },
 ];

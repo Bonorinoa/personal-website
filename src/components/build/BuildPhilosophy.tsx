@@ -9,7 +9,7 @@ const PRINCIPLES = [
   },
   {
     label: 'Observability is a first-class citizen',
-    body: 'Agentic systems are easier to inspect when modeled as a Markov Chain.\u00a0States, transitions, and frozen runs make a system observable.',
+    body: 'Agentic systems are easier to inspect when modeled as State Machines.\u00a0States, transitions, and frozen runs make a system observable.',
   },
   {
     label: 'Open-source by default',

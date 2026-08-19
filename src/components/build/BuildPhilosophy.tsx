@@ -43,17 +43,10 @@ export const BuildPhilosophy = () => {
           </h2>
           <div className="space-y-4 max-w-xl text-base leading-relaxed text-foreground/85">
             <p>
-              I&apos;ve always been pulled toward the whole — the economy behind
-              the model, the assumptions behind the measure, the design behind the
-              number. The behavior that matters usually emerges from how the
-              pieces relate, not from any piece in isolation. A systems mindset
-              lets me abstract my workflows into clear interfaces, feedback
-              loops, and decision rules, which is exactly what makes collaboration
-              with AI agents productive rather than chaotic.
-            </p>
-            <p>
-              Agents write most of the code I ship. It sounds like I am
-              automating myself out of a job, but in reality my job moves
+              A systems mindset lets me abstract my workflows into clear
+              interfaces, feedback loops, and decision rules, which is exactly
+              what makes collaboration with AI agents productive rather than
+              chaotic. Agents write most of the code I ship, but my job moves
               upstream: less implementation, more deciding what the system is
               allowed to conclude. I set the constraints, define the
               observability standards, and design the evaluation experiments;

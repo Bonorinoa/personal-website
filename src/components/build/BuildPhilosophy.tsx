@@ -9,7 +9,7 @@ const PRINCIPLES = [
   },
   {
     label: 'Observability is a first-class citizen',
-    body: 'Treat every system as a state machine: named states, logged transitions, frozen runs, and clear task allocations. The record of traces enables precise budget tracking and empowers decision-making.',
+    body: "Treat every system as a state machine with named states and logged transitions. If you can't say what state it's in, you can't trust what it's doing.",
   },
   {
     label: 'Open-source by default',

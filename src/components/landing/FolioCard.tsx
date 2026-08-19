@@ -35,13 +35,13 @@ export function FolioCard({
       transition={{ duration: 0.32, ease: EASE }}
       whileHover={isAcademic ? { y: -2 } : { y: -4, rotate: -0.15 }}
       whileTap={{ scale: 0.995 }}
-      className="group relative text-left block w-full focus:outline-none focus-visible:ring-1 focus-visible:ring-oxblood"
+      className="group relative text-left block w-full md:h-full focus:outline-none focus-visible:ring-1 focus-visible:ring-oxblood"
       aria-label={`Enter ${label}`}
     >
       {/* Folio frame */}
       <div
         className={
-          'relative overflow-hidden border bg-[hsl(var(--paper))]/60 backdrop-blur-[2px] p-6 sm:p-8 lg:p-10 min-h-[320px] sm:min-h-[380px] flex flex-col justify-between transition-[border-color,background-color,box-shadow] duration-300 ' +
+          'relative overflow-hidden border bg-[hsl(var(--paper))]/60 backdrop-blur-[2px] p-5 sm:p-7 lg:p-8 min-h-[240px] sm:min-h-[280px] md:h-full flex flex-col justify-between transition-[border-color,background-color,box-shadow] duration-300 ' +
           (isAcademic
             ? 'border-ink/25 group-hover:border-ink/60 group-hover:bg-[hsl(var(--paper))]/90'
             : 'border-ink/25 group-hover:border-oxblood/70 group-hover:bg-[hsl(var(--paper))]/85 group-hover:shadow-[6px_6px_0_0_hsl(var(--oxblood)/0.18)]')
@@ -78,9 +78,9 @@ export function FolioCard({
         {/* Bottom-anchored stack — identical rows in both cards so baselines align */}
         <div className="mt-auto">
           {/* Row 1: title — fixed height, content sits on a shared baseline */}
-          <div className="flex items-end min-h-[4.5rem] sm:min-h-[5.5rem] lg:min-h-[6.5rem]">
+          <div className="flex items-end min-h-[3.25rem] sm:min-h-[4rem] lg:min-h-[4.5rem]">
             {isAcademic ? (
-              <h3 className="relative inline-block font-serif italic text-5xl sm:text-6xl lg:text-7xl leading-[0.82] tracking-tight text-ink">
+              <h3 className="relative inline-block font-serif italic text-4xl sm:text-5xl lg:text-6xl leading-[0.82] tracking-tight text-ink">
                 {title}
                 {/* Calligraphic signature flourish — draws itself on hover */}
                 <svg
@@ -100,7 +100,7 @@ export function FolioCard({
                 </svg>
               </h3>
             ) : (
-              <h3 className="relative font-mono text-[2.9rem] sm:text-[3.5rem] lg:text-[4.2rem] leading-[0.82] tracking-tight text-ink">
+              <h3 className="relative font-mono text-[2.25rem] sm:text-[2.9rem] lg:text-[3.5rem] leading-[0.82] tracking-tight text-ink">
                 {/* Decorations positioned absolutely so they never affect resting layout */}
                 <span
                   aria-hidden
@@ -118,7 +118,7 @@ export function FolioCard({
           </div>
 
           {/* Row 2: divider — same height in both, different mark */}
-          <div className="mt-7 h-4 flex items-center gap-3">
+          <div className="mt-5 h-4 flex items-center gap-3">
             {isAcademic ? (
               <>
                 <span className="h-px w-10 bg-ink/40" />
@@ -141,7 +141,7 @@ export function FolioCard({
           {/* Row 3: caption — fixed height so the footer rule aligns */}
           <p
             className={
-              'mt-4 min-h-[3.25rem] ' +
+              'mt-3 min-h-[2.5rem] ' +
               (isAcademic
                 ? 'font-serif italic text-sm sm:text-base text-ink/55 leading-relaxed'
                 : 'font-mono text-xs sm:text-sm text-ink/55 uppercase tracking-[0.18em] leading-relaxed')

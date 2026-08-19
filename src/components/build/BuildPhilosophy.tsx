@@ -4,16 +4,16 @@ const EASE = [0.16, 1, 0.3, 1] as const;
 
 const PRINCIPLES = [
   {
-    label: 'Generalist by choice',
-    body: 'I would rather know how the pieces fit than be the best in the world at one of them.',
+    label: 'Design the system first',
+    body: 'Interfaces, failure modes, and what "done" means are settled before code is written. The design doc is a deliverable, not a warm-up.',
   },
   {
-    label: 'Fewer proxies',
-    body: 'If a variable stands in for the thing I care about, I treat that substitution as the finding, not the method.',
+    label: 'Observability is a first-class citizen',
+    body: 'Every system can report what it is doing while it runs and explain itself afterwards. Logs and decision trails ship with the deliverable.',
   },
   {
-    label: 'Observable by default',
-    body: "If I can't see what a step did, I don't trust it, no matter how good the output looks.",
+    label: 'Open-source by default',
+    body: 'Code, data, and write-ups ship together. If something stays private, it has to explain why.',
   },
 ];
 

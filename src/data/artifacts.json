@@ -215,11 +215,11 @@
       "location": "Claremont, CA",
       "date": "2022-09",
       "endDate": "2023-06",
-      "summary": "Collaborated with Riverside County's District Attorney Office to identify causal implications of sentencing choices; supervised by Gregory DeAngelo and Jeffrey Borowitz.",
+      "summary": "Collaborated with Riverside County's District Attorney Office to identify causal implications of sentencing choices from their proprietary administrative databases.",
       "details": [
         "Assisted the quantitative team in feature engineering and EDA",
         "Developed panel data causal inference models",
-        "Applied NLP methods to legal text analysis"
+        "Supervised by Gregory DeAngelo and Jeffrey Borowitz; findings reported weekly to lead data scientist, and bi-weekly to principal investigator.\u00a0"
       ],
       "mode_visibility": "academic",
       "section": "experience"

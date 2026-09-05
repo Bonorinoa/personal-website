@@ -39,19 +39,30 @@ export const BuildPhilosophy = () => {
             id="how-i-work"
             className="font-mono text-2xl sm:text-3xl leading-[1.15] tracking-tight font-medium mb-5"
           >
-            A systems mindset
+            I think in systems
           </h2>
           <div className="space-y-4 max-w-xl text-base leading-relaxed text-foreground/85">
             <p>
-              I abstract every workflow into interfaces, feedback loops, and
-              decision rules, then let agents handle implementation. That
-              division of labor lets me stay upstream — deciding what the system
-              is allowed to conclude, how it should explain itself, and what
-              would falsify it. A systems mindset is not about drawing boxes; it
-              is about making the work inspectable, repeatable, and
-              accountable. It makes agentic work productive rather than messy,
-              and lets me focus on the object that matters — a user behind a
-              product or a question behind a research project.&nbsp;
+              I build systems the way Joshua Epstein builds generative models
+              in <em>Generative Social Science</em>: not by predicting every
+              outcome, but by writing the local rules that let outcomes emerge.
+              Most of the code I ship is written by agents. That sounds like I
+              am automating myself out of a job, but in reality my work moves
+              upstream — less implementation, more deciding what the system is
+              allowed to conclude. I set the constraints, define the
+              observability standards, and design the evaluation experiments;
+              the agents implement against that specification.
+            </p>
+            <p>
+              The surprising thing about agentic workflows is that you can
+              understand every local step and still not see the whole coming. I
+              treat emergence as a space of things we do not know yet, so I
+              design harnesses — interfaces, feedback loops, decision rules,
+              frozen runs — that let me steer without needing to determine every
+              result. A systems mindset is not about drawing boxes; it is about
+              making the work inspectable, repeatable, and accountable. It
+              lets me focus on the object that matters: a user behind a product
+              or a question behind a research project.
             </p>
           </div>
         </div>

@@ -8,6 +8,7 @@ interface FolioCardProps {
   label: string;
   title: string;
   preview: string;
+  backgroundImage?: string;
   onSelect: () => void;
   onHover: (k: 'academic' | 'build' | null) => void;
   dimmed: boolean;
@@ -18,6 +19,7 @@ export function FolioCard({
   label,
   title,
   preview,
+  backgroundImage,
   onSelect,
   onHover,
   dimmed,
@@ -47,6 +49,21 @@ export function FolioCard({
             : 'border-ink/25 group-hover:border-oxblood/70 group-hover:bg-[hsl(var(--paper))]/85 group-hover:shadow-[6px_6px_0_0_hsl(var(--oxblood)/0.18)]')
         }
       >
+        {/* Art background */}
+        {backgroundImage && (
+          <>
+            <div
+              className="absolute inset-0 bg-cover bg-center opacity-[0.16] group-hover:opacity-[0.24] transition-opacity duration-500"
+              style={{ backgroundImage: `url(${backgroundImage})` }}
+              aria-hidden
+            />
+            <div
+              className="absolute inset-0 bg-gradient-to-t from-[hsl(var(--paper))] via-[hsl(var(--paper))]/80 to-[hsl(var(--paper))]/55"
+              aria-hidden
+            />
+          </>
+        )}
+
         {/* Corner ticks — printer's marks */}
         <Ticks animated={!isAcademic} />
 

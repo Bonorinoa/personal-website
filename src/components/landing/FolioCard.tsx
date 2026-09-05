@@ -54,12 +54,18 @@ export function FolioCard({
         {backgroundImage && (
           <>
             <div
-              className="absolute inset-0 bg-cover bg-center opacity-[0.42] group-hover:opacity-[0.62] transition-opacity duration-500"
+              className={
+                'absolute inset-0 bg-cover bg-center transition-all duration-700 ' +
+                (isAcademic
+                  ? 'opacity-[0.55] saturate-[0.85] group-hover:opacity-[0.8] group-hover:saturate-100'
+                  : 'opacity-[0.62] saturate-[1.05] group-hover:opacity-[0.88] group-hover:saturate-[1.2]')
+              }
               style={{ backgroundImage: `url(${backgroundImage})` }}
               aria-hidden
             />
+            {/* Legibility veil — strongest behind the text at the bottom, clear at the top */}
             <div
-              className="absolute inset-0 bg-gradient-to-t from-[hsl(var(--paper))]/93 via-[hsl(var(--paper))]/50 to-[hsl(var(--paper))]/15"
+              className="absolute inset-0 bg-gradient-to-t from-[hsl(var(--paper))]/90 via-[hsl(var(--paper))]/35 to-transparent transition-opacity duration-500 group-hover:opacity-80"
               aria-hidden
             />
           </>
@@ -69,7 +75,7 @@ export function FolioCard({
         <Ticks animated={!isAcademic} />
 
         {/* Top: roman + arrow */}
-        <div className="flex items-start justify-between">
+        <div className="relative z-10 flex items-start justify-between">
           <span
             className={
               'font-mono text-[10px] uppercase tracking-[0.28em] text-ink/55 ' +
@@ -94,7 +100,7 @@ export function FolioCard({
         </div>
 
         {/* Bottom-anchored stack — identical rows in both cards so baselines align */}
-        <div className="mt-auto">
+        <div className="relative z-10 mt-auto">
           {/* Row 1: title — fixed height, content sits on a shared baseline */}
           <div className="flex items-end min-h-[3.25rem] sm:min-h-[4rem] lg:min-h-[4.5rem]">
             {isAcademic ? (

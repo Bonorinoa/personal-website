@@ -75,7 +75,7 @@ export function FolioCard({
         <Ticks animated={!isAcademic} />
 
         {/* Top: roman + arrow */}
-        <div className="flex items-start justify-between">
+        <div className="relative z-10 flex items-start justify-between">
           <span
             className={
               'font-mono text-[10px] uppercase tracking-[0.28em] text-ink/55 ' +
@@ -100,7 +100,7 @@ export function FolioCard({
         </div>
 
         {/* Bottom-anchored stack — identical rows in both cards so baselines align */}
-        <div className="mt-auto">
+        <div className="relative z-10 mt-auto">
           {/* Row 1: title — fixed height, content sits on a shared baseline */}
           <div className="flex items-end min-h-[3.25rem] sm:min-h-[4rem] lg:min-h-[4.5rem]">
             {isAcademic ? (

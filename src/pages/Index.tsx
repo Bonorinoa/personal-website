@@ -99,7 +99,7 @@ const Index = () => {
                 kind="build"
                 label="Software & systems"
                 title="Portfolio"
-                preview="TOOLS THAT MAKE MY LIFE EASIER"
+                preview="Tools that make my life easier"
                 dimmed={hovered !== null && hovered !== 'build'}
                 onHover={(k) => setHovered(k)}
                 onSelect={() => handleSelect('build')}

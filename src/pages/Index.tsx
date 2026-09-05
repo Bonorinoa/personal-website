@@ -49,7 +49,6 @@ const Index = () => {
       <div className="relative min-h-[100svh] md:h-[100svh] md:overflow-hidden paper-grain text-ink">
         {/* Background layers */}
         <div className="absolute inset-0 baseline-grid opacity-60 pointer-events-none" aria-hidden />
-        <InkTrail />
 
         {/* Content */}
         <div className="relative z-10 min-h-[100svh] md:h-full flex flex-col">

@@ -71,8 +71,7 @@ const Index = () => {
                 </span>
               </h1>
               <p className="mt-4 sm:mt-5 font-serif italic text-base sm:text-lg lg:text-xl text-ink/65 max-w-3xl leading-snug">
-                I study how people decide, and I build the instruments I use to
-                study them.
+                Applied micro-econometrician who likes to build agents and research tools
               </p>
 
             </motion.div>
@@ -91,7 +90,7 @@ const Index = () => {
                 kind="academic"
                 label="Curriculum vitae"
                 title="Resume"
-                preview={`Training, research, teaching, and publications. ${academicCount}+ entries.`}
+                preview={`A snapshot of my past\n`}
                 dimmed={hovered !== null && hovered !== 'academic'}
                 onHover={(k) => setHovered(k)}
                 onSelect={() => handleSelect('academic')}
@@ -100,7 +99,7 @@ const Index = () => {
                 kind="build"
                 label="Software & systems"
                 title="Portfolio"
-                preview={`${buildCount} PROJECTS · COMMIT-LEVEL PROVENANCE`}
+                preview="TOOLS THAT MAKE MY LIFE EASIER"
                 dimmed={hovered !== null && hovered !== 'build'}
                 onHover={(k) => setHovered(k)}
                 onSelect={() => handleSelect('build')}

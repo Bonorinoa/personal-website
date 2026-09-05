@@ -79,12 +79,12 @@ const Index = () => {
 
 
           {/* Two folios */}
-          <section className="flex-1 min-h-0 pl-8 sm:pl-16 lg:pl-28 pr-5 sm:pr-10 lg:pr-16 pb-8">
+          <section className="flex-1 min-h-0 flex flex-col justify-center pl-8 sm:pl-16 lg:pl-28 pr-5 sm:pr-10 lg:pr-16 pb-8">
             <motion.div
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: EASE, delay: 0.15 }}
-              className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-10 lg:gap-16 max-w-6xl md:h-full"
+              className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-10 lg:gap-16 max-w-6xl"
             >
               <FolioCard
                 kind="academic"

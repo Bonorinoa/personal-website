@@ -43,7 +43,8 @@ export function FolioCard({
       {/* Folio frame */}
       <div
         className={
-          'relative overflow-hidden border bg-[hsl(var(--paper))]/60 backdrop-blur-[2px] p-5 sm:p-7 lg:p-8 min-h-[260px] sm:min-h-[300px] lg:min-h-[340px] flex flex-col justify-between transition-[border-color,background-color,box-shadow] duration-300 ' +
+          'relative overflow-hidden border backdrop-blur-[2px] p-5 sm:p-7 lg:p-8 min-h-[260px] sm:min-h-[300px] lg:min-h-[340px] flex flex-col justify-between transition-[border-color,background-color,box-shadow] duration-300 ' +
+          (backgroundImage ? 'bg-[hsl(var(--paper))]/35 ' : 'bg-[hsl(var(--paper))]/60 ') +
           (isAcademic
             ? 'border-ink/25 group-hover:border-ink/60 group-hover:bg-[hsl(var(--paper))]/90'
             : 'border-ink/25 group-hover:border-oxblood/70 group-hover:bg-[hsl(var(--paper))]/85 group-hover:shadow-[6px_6px_0_0_hsl(var(--oxblood)/0.18)]')

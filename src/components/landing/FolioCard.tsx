@@ -54,12 +54,8 @@ export function FolioCard({
         {backgroundImage && (
           <>
             <div
-              className="absolute inset-0 bg-cover bg-center opacity-[0.85] group-hover:opacity-[1] transition-opacity duration-500"
+              className="absolute inset-0 bg-cover bg-center opacity-[0.9] group-hover:opacity-[1] transition-opacity duration-500"
               style={{ backgroundImage: `url(${backgroundImage})` }}
-              aria-hidden
-            />
-            <div
-              className="absolute inset-0 bg-gradient-to-t from-[hsl(var(--paper))]/95 via-[hsl(var(--paper))]/20 to-transparent"
               aria-hidden
             />
           </>

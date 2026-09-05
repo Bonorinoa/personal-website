@@ -8,6 +8,7 @@ interface FolioCardProps {
   label: string;
   title: string;
   preview: string;
+  backgroundImage?: string;
   onSelect: () => void;
   onHover: (k: 'academic' | 'build' | null) => void;
   dimmed: boolean;
@@ -18,6 +19,7 @@ export function FolioCard({
   label,
   title,
   preview,
+  backgroundImage,
   onSelect,
   onHover,
   dimmed,
@@ -41,12 +43,28 @@ export function FolioCard({
       {/* Folio frame */}
       <div
         className={
-          'relative overflow-hidden border bg-[hsl(var(--paper))]/60 backdrop-blur-[2px] p-5 sm:p-7 lg:p-8 min-h-[260px] sm:min-h-[300px] lg:min-h-[340px] flex flex-col justify-between transition-[border-color,background-color,box-shadow] duration-300 ' +
+          'relative overflow-hidden border backdrop-blur-[2px] p-5 sm:p-7 lg:p-8 min-h-[260px] sm:min-h-[300px] lg:min-h-[340px] flex flex-col justify-between transition-[border-color,background-color,box-shadow] duration-300 ' +
+          (backgroundImage ? 'bg-transparent ' : 'bg-[hsl(var(--paper))]/60 ') +
           (isAcademic
-            ? 'border-ink/25 group-hover:border-ink/60 group-hover:bg-[hsl(var(--paper))]/90'
-            : 'border-ink/25 group-hover:border-oxblood/70 group-hover:bg-[hsl(var(--paper))]/85 group-hover:shadow-[6px_6px_0_0_hsl(var(--oxblood)/0.18)]')
+            ? 'border-ink/25 group-hover:border-ink/60 group-hover:bg-[hsl(var(--paper))]/80'
+            : 'border-ink/25 group-hover:border-oxblood/70 group-hover:bg-[hsl(var(--paper))]/75 group-hover:shadow-[6px_6px_0_0_hsl(var(--oxblood)/0.18)]')
         }
       >
+        {/* Art background */}
+        {backgroundImage && (
+          <>
+            <div
+              className="absolute inset-0 bg-cover bg-center opacity-[0.42] group-hover:opacity-[0.62] transition-opacity duration-500"
+              style={{ backgroundImage: `url(${backgroundImage})` }}
+              aria-hidden
+            />
+            <div
+              className="absolute inset-0 bg-gradient-to-t from-[hsl(var(--paper))]/93 via-[hsl(var(--paper))]/50 to-[hsl(var(--paper))]/15"
+              aria-hidden
+            />
+          </>
+        )}
+
         {/* Corner ticks — printer's marks */}
         <Ticks animated={!isAcademic} />
 

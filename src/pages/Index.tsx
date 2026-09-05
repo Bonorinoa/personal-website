@@ -6,6 +6,8 @@ import { useMode, type Mode } from '@/hooks/useMode';
 import { useWorld } from '@/hooks/useWorld';
 import { FolioCard } from '@/components/landing/FolioCard';
 import { Footer } from '@/components/shared/Footer';
+import portfolioArt from '@/assets/portfolio-impressionism.jpg.asset.json';
+import resumeArt from '@/assets/resume-academic-painting.jpg.asset.json';
 
 import { getAcademicArtifacts, getBuildArtifacts } from '@/lib/artifacts';
 
@@ -89,6 +91,7 @@ const Index = () => {
                 label="Curriculum vitae"
                 title="Resume"
                 preview={`A snapshot of my past\n`}
+                backgroundImage={resumeArt.url}
                 dimmed={hovered !== null && hovered !== 'academic'}
                 onHover={(k) => setHovered(k)}
                 onSelect={() => handleSelect('academic')}
@@ -98,6 +101,7 @@ const Index = () => {
                 label="Software & systems"
                 title="Portfolio"
                 preview="Tools that make my life easier"
+                backgroundImage={portfolioArt.url}
                 dimmed={hovered !== null && hovered !== 'build'}
                 onHover={(k) => setHovered(k)}
                 onSelect={() => handleSelect('build')}

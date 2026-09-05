@@ -85,14 +85,12 @@ const Academic = () => {
 
             <div className="mt-8 max-w-2xl space-y-4 text-[15px] leading-relaxed text-foreground/85">
               <p>
-                Originally from Tucumán, Argentina. I work at the intersection of
-                microeconomic theory, experimental economics, and large language
-                models — using LLMs as computational engines of human behavior in
-                economic games.
+                Born in Salta, raised in Ushuaia, and grew up in Tucuman; up and down Argentina with two great geologists to teach me about the world 🇦🇷{`\u00a0`}
+                <br /><br />
+                I work at the intersection of applied micro-econometrics, experimental economics, and large language models studying how to operationalize open-source models to support quantitative social science research at EconLLM Lab.
               </p>
               <p className="text-muted-foreground">
-                My research spans AI-assisted methodology, behavioral economics, and
-                computational approaches to studying non-WEIRD populations.
+                My approach to economic modeling is computational with complexity science features. I am fascinated by artificial societies as a genereal scientific instrument to study the evolution of cultural norms and preferences over time. This means I mostly live out-of-equilibrium and spend my time running cool NetLogo animations.{`\u00a0`}
               </p>
             </div>
 

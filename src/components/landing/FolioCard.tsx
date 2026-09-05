@@ -141,10 +141,10 @@ export function FolioCard({
           {/* Row 3: caption — fixed height so the footer rule aligns */}
           <p
             className={
-              'mt-3 min-h-[2.5rem] ' +
+              'mt-3 min-h-[2.5rem] text-sm sm:text-base text-ink/55 leading-relaxed ' +
               (isAcademic
-                ? 'font-serif italic text-sm sm:text-base text-ink/55 leading-relaxed'
-                : 'font-mono text-xs sm:text-sm text-ink/55 uppercase tracking-[0.18em] leading-relaxed')
+                ? 'font-serif italic'
+                : 'font-mono')
             }
           >
             {preview}

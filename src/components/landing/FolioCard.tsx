@@ -44,7 +44,7 @@ export function FolioCard({
       <div
         className={
           'relative overflow-hidden border backdrop-blur-[2px] p-5 sm:p-7 lg:p-8 min-h-[260px] sm:min-h-[300px] lg:min-h-[340px] flex flex-col justify-between transition-[border-color,background-color,box-shadow] duration-300 ' +
-          (backgroundImage ? 'bg-[hsl(var(--paper))]/25 ' : 'bg-[hsl(var(--paper))]/60 ') +
+          (backgroundImage ? 'bg-transparent ' : 'bg-[hsl(var(--paper))]/60 ') +
           (isAcademic
             ? 'border-ink/25 group-hover:border-ink/60 group-hover:bg-[hsl(var(--paper))]/80'
             : 'border-ink/25 group-hover:border-oxblood/70 group-hover:bg-[hsl(var(--paper))]/75 group-hover:shadow-[6px_6px_0_0_hsl(var(--oxblood)/0.18)]')

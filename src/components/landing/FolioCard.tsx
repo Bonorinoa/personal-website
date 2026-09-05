@@ -43,11 +43,11 @@ export function FolioCard({
       {/* Folio frame */}
       <div
         className={
-          'relative overflow-hidden border backdrop-blur-[2px] p-5 sm:p-7 lg:p-8 min-h-[260px] sm:min-h-[300px] lg:min-h-[340px] flex flex-col justify-between transition-[border-color,background-color,box-shadow] duration-300 ' +
+          'relative overflow-hidden border backdrop-blur-[2px] p-5 sm:p-7 lg:p-8 min-h-[260px] sm:min-h-[300px] lg:min-h-[340px] flex flex-col justify-between shadow-[var(--shadow-lift)] transition-[border-color,background-color,box-shadow] duration-300 ' +
           (backgroundImage ? 'bg-transparent ' : 'bg-[hsl(var(--paper))]/60 ') +
           (isAcademic
-            ? 'border-ink/25 group-hover:border-ink/60 group-hover:bg-[hsl(var(--paper))]/80'
-            : 'border-ink/25 group-hover:border-oxblood/70 group-hover:bg-[hsl(var(--paper))]/75 group-hover:shadow-[6px_6px_0_0_hsl(var(--oxblood)/0.18)]')
+            ? 'border-ink/25 group-hover:border-ink/60 group-hover:bg-[hsl(var(--paper))]/80 group-hover:shadow-[0_28px_60px_-22px_hsl(var(--ink)/0.30)]'
+            : 'border-ink/25 group-hover:border-oxblood/70 group-hover:bg-[hsl(var(--paper))]/75 group-hover:shadow-[6px_6px_0_0_hsl(var(--oxblood)/0.18),0_28px_60px_-22px_hsl(var(--ink)/0.28)]')
         }
       >
         {/* Art background */}

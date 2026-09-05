@@ -4,7 +4,6 @@ import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
 import { useMode, type Mode } from '@/hooks/useMode';
 import { useWorld } from '@/hooks/useWorld';
-import { InkTrail } from '@/components/landing/InkTrail';
 import { FolioCard } from '@/components/landing/FolioCard';
 import { Footer } from '@/components/shared/Footer';
 

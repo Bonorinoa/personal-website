@@ -8,6 +8,7 @@ import Academic from "./pages/Academic";
 import Build from "./pages/Build";
 import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
+import { ScrollToTop } from "./components/shared/ScrollToTop";
 
 const queryClient = new QueryClient({
   defaultOptions: {

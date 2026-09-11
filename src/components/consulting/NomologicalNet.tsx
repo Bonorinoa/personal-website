@@ -71,7 +71,7 @@ export function NomologicalNet() {
               <span className="block font-mono text-[11px] tracking-[0.14em] text-[hsl(var(--oxblood))]">
                 {node.id}
               </span>
-              <span className="block whitespace-nowrap font-serif text-[15px] sm:text-base font-medium leading-snug mt-0.5">
+              <span className="block sm:whitespace-nowrap font-serif text-[14px] sm:text-base font-medium leading-snug mt-0.5">
                 {node.title}
               </span>
             </button>

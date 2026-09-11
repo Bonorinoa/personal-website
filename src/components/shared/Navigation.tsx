@@ -26,7 +26,8 @@ export function Navigation() {
                   : 'font-mono text-[12px] sm:text-[13px]'
               }`}
             >
-              A. González-Bonorino
+              <span className="sm:hidden">A. G-B</span>
+              <span className="hidden sm:inline">A. González-Bonorino</span>
             </span>
 
           </Link>

@@ -8,7 +8,8 @@ export function Navigation() {
 
   if (location.pathname === '/') return null;
 
-  const isAcademic = mode === 'academic';
+  const isConsulting = location.pathname === '/consulting';
+  const isAcademic = mode === 'academic' || isConsulting;
 
   return (
     <nav className="fixed top-0 inset-x-0 z-50 bg-background/70 backdrop-blur-xl backdrop-saturate-150 hairline-b">
@@ -24,10 +25,21 @@ export function Navigation() {
 
           </Link>
 
-          <ModeToggle />
+          <div className="flex items-center gap-4 sm:gap-5">
+            <Link
+              to="/consulting"
+              className={`font-serif text-[15px] transition-colors ${
+                isConsulting
+                  ? 'text-[hsl(var(--oxblood))]'
+                  : 'text-[hsl(var(--muted-ink))] hover:text-[hsl(var(--oxblood))]'
+              }`}
+            >
+              Consulting
+            </Link>
+            <ModeToggle />
+          </div>
         </div>
       </div>
     </nav>
   );
 }
-

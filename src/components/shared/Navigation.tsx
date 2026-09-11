@@ -19,13 +19,19 @@ export function Navigation() {
             to="/"
             className="group flex items-baseline gap-2 text-sm tracking-tight text-foreground min-h-[44px] py-2"
           >
-            <span className={isAcademic ? 'font-serif text-base italic' : 'font-mono text-[13px]'}>
+            <span
+              className={`whitespace-nowrap ${
+                isAcademic
+                  ? 'font-serif text-[14px] sm:text-base italic'
+                  : 'font-mono text-[12px] sm:text-[13px]'
+              }`}
+            >
               A. González-Bonorino
             </span>
 
           </Link>
 
-          <div className="flex items-center gap-4 sm:gap-5">
+          <div className="flex items-center gap-3 sm:gap-5 shrink-0">
             <Link
               to="/consulting"
               className={`font-serif text-[15px] transition-colors ${

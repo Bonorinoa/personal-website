@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Academic from "./pages/Academic";
 import Build from "./pages/Build";
+import Consulting from "./pages/Consulting";
 import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
 import { ScrollToTop } from "./components/shared/ScrollToTop";
@@ -31,6 +32,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/academic" element={<Academic />} />
           <Route path="/build" element={<Build />} />
+          <Route path="/consulting" element={<Consulting />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

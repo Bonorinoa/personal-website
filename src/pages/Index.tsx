@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
 import { useMode, type Mode } from '@/hooks/useMode';
@@ -110,6 +110,20 @@ const Index = () => {
               />
 
             </motion.div>
+
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8, ease: EASE, delay: 0.5 }}
+              className="mt-5 sm:mt-7 max-w-6xl"
+            >
+              <Link
+                to="/consulting"
+                className="font-serif italic text-[14px] sm:text-[15px] text-ink/55 hover:text-[hsl(var(--oxblood))] transition-colors"
+              >
+                Independent review for a named decision →
+              </Link>
+            </motion.p>
           </section>
 
           <Footer />

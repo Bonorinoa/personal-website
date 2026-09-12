@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from 'react';
 import { Button } from '@/components/ui/button';
-import { CONSULTING_INBOX } from '@/data/consulting';
+import { CALENDLY_LINK, CONSULTING_INBOX } from '@/data/consulting';
 import { supabase } from '@/integrations/supabase/client';
 
 const fieldClass =
@@ -13,6 +13,7 @@ export function DecisionForm() {
   const [deadline, setDeadline] = useState('');
   const [cost, setCost] = useState('');
   const [email, setEmail] = useState('');
+  const [submittedEmail, setSubmittedEmail] = useState('');
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
 
   const mailtoFallback = () => {
@@ -39,11 +40,12 @@ export function DecisionForm() {
     e.preventDefault();
     setStatus('sending');
 
+    const trimmedEmail = email.trim();
     const { error } = await supabase.from('consulting_inquiries').insert({
       decision: decision.trim(),
       deadline: deadline.trim(),
       cost: cost.trim(),
-      email: email.trim() || null,
+      email: trimmedEmail || null,
     });
 
     if (error) {
@@ -52,6 +54,7 @@ export function DecisionForm() {
       return;
     }
 
+    setSubmittedEmail(trimmedEmail);
     setStatus('sent');
     setDecision('');
     setDeadline('');
@@ -60,12 +63,24 @@ export function DecisionForm() {
   };
 
   if (status === 'sent') {
+    const calendlyUrl = new URL(CALENDLY_LINK);
+    if (submittedEmail) calendlyUrl.searchParams.set('email', submittedEmail);
+
     return (
       <div className="max-w-xl">
         <p className="font-serif text-[17px] text-foreground">Received.</p>
         <p className="mt-2 font-serif italic text-[14px] text-[hsl(var(--muted-ink))]">
-          I read these myself and reply within a couple of days.
+          I read these myself and reply within a couple of days. If you would like to lock in a time, book the call below.
         </p>
+        <Button
+          asChild
+          variant="outline"
+          className="mt-5 min-h-[44px] rounded-[2px] border-[hsl(var(--oxblood))] bg-transparent px-5 text-[14px] font-normal tracking-wide text-[hsl(var(--oxblood))] hover:bg-[hsl(var(--oxblood))] hover:text-[hsl(var(--paper))]"
+        >
+          <a href={calendlyUrl.toString()} target="_blank" rel="noreferrer">
+            Schedule the call →
+          </a>
+        </Button>
       </div>
     );
   }

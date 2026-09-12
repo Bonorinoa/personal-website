@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from 'react';
 import { Button } from '@/components/ui/button';
 import { CONSULTING_INBOX } from '@/data/consulting';
+import { supabase } from '@/integrations/supabase/client';
 
 const fieldClass =
   'mt-2 w-full rounded-[2px] bg-[hsl(var(--paper))] border border-[hsl(var(--rule))] px-3 py-2 text-[15px] text-foreground outline-none focus:border-[hsl(var(--oxblood))] transition-colors';

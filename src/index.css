@@ -159,6 +159,8 @@
       animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
     }
+
+    .pipeline-glint { display: none; }
   }
 
   .hairline { border-color: hsl(var(--rule)); }

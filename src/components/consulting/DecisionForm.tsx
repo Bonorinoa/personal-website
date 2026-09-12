@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { CONSULTING_INBOX } from '@/data/consulting';
 
 const fieldClass =
-  'mt-2 w-full bg-[hsl(var(--paper))] border border-[hsl(var(--rule))] px-3 py-2 text-[15px] text-foreground outline-none focus:border-[hsl(var(--oxblood))] transition-colors';
+  'mt-2 w-full rounded-[2px] bg-[hsl(var(--paper))] border border-[hsl(var(--rule))] px-3 py-2 text-[15px] text-foreground outline-none focus:border-[hsl(var(--oxblood))] transition-colors';
 
 const labelClass = 'font-mono text-[11px] uppercase tracking-[0.18em] text-[hsl(var(--muted-ink))]';
 
@@ -48,7 +48,6 @@ export function DecisionForm() {
             value={decision}
             onChange={(e) => setDecision(e.target.value)}
             className={fieldClass}
-            style={{ borderRadius: 2 }}
           />
         </div>
 
@@ -63,7 +62,6 @@ export function DecisionForm() {
             value={deadline}
             onChange={(e) => setDeadline(e.target.value)}
             className={fieldClass}
-            style={{ borderRadius: 2 }}
           />
         </div>
 
@@ -78,7 +76,6 @@ export function DecisionForm() {
             value={cost}
             onChange={(e) => setCost(e.target.value)}
             className={fieldClass}
-            style={{ borderRadius: 2 }}
           />
         </div>
 
@@ -92,7 +89,6 @@ export function DecisionForm() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             className={fieldClass}
-            style={{ borderRadius: 2 }}
           />
         </div>
       </div>

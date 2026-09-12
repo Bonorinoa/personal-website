@@ -8,8 +8,13 @@ type Flight = {
   id: number;
   fromX: number;
   fromY: number;
+  fromW: number;
+  fromH: number;
   toX: number;
   toY: number;
+  toW: number;
+  toH: number;
+  peakY: number;
   destination: 'consulting' | 'mode';
 };
 
@@ -60,10 +65,14 @@ export function Navigation() {
     }
 
     const targetIsBuild = location.pathname.startsWith('/build');
-    const modeX = toggle.left - actions.left + toggle.width * (targetIsBuild ? 0.75 : 0.25) - 10;
-    const modeY = toggle.top - actions.top + toggle.height / 2 - 10;
-    const consultingX = consulting.left - actions.left + consulting.width / 2 - 10;
-    const consultingY = consulting.bottom - actions.top - 2;
+    const segW = (toggle.width - 8) / 2;
+    const segH = toggle.height - 8;
+    const modeX = toggle.left - actions.left + 4 + (targetIsBuild ? segW : 0);
+    const modeY = toggle.top - actions.top + 4;
+    const markerW = 28;
+    const markerH = 3;
+    const consultingX = consulting.left - actions.left + consulting.width / 2 - markerW / 2;
+    const consultingY = consulting.bottom - actions.top + 4;
 
     flightIdRef.current += 1;
     setConsultingMarkerReady(false);
@@ -71,8 +80,13 @@ export function Navigation() {
       id: flightIdRef.current,
       fromX: shouldEnterConsulting ? modeX : consultingX,
       fromY: shouldEnterConsulting ? modeY : consultingY,
+      fromW: shouldEnterConsulting ? segW : markerW,
+      fromH: shouldEnterConsulting ? segH : markerH,
       toX: shouldEnterConsulting ? consultingX : modeX,
       toY: shouldEnterConsulting ? consultingY : modeY,
+      toW: shouldEnterConsulting ? markerW : segW,
+      toH: shouldEnterConsulting ? markerH : segH,
+      peakY: Math.min(modeY, consultingY) - 14,
       destination: shouldEnterConsulting ? 'consulting' : 'mode',
     });
   }, [isConsulting, location.pathname, prefersReducedMotion]);
@@ -119,7 +133,7 @@ export function Navigation() {
                 <motion.span
                   data-testid="consulting-marker"
                   layoutId="consulting-active-marker"
-                  initial={{ opacity: 0, scaleX: 0.55, y: -2 }}
+                  initial={false}
                   animate={{ opacity: 1, scaleX: 1, y: 0 }}
                   className="absolute -bottom-1 left-1/2 h-[3px] w-7 -translate-x-1/2 rounded-full bg-[hsl(var(--oxblood))]/75 shadow-[0_1px_4px_hsl(var(--oxblood)/0.22)]"
                 />
@@ -133,18 +147,50 @@ export function Navigation() {
               <motion.span
                 key={flight.id}
                 aria-hidden
-                className="pointer-events-none absolute left-0 top-0 z-20 h-5 w-5 rounded-full bg-background/80 ring-1 ring-foreground/15 shadow-[inset_0_1px_0_hsl(var(--background)),0_4px_12px_-3px_hsl(var(--foreground)/0.28)] backdrop-blur-md"
-                initial={{ x: flight.fromX, y: flight.fromY, scaleX: 1, scaleY: 1, rotate: 0 }}
-                animate={{
-                  x: [flight.fromX, flight.fromX, (flight.fromX + flight.toX) / 2, flight.toX + (flight.destination === 'consulting' ? -5 : 5), flight.toX],
-                  y: [flight.fromY, flight.fromY + 4, Math.min(flight.fromY, flight.toY) - 24, flight.toY - 3, flight.toY],
-                  scaleX: [1, 1.3, 0.82, 1.18, 1],
-                  scaleY: [1, 0.68, 1.2, 0.82, 1],
-                  rotate: [0, -8, 18, -7, 0],
+                className="pointer-events-none absolute left-0 top-0 z-20 rounded-full overflow-hidden
+                           bg-background/70 ring-1 ring-foreground/10 backdrop-blur-md backdrop-saturate-150
+                           shadow-[inset_0_1px_0_hsl(var(--background)),inset_0_-1px_1px_hsl(var(--foreground)/0.08),0_4px_14px_-4px_hsl(var(--foreground)/0.2)]"
+                initial={{
+                  x: flight.fromX,
+                  y: flight.fromY,
+                  width: flight.fromW,
+                  height: flight.fromH,
+                  scaleX: 1,
+                  scaleY: 1,
                 }}
-                transition={{ duration: 0.72, times: [0, 0.14, 0.5, 0.82, 1], ease: 'easeInOut' }}
+                animate={{
+                  x: [flight.fromX, (flight.fromX + flight.toX) / 2, flight.toX],
+                  y: [flight.fromY, flight.peakY, flight.toY],
+                  width: [flight.fromW, (flight.fromW + flight.toW) / 2, flight.toW],
+                  height: [flight.fromH, (flight.fromH + flight.toH) / 2 + 2, flight.toH],
+                  scaleX: [1, 0.94, 1.04, 1],
+                  scaleY: [1, 1.06, 0.96, 1],
+                }}
+                transition={{
+                  duration: 0.58,
+                  ease: [0.33, 0.02, 0.2, 1],
+                  x: { duration: 0.58, ease: [0.4, 0, 0.2, 1] },
+                  y: { duration: 0.58, times: [0, 0.48, 1], ease: [0.34, 0.8, 0.3, 1] },
+                  scaleX: { duration: 0.58, times: [0, 0.35, 0.78, 1], ease: 'easeInOut' },
+                  scaleY: { duration: 0.58, times: [0, 0.35, 0.78, 1], ease: 'easeInOut' },
+                }}
                 onAnimationComplete={finishFlight}
-              />
+              >
+                <motion.span
+                  aria-hidden
+                  className="absolute inset-x-1 top-[1px] h-1/2 rounded-full bg-gradient-to-b from-background to-transparent"
+                  initial={{ opacity: 0.8 }}
+                  animate={{ opacity: flight.destination === 'consulting' ? [0.8, 0.5, 0] : [0, 0.5, 0.8] }}
+                  transition={{ duration: 0.58, ease: 'easeInOut' }}
+                />
+                <motion.span
+                  aria-hidden
+                  className="absolute inset-0 rounded-full bg-[hsl(var(--oxblood))]"
+                  initial={{ opacity: flight.destination === 'consulting' ? 0 : 0.75 }}
+                  animate={{ opacity: flight.destination === 'consulting' ? [0, 0.15, 0.75] : [0.75, 0.15, 0] }}
+                  transition={{ duration: 0.58, ease: 'easeInOut' }}
+                />
+              </motion.span>
             )}
           </div>
         </div>

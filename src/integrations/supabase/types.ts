@@ -106,6 +106,39 @@ export type Database = {
           },
         ]
       }
+      consulting_inquiries: {
+        Row: {
+          cost: string
+          created_at: string
+          deadline: string
+          decision: string
+          email: string | null
+          id: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          cost: string
+          created_at?: string
+          deadline: string
+          decision: string
+          email?: string | null
+          id?: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          cost?: string
+          created_at?: string
+          deadline?: string
+          decision?: string
+          email?: string | null
+          id?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       inbox_items: {
         Row: {
           created_at: string

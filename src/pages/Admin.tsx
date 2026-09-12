@@ -9,6 +9,7 @@ import { InboxList } from '@/components/admin/InboxList';
 import { ContentEditor } from '@/components/admin/ContentEditor';
 import { SyncButton } from '@/components/admin/SyncButton';
 import { RepoSelector } from '@/components/admin/RepoSelector';
+import { ConsultingInquiries } from '@/components/admin/ConsultingInquiries';
 import { getInboxConfig } from '@/lib/artifacts';
 import { useAllArtifacts } from '@/hooks/useArtifacts';
 import { useInboxItems } from '@/hooks/useInboxItems';
@@ -198,7 +199,7 @@ const Admin = () => {
 
         <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <Tabs defaultValue="inbox" className="space-y-6">
-            <TabsList className="grid w-full grid-cols-4 lg:w-auto lg:inline-grid">
+            <TabsList className="grid w-full grid-cols-5 lg:w-auto lg:inline-grid">
               <TabsTrigger value="inbox" className="gap-2">
                 <Inbox className="w-4 h-4" /><span className="hidden sm:inline">Inbox</span>
                 {pendingItems.length > 0 && (
@@ -207,6 +208,7 @@ const Admin = () => {
               </TabsTrigger>
               <TabsTrigger value="content" className="gap-2"><FileEdit className="w-4 h-4" /><span className="hidden sm:inline">Content</span></TabsTrigger>
               <TabsTrigger value="analytics" className="gap-2"><BarChart3 className="w-4 h-4" /><span className="hidden sm:inline">Analytics</span></TabsTrigger>
+              <TabsTrigger value="inquiries" className="gap-2"><Mail className="w-4 h-4" /><span className="hidden sm:inline">Inquiries</span></TabsTrigger>
               <TabsTrigger value="widgets" className="gap-2"><FlaskConical className="w-4 h-4" /><span className="hidden sm:inline">Widgets</span></TabsTrigger>
             </TabsList>
 
@@ -284,6 +286,14 @@ const Admin = () => {
                   <ExternalLink className="w-4 h-4" /> Learn more
                 </Button>
               </CardContent></Card>
+            </TabsContent>
+
+            <TabsContent value="inquiries" className="space-y-4">
+              <div>
+                <h2 className="font-serif text-2xl">Consulting inquiries</h2>
+                <p className="text-sm text-muted-foreground">Submissions from the Describe a decision form.</p>
+              </div>
+              <Card><CardContent className="pt-6"><ConsultingInquiries /></CardContent></Card>
             </TabsContent>
 
             <TabsContent value="widgets" className="space-y-4">

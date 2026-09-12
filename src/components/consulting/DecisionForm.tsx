@@ -13,6 +13,7 @@ export function DecisionForm() {
   const [deadline, setDeadline] = useState('');
   const [cost, setCost] = useState('');
   const [email, setEmail] = useState('');
+  const [submittedEmail, setSubmittedEmail] = useState('');
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
 
   const mailtoFallback = () => {

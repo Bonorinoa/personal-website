@@ -133,7 +133,7 @@ export function Navigation() {
                 <motion.span
                   data-testid="consulting-marker"
                   layoutId="consulting-active-marker"
-                  initial={{ opacity: 0, scaleX: 0.55, y: -2 }}
+                  initial={false}
                   animate={{ opacity: 1, scaleX: 1, y: 0 }}
                   className="absolute -bottom-1 left-1/2 h-[3px] w-7 -translate-x-1/2 rounded-full bg-[hsl(var(--oxblood))]/75 shadow-[0_1px_4px_hsl(var(--oxblood)/0.22)]"
                 />

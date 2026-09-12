@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from 'react';
 import { Button } from '@/components/ui/button';
 import { CONSULTING_INBOX } from '@/data/consulting';
+import { supabase } from '@/integrations/supabase/client';
 
 const fieldClass =
   'mt-2 w-full rounded-[2px] bg-[hsl(var(--paper))] border border-[hsl(var(--rule))] px-3 py-2 text-[15px] text-foreground outline-none focus:border-[hsl(var(--oxblood))] transition-colors';
@@ -12,9 +13,9 @@ export function DecisionForm() {
   const [deadline, setDeadline] = useState('');
   const [cost, setCost] = useState('');
   const [email, setEmail] = useState('');
+  const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
 
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
+  const mailtoFallback = () => {
     const body = [
       'What decision?',
       decision,
@@ -29,10 +30,45 @@ export function DecisionForm() {
       email || '(not provided)',
     ].join('\n');
 
-    window.location.href = `mailto:${CONSULTING_INBOX}?subject=${encodeURIComponent(
+    return `mailto:${CONSULTING_INBOX}?subject=${encodeURIComponent(
       'Describe a decision',
     )}&body=${encodeURIComponent(body)}`;
   };
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    setStatus('sending');
+
+    const { error } = await supabase.from('consulting_inquiries').insert({
+      decision: decision.trim(),
+      deadline: deadline.trim(),
+      cost: cost.trim(),
+      email: email.trim() || null,
+    });
+
+    if (error) {
+      console.error('[consulting] submission failed:', error.message);
+      setStatus('error');
+      return;
+    }
+
+    setStatus('sent');
+    setDecision('');
+    setDeadline('');
+    setCost('');
+    setEmail('');
+  };
+
+  if (status === 'sent') {
+    return (
+      <div className="max-w-xl">
+        <p className="font-serif text-[17px] text-foreground">Received.</p>
+        <p className="mt-2 font-serif italic text-[14px] text-[hsl(var(--muted-ink))]">
+          I read these myself and reply within a couple of days.
+        </p>
+      </div>
+    );
+  }
 
   return (
     <form onSubmit={handleSubmit} className="max-w-xl">

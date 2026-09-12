@@ -68,9 +68,9 @@ export function NomologicalNet() {
             <p className="mt-5 max-w-[56ch] font-serif text-[15px] leading-relaxed text-foreground/85">
               <strong className="font-semibold">The reduction:</strong> {current.reduction}
             </p>
-            {current.links.length > 0 && (
-              <div className="mt-7 border-t border-[hsl(var(--rule))] pt-4">
-                <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-[hsl(var(--muted-ink))]">Evidence</div>
+            <div className="mt-7 border-t border-[hsl(var(--rule))] pt-4">
+              <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-[hsl(var(--muted-ink))]">Evidence</div>
+              {current.links.length > 0 ? (
                 <div className="mt-3 flex flex-wrap gap-x-5 gap-y-2">
                   {current.links.map((link) =>
                     link.href ? (
@@ -82,8 +82,12 @@ export function NomologicalNet() {
                     ),
                   )}
                 </div>
-              </div>
-            )}
+              ) : (
+                <p className="mt-3 font-serif text-[14px] italic text-[hsl(var(--muted-ink))]">
+                  Interactive demos for this stage are coming soon.
+                </p>
+              )}
+            </div>
           </div>
       </div>
     </div>

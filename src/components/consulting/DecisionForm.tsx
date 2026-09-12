@@ -40,11 +40,12 @@ export function DecisionForm() {
     e.preventDefault();
     setStatus('sending');
 
+    const trimmedEmail = email.trim();
     const { error } = await supabase.from('consulting_inquiries').insert({
       decision: decision.trim(),
       deadline: deadline.trim(),
       cost: cost.trim(),
-      email: email.trim() || null,
+      email: trimmedEmail || null,
     });
 
     if (error) {
@@ -53,6 +54,7 @@ export function DecisionForm() {
       return;
     }
 
+    setSubmittedEmail(trimmedEmail);
     setStatus('sent');
     setDecision('');
     setDeadline('');

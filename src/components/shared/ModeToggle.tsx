@@ -1,14 +1,18 @@
 import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
+type ModeToggleProps = {
+  activeOverride?: 'academic' | 'build' | null;
+};
+
 /**
  * Liquid-glass pill toggle for switching between Research (Academic) and Build modes.
  * Uses backdrop-blur, layered highlights, and a motion-shared thumb for the slide.
  */
-export function ModeToggle() {
+export function ModeToggle({ activeOverride }: ModeToggleProps) {
   const { pathname } = useLocation();
-  const active: 'academic' | 'build' =
-    pathname.startsWith('/build') ? 'build' : 'academic';
+  const inferredActive: 'academic' | 'build' = pathname.startsWith('/build') ? 'build' : 'academic';
+  const active = activeOverride === undefined ? inferredActive : activeOverride;
 
   const options: Array<{ key: 'academic' | 'build'; to: string; label: string; font: string }> = [
     { key: 'academic', to: '/academic', label: 'Resume', font: 'font-serif italic' },

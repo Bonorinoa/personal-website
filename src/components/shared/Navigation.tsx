@@ -65,10 +65,14 @@ export function Navigation() {
     }
 
     const targetIsBuild = location.pathname.startsWith('/build');
-    const modeX = toggle.left - actions.left + toggle.width * (targetIsBuild ? 0.75 : 0.25) - 10;
-    const modeY = toggle.top - actions.top + toggle.height / 2 - 10;
-    const consultingX = consulting.left - actions.left + consulting.width / 2 - 10;
-    const consultingY = consulting.bottom - actions.top - 2;
+    const segW = (toggle.width - 8) / 2;
+    const segH = toggle.height - 8;
+    const modeX = toggle.left - actions.left + 4 + (targetIsBuild ? segW : 0);
+    const modeY = toggle.top - actions.top + 4;
+    const markerW = 28;
+    const markerH = 3;
+    const consultingX = consulting.left - actions.left + consulting.width / 2 - markerW / 2;
+    const consultingY = consulting.bottom - actions.top + 4;
 
     flightIdRef.current += 1;
     setConsultingMarkerReady(false);
@@ -76,8 +80,13 @@ export function Navigation() {
       id: flightIdRef.current,
       fromX: shouldEnterConsulting ? modeX : consultingX,
       fromY: shouldEnterConsulting ? modeY : consultingY,
+      fromW: shouldEnterConsulting ? segW : markerW,
+      fromH: shouldEnterConsulting ? segH : markerH,
       toX: shouldEnterConsulting ? consultingX : modeX,
       toY: shouldEnterConsulting ? consultingY : modeY,
+      toW: shouldEnterConsulting ? markerW : segW,
+      toH: shouldEnterConsulting ? markerH : segH,
+      peakY: Math.min(modeY, consultingY) - 14,
       destination: shouldEnterConsulting ? 'consulting' : 'mode',
     });
   }, [isConsulting, location.pathname, prefersReducedMotion]);

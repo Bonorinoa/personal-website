@@ -2,71 +2,54 @@ export const CONSULTING_INBOX = 'agbonorino@proton.me';
 
 export interface ConsultingLink {
   label: string;
-  href: string;
+  href?: string;
 }
 
 export interface ConsultingNode {
   id: '01' | '02' | '03';
   title: string;
+  scope: string;
   question: string;
   body: string;
+  reduction: string;
   links: ConsultingLink[];
-  /** Percentage position within the net pane. */
-  x: number;
-  y: number;
-  lead?: boolean;
 }
 
 export const NODES: ConsultingNode[] = [
   {
     id: '01',
-    title: 'Fit to rely',
-    question: 'Is this system fit to release or rely on?',
-    body: 'Independent evaluation of a research, RAG, or agent system for a named use. Frozen tests, a failure register, and an evidence pack another reviewer can rerun. Advisory, not a certification.',
-    links: [
-      { label: 'Learn more', href: '#' },
-      { label: 'Demonstration', href: 'https://github.com/Cognitio-EDU/Silicus-TA-2.0' },
-    ],
-    x: 50,
-    y: 24,
-    lead: true,
+    title: 'Upstream',
+    scope: 'define the construct · generate measures · process data',
+    question: "We need to measure something we can't observe yet",
+    body: 'I define the construct, propose candidate measures, and build the processing chain — with provenance on every transformation, so a reviewer can see where each number came from.',
+    reduction: 'which measure is worth building first.',
+    links: [],
   },
   {
     id: '02',
-    title: 'Did it change',
-    question: 'Did the intervention change the outcome?',
-    body: 'Estimand, design, contamination, power, and a decision memo — before you spend or claim.',
+    title: 'Midstream',
+    scope: 'specification & multiverse analysis · admissible set M*',
+    question: "Is our measure entitled to the claim we're making?",
+    body: 'Construct validity as partial identification: the admissible measurement set M*, and the range of conclusions your assumptions actually permit. An empty set is a finding.',
+    reduction: 'which measure is load-bearing — remove it and the conclusion moves — and which to drop.',
     links: [
-      { label: 'Learn more', href: '#' },
       {
-        label: 'Replication',
-        href: 'https://github.com/Bonorinoa/economics-of-water-scarcity-replication',
+        label: 'Construct-Identified Inference',
+        href: 'https://augustogbonorino.substack.com/p/construct-identified-inference',
       },
+      { label: 'cvprofiles (open source)', href: 'https://github.com/Bonorinoa/cvprofiles' },
+      { label: 'Interactive demo — in build' },
     ],
-    x: 22,
-    y: 74,
   },
   {
     id: '03',
-    title: 'Does it measure',
-    question: 'Does the score measure what the decision assumes?',
-    body: 'A construct map, an allowed-use boundary, and a test against held-out human evidence. Distinctive depth, not the lead offer.',
-    links: [
-      {
-        label: 'Learn more',
-        href: 'https://augustogbonorino.substack.com/p/construct-identified-inference',
-      },
-      { label: 'Paper', href: 'https://arxiv.org/abs/2501.06834' },
-    ],
-    x: 78,
-    y: 74,
+    title: 'Downstream',
+    scope: 'estimand · estimator · identified range [L,U] · robustness',
+    question: 'Is the number defensible — and what do we do?',
+    body: 'Estimand, estimator, estimate, then the robustness work — including an explicit statement of what the evidence does not establish.',
+    reduction: 'what to collect next to shrink the range.',
+    links: [],
   },
-];
-
-export const EDGES: Array<[ConsultingNode['id'], ConsultingNode['id']]> = [
-  ['01', '02'],
-  ['01', '03'],
-  ['02', '03'],
 ];
 
 export interface WritingItem {

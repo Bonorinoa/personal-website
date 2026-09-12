@@ -159,6 +159,8 @@
       animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
     }
+
+    .pipeline-glint { display: none; }
   }
 
   .hairline { border-color: hsl(var(--rule)); }
@@ -182,6 +184,34 @@
   .scrollbar-hide { scrollbar-width: none; }
 
   .animate-fade-in { animation: fade-in var(--dur-slow) var(--ease-out) both; }
+
+  .pipeline-connector {
+    position: relative;
+    height: 28px;
+    margin-left: 25px;
+    border-left: 1px dashed hsl(var(--oxblood) / 0.4);
+  }
+
+  .pipeline-glint {
+    position: absolute;
+    left: -2px;
+    top: 0;
+    width: 3px;
+    height: 4px;
+    background: hsl(var(--oxblood));
+    box-shadow: 0 0 5px hsl(var(--oxblood) / 0.45);
+    opacity: 0;
+    animation: pipeline-glint 7s ease-in-out infinite;
+  }
+
+  .pipeline-glint-late { animation-delay: 1.1s; }
+
+  @keyframes pipeline-glint {
+    0%, 8% { transform: translateY(0); opacity: 0; }
+    9% { opacity: 0.9; }
+    18% { transform: translateY(24px); opacity: 0; }
+    100% { transform: translateY(24px); opacity: 0; }
+  }
 
   @keyframes fade-in {
     from { opacity: 0; transform: translateY(4px); }

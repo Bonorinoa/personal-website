@@ -1,8 +1,9 @@
 import { useState, type FormEvent } from 'react';
+import { Button } from '@/components/ui/button';
 import { CONSULTING_INBOX } from '@/data/consulting';
 
 const fieldClass =
-  'mt-2 w-full bg-[hsl(var(--paper))] border border-[hsl(var(--rule))] px-3 py-2 text-[15px] text-foreground outline-none focus:border-[hsl(var(--oxblood))] transition-colors';
+  'mt-2 w-full rounded-[2px] bg-[hsl(var(--paper))] border border-[hsl(var(--rule))] px-3 py-2 text-[15px] text-foreground outline-none focus:border-[hsl(var(--oxblood))] transition-colors';
 
 const labelClass = 'font-mono text-[11px] uppercase tracking-[0.18em] text-[hsl(var(--muted-ink))]';
 
@@ -47,7 +48,6 @@ export function DecisionForm() {
             value={decision}
             onChange={(e) => setDecision(e.target.value)}
             className={fieldClass}
-            style={{ borderRadius: 2 }}
           />
         </div>
 
@@ -62,7 +62,6 @@ export function DecisionForm() {
             value={deadline}
             onChange={(e) => setDeadline(e.target.value)}
             className={fieldClass}
-            style={{ borderRadius: 2 }}
           />
         </div>
 
@@ -77,7 +76,6 @@ export function DecisionForm() {
             value={cost}
             onChange={(e) => setCost(e.target.value)}
             className={fieldClass}
-            style={{ borderRadius: 2 }}
           />
         </div>
 
@@ -91,18 +89,17 @@ export function DecisionForm() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             className={fieldClass}
-            style={{ borderRadius: 2 }}
           />
         </div>
       </div>
 
-      <button
+      <Button
         type="submit"
-        className="mt-7 border border-[hsl(var(--oxblood))] text-[hsl(var(--oxblood))] px-5 py-2.5 text-[14px] tracking-wide hover:bg-[hsl(var(--oxblood))] hover:text-[hsl(var(--paper))] transition-colors min-h-[44px]"
-        style={{ borderRadius: 2 }}
+        variant="outline"
+        className="mt-7 min-h-[44px] rounded-[2px] border-[hsl(var(--oxblood))] bg-transparent px-5 text-[14px] font-normal tracking-wide text-[hsl(var(--oxblood))] hover:bg-[hsl(var(--oxblood))] hover:text-[hsl(var(--paper))]"
       >
         Describe a decision
-      </button>
+      </Button>
 
       <p className="mt-3 font-serif italic text-[14px] text-[hsl(var(--muted-ink))]">
         Twenty minutes. Deadline and cost of being wrong, not a pitch deck.

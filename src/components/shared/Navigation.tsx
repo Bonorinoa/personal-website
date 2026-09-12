@@ -8,8 +8,13 @@ type Flight = {
   id: number;
   fromX: number;
   fromY: number;
+  fromW: number;
+  fromH: number;
   toX: number;
   toY: number;
+  toW: number;
+  toH: number;
+  peakY: number;
   destination: 'consulting' | 'mode';
 };
 

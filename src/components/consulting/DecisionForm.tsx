@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from 'react';
+import { Button } from '@/components/ui/button';
 import { CONSULTING_INBOX } from '@/data/consulting';
 
 const fieldClass =
@@ -96,13 +97,13 @@ export function DecisionForm() {
         </div>
       </div>
 
-      <button
+      <Button
         type="submit"
-        className="mt-7 border border-[hsl(var(--oxblood))] text-[hsl(var(--oxblood))] px-5 py-2.5 text-[14px] tracking-wide hover:bg-[hsl(var(--oxblood))] hover:text-[hsl(var(--paper))] transition-colors min-h-[44px]"
-        style={{ borderRadius: 2 }}
+        variant="outline"
+        className="mt-7 min-h-[44px] rounded-[2px] border-[hsl(var(--oxblood))] bg-transparent px-5 text-[14px] font-normal tracking-wide text-[hsl(var(--oxblood))] hover:bg-[hsl(var(--oxblood))] hover:text-[hsl(var(--paper))]"
       >
         Describe a decision
-      </button>
+      </Button>
 
       <p className="mt-3 font-serif italic text-[14px] text-[hsl(var(--muted-ink))]">
         Twenty minutes. Deadline and cost of being wrong, not a pitch deck.

@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from 'react';
 import { Button } from '@/components/ui/button';
-import { CONSULTING_INBOX } from '@/data/consulting';
+import { CALENDLY_LINK, CONSULTING_INBOX } from '@/data/consulting';
 import { supabase } from '@/integrations/supabase/client';
 
 const fieldClass =

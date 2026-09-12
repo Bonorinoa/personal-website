@@ -13,6 +13,8 @@ type Flight = {
   destination: 'consulting' | 'mode';
 };
 
+let lastNavigationPath: string | null = null;
+
 export function Navigation() {
   const { mode } = useMode();
   const location = useLocation();
@@ -20,7 +22,6 @@ export function Navigation() {
   const actionsRef = useRef<HTMLDivElement>(null);
   const consultingRef = useRef<HTMLAnchorElement>(null);
   const toggleRef = useRef<HTMLDivElement>(null);
-  const previousPathRef = useRef<string | null>(null);
   const flightIdRef = useRef(0);
   const [flight, setFlight] = useState<Flight | null>(null);
   const [consultingMarkerReady, setConsultingMarkerReady] = useState(false);
@@ -31,8 +32,8 @@ export function Navigation() {
   const isAcademic = mode === 'academic' || isConsulting;
 
   useLayoutEffect(() => {
-    const previousPath = previousPathRef.current;
-    previousPathRef.current = location.pathname;
+    const previousPath = lastNavigationPath;
+    lastNavigationPath = location.pathname;
 
     if (prefersReducedMotion) {
       setFlight(null);
@@ -116,6 +117,7 @@ export function Navigation() {
               Consulting
               {isConsulting && consultingMarkerReady && (
                 <motion.span
+                  data-testid="consulting-marker"
                   layoutId="consulting-active-marker"
                   initial={{ opacity: 0, scaleX: 0.55, y: -2 }}
                   animate={{ opacity: 1, scaleX: 1, y: 0 }}

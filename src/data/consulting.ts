@@ -1,4 +1,5 @@
 export const CONSULTING_INBOX = 'agbonorino@proton.me';
+export const CALENDLY_LINK = 'https://calendly.com/agbonorino-proton';
 
 export interface ConsultingLink {
   label: string;

@@ -75,7 +75,7 @@ export const WRITING: WritingItem[] = [
   {
     kind: 'Column',
     title: 'La Gaceta · ADEPA',
-    href: '#',
+    href: 'https://www.lagaceta.com.ar/nota/1153651/opinion/cartas-lectores-verificacion-social.html',
     blurb: 'Public writing, not a service tile.',
   },
 ];

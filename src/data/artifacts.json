@@ -29,7 +29,8 @@
       },
       "demoInfo": {
         "type": "streamlit",
-        "url": "https://cvprofiles-demo.streamlit.app/"
+        "url": "https://cvprofiles-demo.streamlit.app/",
+        "thumbnail": "/images/cvprofiles-demo.jpg"
       },
       "source_ids": {
         "github": "cvprofiles"

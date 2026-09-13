@@ -39,7 +39,7 @@ export const NODES: ConsultingNode[] = [
         href: 'https://augustogbonorino.substack.com/p/construct-identified-inference',
       },
       { label: 'cvprofiles (open source)', href: 'https://github.com/Bonorinoa/cvprofiles' },
-      { label: 'Interactive demo — in build' },
+      { label: 'Interactive demo', href: 'https://cvprofiles-demo.streamlit.app/' },
     ],
   },
   {

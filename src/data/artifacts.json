@@ -24,7 +24,12 @@
       "mode_visibility": "build",
       "featured": true,
       "links": {
-        "repo": "https://github.com/Bonorinoa/cvprofiles"
+        "repo": "https://github.com/Bonorinoa/cvprofiles",
+        "demo": "https://cvprofiles-demo.streamlit.app/"
+      },
+      "demoInfo": {
+        "type": "streamlit",
+        "url": "https://cvprofiles-demo.streamlit.app/"
       },
       "source_ids": {
         "github": "cvprofiles"

@@ -79,8 +79,9 @@ const Academic = () => {
               Augusto<br />González-Bonorino
             </h1>
             <p className="mt-6 font-serif italic text-lg sm:text-xl text-muted-foreground">
-              MSc Economics (PhD track) · Arizona State University
+              Arizona State University
             </p>
+
 
 
             <div className="mt-8 max-w-2xl space-y-4 text-[15px] leading-relaxed text-foreground/85">

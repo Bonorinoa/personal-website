@@ -937,48 +937,6 @@
       "pubType": "essay"
     },
     {
-      "id": "project-water-scarcity-replication",
-      "type": "project",
-      "title": "Economics of Water Scarcity — Stata Replication",
-      "organization": "Replication study · code and data on GitHub",
-      "org": "Personal",
-      "date": "2025",
-      "year": 2026,
-      "summary": "A reproducible Stata replication of Frost, Martinez Jaramillo & Madeira's BIS working paper on the economics of water scarcity. Wraps the official World Bank package in a portable runner that pulls the raw data, re-executes the canonical workflow, and regenerates the paper's figures and tables as reviewer-facing outputs.",
-      "tags": [
-        "ai-assisted"
-      ],
-      "mode_visibility": "both",
-      "collaboration_breakdown": {
-        "human": "Data restoration workflow, Stata do-file adaptation for macOS, output curation, gitignore policy separating raw data and scratch outputs from reviewer-facing deliverables, and cross-check against the published paper.",
-        "matrix": [
-          {
-            "model": "claude-3-sonnet",
-            "tasks": [
-              "code-review",
-              "writing-editing"
-            ]
-          }
-        ],
-        "verification": "Figures and tables regenerated end-to-end from the World Bank raw package and compared against the published paper via paper_order_replication.pdf."
-      },
-      "links": {
-        "repo": "https://github.com/Bonorinoa/economics-of-water-scarcity-replication",
-        "paper": "https://www.bis.org/publ/work1314.pdf"
-      },
-      "source_ids": {
-        "github": "economics-of-water-scarcity-replication"
-      },
-      "credit": {
-        "authored": "Designed the specification analysis and evaluated every result against the published paper.",
-        "assisted": "I directed an agent to (1) replicate the paper from publicly available code and data and (2) extend it with my proposed analysis — which is why the whole thing took a few days of intense work rather than months.",
-        "verification": "Figures and tables regenerated end-to-end from the World Bank raw package and compared against the published paper via paper_order_replication.pdf."
-      },
-      "category": "research",
-      "section": "publications",
-      "pubType": "replication"
-    },
-    {
       "id": "project-silicus-ta-2",
       "type": "project",
       "title": "Silicus TA 2.0",
@@ -1151,8 +1109,10 @@
       "tags": [
         "vibe-engineered"
       ],
-      "mode_visibility": "build",
+      "mode_visibility": "both",
       "featured": false,
+      "section": "publications",
+      "pubType": "working-paper",
       "links": {
         "repo": "https://github.com/EconLLM-Lab/SCA2_PofW",
         "paper": "https://github.com/EconLLM-Lab/SCA2_PofW/blob/main/misc/position_paper/Synthetic_Cultural_Agents_from_Aggregate_Anchors.pdf",

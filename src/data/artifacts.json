@@ -359,7 +359,7 @@
         "verification": "Comparison with human experimental data, statistical validation, peer review"
       },
       "org": "EconLLM-Lab",
-      "citations": 6,
+      "citations": 10,
       "pubType": "journal"
     },
     {
@@ -381,7 +381,7 @@
       },
       "mode_visibility": "academic",
       "section": "publications",
-      "citations": 2,
+      "citations": 1,
       "pubType": "proceedings"
     },
     {
@@ -1128,6 +1128,7 @@
       },
       "mode_visibility": "academic",
       "section": "publications",
+      "citations": 2,
       "pubType": "journal"
     },
     {
@@ -1140,12 +1141,12 @@
       "date": "2026-03",
       "year": 2026,
       "category": "research",
-      "summary": "A falsifiable construction protocol for population-level choice policies. The pipeline renders declared aggregate anchors — country-level Global Preference Survey scores — into synthetic preference data, fits country-specific DPO/QLoRA adapters on Llama-3.1-8B-Instruct, and evaluates the induced policies against independent human survey distributions.",
+      "summary": "An inspectable construction for mapping declared aggregate preference anchors into group-indexed choice policies. The current study evaluates sixteen country adapters across twenty-three World Values Survey items, separating recovery of imposed labels, transfer to new text, human cross-survey coherence, and model–human agreement.",
       "details": [
-        "Country labels are excluded from primary inference prompts: culture enters through the training signal, not through prompt retrieval.",
-        "The protocol predeclares five rejection points — anchor transmission, policy encoding, a permuted-anchor placebo for anchor relevance, external transport to independent human evidence, and operator robustness.",
-        "Ships the full stack: synthetic generation with scoring and QC, the canonical DPO training pipeline, and a World Values Survey out-of-sample evaluation surface with result tables.",
-        "Methods working paper (Gonzalez-Bonorino, Biriukova, Capra) includes a USA/MEX pilot diagnostic and an independent adversarial audit of the generation pipeline; results shells await the scaled experiment."
+        "Country names are omitted from primary evaluation prompts, closing the prompting channel while leaving pretrained associations in the base model.",
+        "The adapters recover their imposed pairwise labels; on trust, adapter scores completely separate the two GPS-sign groups and correlate 0.74 with continuous GPS trust scores.",
+        "Agreement with human country ranks remains unresolved, and results across the other preference dimensions are heterogeneous: retaining an anchor does not establish human measurement validity.",
+        "Ships committed analysis tables and figures, a reproducible no-GPU table workflow, public sixteen-country evaluation outputs, and released adapter weights."
       ],
       "tags": [
         "vibe-engineered"
@@ -1154,7 +1155,7 @@
       "featured": false,
       "links": {
         "repo": "https://github.com/EconLLM-Lab/SCA2_PofW",
-        "paper": "https://github.com/EconLLM-Lab/SCA2_PofW/blob/main/misc/position_paper/position_paper_sca2.pdf",
+        "paper": "https://github.com/EconLLM-Lab/SCA2_PofW/blob/main/misc/position_paper/Synthetic_Cultural_Agents_from_Aggregate_Anchors.pdf",
         "website": "https://www.econllm-lab.com/"
       },
       "source_ids": {
@@ -1163,7 +1164,7 @@
       "credit": {
         "authored": "The construction protocol, the scope boundary, the five predeclared rejection points, and the multi-country experimental design — plus the methods paper with my co-authors.",
         "assisted": "My hermes agent drove pipeline implementation, training scripts, and evaluation harness against that specification; the human/agent split is visible in the commit history.",
-        "verification": "Predeclared rejection points, a permuted-anchor placebo, out-of-sample evaluation against independent WVS human distributions, and an independent adversarial audit of the generation pipeline."
+        "verification": "Four distinct checks separate synthetic-label recovery, cross-text anchor transfer, human cross-survey coherence, and direct model–human agreement; the repository preserves the committed outputs and frozen runs behind the reported results."
       }
     }
   ]

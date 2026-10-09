@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { DEMOS_LINE, NODES, PREPRINT_LINK, type ConsultingNode } from '@/data/consulting';
+import { DEMOS_LINE, METHOD_ESSAY_LINK, NODES, type ConsultingNode } from '@/data/consulting';
 
 function nodeById(id: ConsultingNode['id']) {
   return NODES.find((node) => node.id === id) ?? NODES[1];
@@ -19,6 +19,9 @@ function StagePanel({ node }: { node: ConsultingNode }) {
         {node.question}
       </h2>
       <p className="mt-5 max-w-[56ch] font-serif text-[15px] leading-relaxed text-foreground/85">{node.body}</p>
+      {node.bodyNote && (
+        <p className="mt-3 max-w-[56ch] font-serif text-[15px] leading-relaxed text-foreground/85">{node.bodyNote}</p>
+      )}
       <p className="mt-5 max-w-[56ch] font-serif text-[15px] leading-relaxed text-foreground/85">
         <strong className="font-semibold">The reduction:</strong> {node.reduction}
       </p>
@@ -30,6 +33,11 @@ function StagePanel({ node }: { node: ConsultingNode }) {
             </p>
           ))}
         </div>
+      )}
+      {node.example && (
+        <p className="mt-4 max-w-[56ch] font-serif text-[14px] italic leading-relaxed text-[hsl(var(--muted-ink))]">
+          {node.example}
+        </p>
       )}
       <div className="mt-7 border-t border-[hsl(var(--rule))] pt-4">
         <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-[hsl(var(--muted-ink))]">Evidence</div>
@@ -50,8 +58,8 @@ function StagePanel({ node }: { node: ConsultingNode }) {
         ) : (
           <p className="mt-3 font-serif text-[14px] italic text-[hsl(var(--muted-ink))]">
             {DEMOS_LINE}{' '}
-            <a href={PREPRINT_LINK} target="_blank" rel="noreferrer" className={`${linkClass} not-italic`}>
-              Read the preprint →
+            <a href={METHOD_ESSAY_LINK} target="_blank" rel="noreferrer" className={`${linkClass} not-italic`}>
+              Read the essay →
             </a>
           </p>
         )}

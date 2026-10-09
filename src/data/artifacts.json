@@ -264,12 +264,10 @@
         "verification": "User satisfaction surveys, accuracy benchmarks, A/B testing with real users"
       },
       "links": {
-        "repo": "https://github.com/Bonorinoa/ODQA_Marist",
         "paper": "https://doi.org/10.5220/0011059000003182"
       },
       "source_ids": {
-        "doi": "10.5220/0011059000003182",
-        "github": "ODQA_Marist"
+        "doi": "10.5220/0011059000003182"
       },
       "year": 2022,
       "org": "Academic"
@@ -755,16 +753,16 @@
         "verification": "User studies, comparison with manual survey design, published at CSEDU 2023"
       },
       "links": {
-        "repo": "https://github.com/Bonorinoa/smart-surveys",
+        "repo": "https://github.com/Bonorinoa/Smart_Surveys",
         "paper": "https://doi.org/10.5220/0011985400003470"
       },
       "source_ids": {
         "doi": "10.5220/0011985400003470",
-        "github": "smart-surveys"
+        "github": "Smart_Surveys"
       },
       "demoInfo": {
         "type": "github",
-        "url": "https://github.com/Bonorinoa/smart-surveys"
+        "url": "https://github.com/Bonorinoa/Smart_Surveys"
       },
       "org": "EconLLM-Lab"
     },
@@ -807,16 +805,10 @@
         "verification": "User satisfaction surveys, accuracy benchmarks, A/B testing, published at CSEDU 2022"
       },
       "links": {
-        "repo": "https://github.com/Bonorinoa/ODQA_Marist",
         "paper": "https://doi.org/10.5220/0011059000003182"
       },
       "source_ids": {
-        "doi": "10.5220/0011059000003182",
-        "github": "ODQA_Marist"
-      },
-      "demoInfo": {
-        "type": "github",
-        "url": "https://github.com/Bonorinoa/ODQA_Marist"
+        "doi": "10.5220/0011059000003182"
       },
       "org": "Academic"
     },
@@ -848,7 +840,7 @@
         "verification": "Manual testing, accessibility checks, responsive design validation"
       },
       "links": {
-        "website": "https://augustogonzalezbonorino.com",
+        "website": "https://augusto-gonzalezbonorino.com",
         "repo": "https://github.com/Bonorinoa/personal-website"
       },
       "org": "Personal",
@@ -902,8 +894,7 @@
         "verification": "Comparison with human experimental data, statistical validation, under peer review"
       },
       "links": {
-        "paper": "http://dx.doi.org/10.2139/ssrn.5082714",
-        "repo": "https://github.com/Bonorinoa/llm-weird-experiments"
+        "paper": "https://arxiv.org/abs/2501.06834"
       },
       "source_ids": {
         "ssrn": "5082714",
@@ -1094,13 +1085,14 @@
       "type": "project",
       "title": "Synthetic Cultural Agents from Aggregate Anchors",
       "subtitle": "SCA 2.0 proof-of-work",
-      "organization": "EconLLM Lab",
+      "organization": "arXiv preprint",
       "org": "EconLLM-Lab",
-      "date": "2026-03",
+      "date": "2026-10",
       "year": 2026,
       "category": "research",
       "summary": "An inspectable construction for mapping declared aggregate preference anchors into group-indexed choice policies. The current study evaluates sixteen country adapters across twenty-three World Values Survey items, separating recovery of imposed labels, transfer to new text, human cross-survey coherence, and model–human agreement.",
       "details": [
+        "Authors: Gonzalez-Bonorino, A., Biriukova, K., & Capra, M. C.",
         "Country names are omitted from primary evaluation prompts, closing the prompting channel while leaving pretrained associations in the base model.",
         "The adapters recover their imposed pairwise labels; on trust, adapter scores completely separate the two GPS-sign groups and correlate 0.74 with continuous GPS trust scores.",
         "Agreement with human country ranks remains unresolved, and results across the other preference dimensions are heterogeneous: retaining an anchor does not establish human measurement validity.",
@@ -1115,11 +1107,12 @@
       "pubType": "working-paper",
       "links": {
         "repo": "https://github.com/EconLLM-Lab/SCA2_PofW",
-        "paper": "https://github.com/EconLLM-Lab/SCA2_PofW/blob/main/misc/position_paper/Synthetic_Cultural_Agents_from_Aggregate_Anchors.pdf",
+        "paper": "https://arxiv.org/abs/2610.06562",
         "website": "https://www.econllm-lab.com/"
       },
       "source_ids": {
-        "github": "SCA2_PofW"
+        "github": "SCA2_PofW",
+        "arxiv": "2610.06562"
       },
       "credit": {
         "authored": "The construction protocol, the scope boundary, the five predeclared rejection points, and the multi-country experimental design — plus the methods paper with my co-authors.",

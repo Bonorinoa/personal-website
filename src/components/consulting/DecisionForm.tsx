@@ -6,6 +6,8 @@ import { supabase } from '@/integrations/supabase/client';
 const fieldClass =
   'mt-2 w-full rounded-[2px] bg-[hsl(var(--paper))] border border-[hsl(var(--rule))] px-3 py-2 text-[15px] text-foreground outline-none focus:border-[hsl(var(--oxblood))] transition-colors';
 
+const placeholderClass = 'placeholder:text-[hsl(var(--muted-ink)/0.6)]';
+
 const labelClass = 'font-mono text-[11px] uppercase tracking-[0.18em] text-[hsl(var(--muted-ink))]';
 
 export function DecisionForm() {
@@ -41,12 +43,17 @@ export function DecisionForm() {
     setStatus('sending');
 
     const trimmedEmail = email.trim();
-    const { error } = await supabase.from('consulting_inquiries').insert({
-      decision: decision.trim(),
-      deadline: deadline.trim(),
-      cost: cost.trim(),
-      email: trimmedEmail || null,
-    });
+    let error: { message: string } | null = null;
+    try {
+      ({ error } = await supabase.from('consulting_inquiries').insert({
+        decision: decision.trim(),
+        deadline: deadline.trim(),
+        cost: cost.trim(),
+        email: trimmedEmail || null,
+      }));
+    } catch (err) {
+      error = { message: err instanceof Error ? err.message : String(err) };
+    }
 
     if (error) {
       console.error('[consulting] submission failed:', error.message);
@@ -85,9 +92,16 @@ export function DecisionForm() {
     );
   }
 
+  const busy = status === 'sending';
+  const inputClass = `${fieldClass} ${placeholderClass} ${busy ? 'opacity-70' : ''}`;
+
   return (
-    <form onSubmit={handleSubmit} className="max-w-xl">
-      <div className="space-y-5">
+    <form onSubmit={handleSubmit} className="max-w-xl" aria-busy={busy}>
+      <p className="mt-3 font-serif italic text-[14px] text-[hsl(var(--muted-ink))]">
+        Twenty minutes. Deadline and cost of being wrong, not a pitch deck.
+      </p>
+
+      <fieldset disabled={busy} className="mt-6 space-y-5">
         <div>
           <label className={labelClass} htmlFor="decision">
             What decision?
@@ -98,7 +112,8 @@ export function DecisionForm() {
             rows={3}
             value={decision}
             onChange={(e) => setDecision(e.target.value)}
-            className={fieldClass}
+            placeholder="e.g. Whether to roll out a pricing change based on last quarter's A/B test"
+            className={inputClass}
           />
         </div>
 
@@ -112,7 +127,8 @@ export function DecisionForm() {
             type="text"
             value={deadline}
             onChange={(e) => setDeadline(e.target.value)}
-            className={fieldClass}
+            placeholder="e.g. Board meeting on March 14, report goes out end of quarter"
+            className={inputClass}
           />
         </div>
 
@@ -126,35 +142,50 @@ export function DecisionForm() {
             rows={3}
             value={cost}
             onChange={(e) => setCost(e.target.value)}
-            className={fieldClass}
+            placeholder="e.g. We'd fund the wrong program for a year, a published estimate gets retracted"
+            className={inputClass}
           />
         </div>
 
         <div>
           <label className={labelClass} htmlFor="email">
-            Your email (optional)
+            Your email (so I can reply)
           </label>
           <input
             id="email"
+            required
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className={fieldClass}
+            placeholder="you@company.com"
+            className={inputClass}
           />
         </div>
-      </div>
+      </fieldset>
+
+      {status === 'error' && (
+        <div role="alert" className="mt-6 border-l-2 border-[hsl(var(--oxblood))] pl-4 font-serif text-[15px]">
+          <p>That didn't go through. Your text is still here.</p>
+          <p className="mt-1">
+            <a
+              href={mailtoFallback()}
+              className="text-[hsl(var(--oxblood))] underline decoration-[hsl(var(--oxblood)/0.35)] underline-offset-4 hover:decoration-[hsl(var(--oxblood))]"
+            >
+              Email it instead →
+            </a>{' '}
+            <span className="italic text-[hsl(var(--muted-ink))]">or try again.</span>
+          </p>
+        </div>
+      )}
 
       <Button
         type="submit"
         variant="outline"
-        className="mt-7 min-h-[44px] rounded-[2px] border-[hsl(var(--oxblood))] bg-transparent px-5 text-[14px] font-normal tracking-wide text-[hsl(var(--oxblood))] hover:bg-[hsl(var(--oxblood))] hover:text-[hsl(var(--paper))]"
+        disabled={busy}
+        className={`mt-7 min-h-[44px] rounded-[2px] border-[hsl(var(--oxblood))] bg-transparent px-5 text-[14px] font-normal tracking-wide text-[hsl(var(--oxblood))] hover:bg-[hsl(var(--oxblood))] hover:text-[hsl(var(--paper))] ${busy ? 'opacity-60 cursor-wait disabled:opacity-60' : ''}`}
       >
-        Describe a decision
+        {busy ? 'Sending…' : 'Send'}
       </Button>
-
-      <p className="mt-3 font-serif italic text-[14px] text-[hsl(var(--muted-ink))]">
-        Twenty minutes. Deadline and cost of being wrong, not a pitch deck.
-      </p>
     </form>
   );
 }

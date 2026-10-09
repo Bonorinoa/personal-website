@@ -13,6 +13,8 @@ export interface ConsultingNode {
   question: string;
   body: string;
   reduction: string;
+  /** Plain-language gloss for notation used in this stage. */
+  glosses?: string[];
   links: ConsultingLink[];
 }
 
@@ -33,6 +35,7 @@ export const NODES: ConsultingNode[] = [
     question: "Is our measure entitled to the claim we're making?",
     body: 'Construct validity as partial identification: the admissible measurement set M*, and the range of conclusions your assumptions actually permit. An empty set is a finding.',
     reduction: 'which measure is load-bearing — remove it and the conclusion moves — and which to drop.',
+    glosses: ["M* — the set of measures your assumptions can't rule out."],
     links: [
       {
         label: 'Construct-Identified Inference',
@@ -49,6 +52,7 @@ export const NODES: ConsultingNode[] = [
     question: 'Is the number defensible — and what do we do?',
     body: 'Estimand, estimator, estimate, then the robustness work — including an explicit statement of what the evidence does not establish.',
     reduction: 'what to collect next to shrink the range.',
+    glosses: ['[L, U] — the range of answers the data allows, from lowest (L) to highest (U).'],
     links: [],
   },
 ];
@@ -68,7 +72,7 @@ export const WRITING: WritingItem[] = [
     blurb: 'Measurement, specification, and sampling as three separate uncertainties.',
   },
   {
-    kind: 'Journal',
+    kind: 'Preprint',
     title: 'Synthetic Cultural Agents',
     href: 'https://arxiv.org/abs/2501.06834',
     blurb: 'Whether simulated respondents preserve human patterns. Failures included.',
@@ -77,15 +81,42 @@ export const WRITING: WritingItem[] = [
     kind: 'Column',
     title: 'La Gaceta · ADEPA',
     href: 'https://www.lagaceta.com.ar/nota/1153651/opinion/cartas-lectores-verificacion-social.html',
-    blurb: 'Public writing, not a service tile.',
+    blurb: 'Opinion writing in La Gaceta (Tucumán) on checking claims against local context and public data.',
   },
+];
+
+export const PREPRINT_LINK = 'https://arxiv.org/abs/2501.06834';
+
+export const INTRO =
+  "For research leads, policy teams and data teams who are about to act on a number: a second look at whether the evidence supports the decision, before it's made.";
+
+export const DEMOS_LINE =
+  'Worked examples for this stage are in progress. For now, the preprint walks through the method end to end.';
+
+export const WHAT_YOU_GET: { id: string; title: string; line: string }[] = [
+  { id: '01', title: 'A call', line: 'A 20-minute call about the question and the data behind it.' },
+  { id: '02', title: 'A written memo', line: "A short written memo on what the evidence supports, what it doesn't, and which measure carries the result." },
+  { id: '03', title: 'Next steps', line: 'A plain list of what to collect next to narrow the answer.' },
 ];
 
 export interface Note {
   quote: string;
   name: string;
+  /** e.g. "Role, Org" */
   role: string;
+  /** e.g. "Midstream" */
+  stage?: string;
 }
 
-/** Rendered only when at least two real notes exist. */
+/**
+ * Real client notes only. The section renders only when at least two exist.
+ * Never add placeholder or invented entries here. Format example (commented out on purpose):
+ *
+ * {
+ *   quote: 'Example quote text.',
+ *   name: 'Jane Doe',
+ *   role: 'Research Lead, Example Org',
+ *   stage: 'Midstream',
+ * },
+ */
 export const NOTES: Note[] = [];

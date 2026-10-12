@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <style>
+    .disc{fill:#5B1A1E}.ring{stroke:#F4EEE2}.glyph{fill:#F4EEE2}
+    @media (prefers-color-scheme: dark){.disc{fill:#F4EEE2}.ring{stroke:#5B1A1E}.glyph{fill:#5B1A1E}}
+  </style>
+  <circle class="disc" cx="32" cy="32" r="31"/>
+  <circle class="ring" cx="32" cy="32" r="26.5" fill="none" stroke-width="1.2" opacity="0.55"/>
+  <text class="glyph" x="32" y="45" text-anchor="middle" font-family="'Playfair Display', Georgia, 'Times New Roman', serif" font-style="italic" font-weight="700" font-size="38">A</text>
+</svg>
